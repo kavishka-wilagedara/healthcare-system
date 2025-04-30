@@ -1,12 +1,7 @@
 import React from "react";
 import { Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import {
-  FaCalendarCheck,
-  FaEnvelope,
-  FaSignOutAlt,
-  FaChartPie,
-} from "react-icons/fa";
+import { FaCalendarCheck, FaEnvelope, FaSignOutAlt } from "react-icons/fa";
 import { GiMedicines } from "react-icons/gi";
 import { MdAccountCircle } from "react-icons/md";
 import { MdMedicalServices } from "react-icons/md";
@@ -22,9 +17,6 @@ const PatientSidebar = () => {
         <h5 className="profile-name">Ashan Vimod</h5>
       </div>
       <Nav className="flex-column">
-        <Nav.Link as={Link} to="/patient/dashboard" className="nav-item">
-          <FaChartPie className="icon" /> Overview
-        </Nav.Link>
         <Nav.Link
           as={Link}
           to="/patient/dashboard/channeling"
