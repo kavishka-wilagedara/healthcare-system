@@ -1,6 +1,11 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 import AddTimeForm from "./doctor/pages/AddTimeForm";
 import Dashboard from "./doctor/pages/dashboard";
 import Appointments from "./doctor/pages/Appoinments";
@@ -9,7 +14,14 @@ import AppointmentHistory from "./doctor/pages/AppointmentHistory";
 import AppointmentDetailsPage from "./doctor/pages/AppointmentDetailsPage";
 import ViewAppointmentDetailsPage from "./doctor/pages/ViewAppointmentDetailsPage";
 import DocNavbar from "./doctor/components/DocNavbar";
-
+// Patient
+import PatientDashboard from "./patient/PatientDashboard";
+import Overview from "./patient/Overview";
+import Channeling from "./patient/Channeling";
+import Services from "./patient/Services";
+import Pharmacy from "./patient/Pharmacy";
+import Messages from "./patient/Messages";
+import Profile from "./patient/Profile";
 
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -28,14 +40,36 @@ function App() {
     <Router>
       <Layout>
         <Routes>
-           <Route path="/doc-home" element={<Dashboard />} />
+          <Route path="/doc-home" element={<Dashboard />} />
           <Route path="/doc-dashboard" element={<Dashboard />} />
           <Route path="/doc-add-time" element={<AddTimeForm />} />
           <Route path="/doc-appointments" element={<Appointments />} />
-          <Route path="/doc-scheduledAppointments" element={<ScheduledAppointments />} />
-          <Route path="/doc-appointmentHistory" element={<AppointmentHistory />} />
-          <Route path="/doc-appointment/:id" element={<AppointmentDetailsPage />} />
-          <Route path="/doc-appointment-details/:id" element={<ViewAppointmentDetailsPage />} />
+          <Route
+            path="/doc-scheduledAppointments"
+            element={<ScheduledAppointments />}
+          />
+          <Route
+            path="/doc-appointmentHistory"
+            element={<AppointmentHistory />}
+          />
+          <Route
+            path="/doc-appointment/:id"
+            element={<AppointmentDetailsPage />}
+          />
+          <Route
+            path="/doc-appointment-details/:id"
+            element={<ViewAppointmentDetailsPage />}
+          />
+
+          {/* Patient Routes */}
+          <Route path="/patient/dashboard" element={<PatientDashboard />}>
+            <Route index element={<Overview />} />
+            <Route path="channeling" element={<Channeling />} />
+            <Route path="services" element={<Services />} />
+            <Route path="pharmacy" element={<Pharmacy />} />
+            <Route path="messages" element={<Messages />} />
+            <Route path="profile" element={<Profile />} />
+          </Route>
         </Routes>
       </Layout>
     </Router>
