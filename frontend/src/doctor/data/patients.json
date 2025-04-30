@@ -1,0 +1,91 @@
+[
+    {
+      "patient_ID": "P001",
+      "name": "Kasun Perera",
+      "nic": "801234567V",
+      "age": 40,
+      "gender": "Male",
+      "phone": "077-1234567",
+      "email": "kasun.perera@example.lk",
+      "address": "No. 12, Galle Road, Colombo 03",
+      "medical_history": ["Diabetes", "High Cholesterol"]
+    },
+    {
+      "patient_ID": "P002",
+      "name": "Nimali Fernando",
+      "nic": "199412345678",
+      "age": 29,
+      "gender": "Female",
+      "phone": "071-2345678",
+      "email": "nimali.fernando@example.lk",
+      "address": "34/1, Kandy Road, Kiribathgoda",
+      "medical_history": ["Asthma"]
+    },
+    {
+      "patient_ID": "P003",
+      "name": "Tharindu Jayasinghe",
+      "nic": "730456789V",
+      "age": 50,
+      "gender": "Male",
+      "phone": "075-9876543",
+      "email": "tharindu.j@example.lk",
+      "address": "120/A, High Level Road, Nugegoda",
+      "medical_history": ["Hypertension", "Arthritis"]
+    },
+    {
+      "patient_ID": "P004",
+      "name": "Sanduni Rathnayake",
+      "nic": "198812345123",
+      "age": 36,
+      "gender": "Female",
+      "phone": "072-3456789",
+      "email": "sanduni.rathnayake@example.lk",
+      "address": "56, Mahaweli Avenue, Kandy",
+      "medical_history": []
+    },
+    {
+      "patient_ID": "P005",
+      "name": "Indika Senanayake",
+      "nic": "620987654V",
+      "age": 61,
+      "gender": "Male",
+      "phone": "076-1122334",
+      "email": "indika.senanayake@example.lk",
+      "address": "21/3, Anuradhapura Road, Kurunegala",
+      "medical_history": ["Heart Disease"]
+    },
+    {
+      "patient_ID": "P006",
+      "name": "Dilani Wijesinghe",
+      "nic": "200211234567",
+      "age": 22,
+      "gender": "Female",
+      "phone": "078-9988776",
+      "email": "dilani.w@example.lk",
+      "address": "No. 45, Lake Road, Polonnaruwa",
+      "medical_history": ["Migraines"]
+    },
+    {
+      "patient_ID": "P007",
+      "name": "Ruwan Gunarathna",
+      "nic": "750234567V",
+      "age": 48,
+      "gender": "Male",
+      "phone": "070-3344556",
+      "email": "ruwan.g@example.lk",
+      "address": "10/2, Matara Road, Galle",
+      "medical_history": ["Back Pain"]
+    },
+    {
+      "patient_ID": "P008",
+      "name": "Harshani Silva",
+      "nic": "199312346789",
+      "age": 31,
+      "gender": "Female",
+      "phone": "074-5566778",
+      "email": "harshani.silva@example.lk",
+      "address": "88, Baseline Road, Borella",
+      "medical_history": []
+    }
+  ]
+  
