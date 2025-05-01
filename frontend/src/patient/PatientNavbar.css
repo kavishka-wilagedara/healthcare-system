@@ -1,0 +1,46 @@
+.patient-navbar {
+  background-color: #23548d !important;
+  padding: 8px 20px;
+}
+
+.patient-navbar .navbar-title {
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.patient-navbar .nav-link {
+  color: #ffffff;
+  margin-left: 15px;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.patient-navbar .nav-link:hover {
+  color: #cde1ff;
+}
+
+.patient-navbar .dropdown-toggle {
+  color: #ffffff;
+  font-weight: 500;
+  margin-left: 15px;
+}
+
+.patient-navbar .dropdown-menu {
+  right: 0;
+  left: auto;
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.patient-navbar .dropdown-item {
+  color: #23548d;
+  font-weight: 500;
+}
+
+.patient-navbar .dropdown-item:hover {
+  background-color: #f0f4fa;
+  color: #0c2a4d;
+}

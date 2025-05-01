@@ -1,14 +1,12 @@
 import React from "react";
-import PatientSidebar from "./PatientSidebar";
+import PatientNavbar from "./PatientNavbar";
 import { Outlet } from "react-router-dom";
 
 const PatientDashboard = () => {
   return (
     <div>
-      <PatientSidebar />
-      <div className="flex-grow-1 p-4" style={{ marginLeft: "250px" }}>
-        <Outlet />
-      </div>
+      <PatientNavbar />
+      <Outlet />
     </div>
   );
 };

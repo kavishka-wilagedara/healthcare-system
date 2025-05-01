@@ -1,4 +1,5 @@
 .service-container {
+  margin: 0;
   padding: 40px 30px;
   background-color: #f9f9f9;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -46,7 +47,7 @@
 .service-card-wrapper {
   display: flex;
   flex-wrap: wrap;
-  gap: 25px;
+  gap: 30px;
   justify-content: start;
 }
 
@@ -62,6 +63,12 @@
   max-width: 320px;
   overflow: hidden;
   transition: transform 0.3s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  z-index: 2;
 }
 
 .card-header {
@@ -93,22 +100,6 @@
   height: 20px;
   margin-right: 8px;
   color: #23548d;
-}
-
-.card-body .details-btn {
-  margin-top: 10px;
-  padding: 8px 12px;
-  background-color: #23548d;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.card-body .details-btn:hover {
-  background-color: #0c2a4d;
 }
 
 /* Modal Styles */

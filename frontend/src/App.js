@@ -16,7 +16,7 @@ import ViewAppointmentDetailsPage from "./doctor/pages/ViewAppointmentDetailsPag
 import DocNavbar from "./doctor/components/DocNavbar";
 // Patient
 import PatientDashboard from "./patient/PatientDashboard";
-import Overview from "./patient/Overview";
+import Homepage from "./patient/Homepage";
 import Channeling from "./patient/Channeling";
 import Services from "./patient/Services";
 import Pharmacy from "./patient/Pharmacy";
@@ -63,11 +63,11 @@ function App() {
 
           {/* Patient Routes */}
           <Route path="/patient/dashboard" element={<PatientDashboard />}>
-            <Route index element={<Overview />} />
+            <Route index element={<Homepage />} />
             <Route path="channeling" element={<Channeling />} />
-            <Route path="services" element={<Services />} />
+            <Route path="clinical-services" element={<Services />} />
             <Route path="pharmacy" element={<Pharmacy />} />
-            <Route path="messages" element={<Messages />} />
+            <Route path="notification" element={<Messages />} />
             <Route path="profile" element={<Profile />} />
           </Route>
         </Routes>

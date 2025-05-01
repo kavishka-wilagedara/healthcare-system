@@ -1,0 +1,103 @@
+.channeling-info-card {
+  background: linear-gradient(135deg, #eaf6ff, #ffffff);
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  max-width: 700px;
+  margin: 50px auto;
+  text-align: center;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  transition: all 0.3s ease;
+}
+
+.channeling-info-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+}
+
+.channeling-info-card h1 {
+  font-size: 2rem;
+  color: #23548d;
+  margin-bottom: 16px;
+}
+
+.channeling-description {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+.channeling-features {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+  text-align: left;
+  color: #333;
+}
+
+.custom-list {
+  list-style: none;
+  padding-left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.custom-list li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.list-icon {
+  color: #23548d;
+  margin-right: 10px;
+}
+
+.channeling-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+.channeling-btn:hover {
+  background-color: #23548d;
+  color: white;
+}
+
+.channeling-btn {
+  padding: 14px 24px;
+  font-size: 20px;
+  border: 2px solid #23548d;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.channeling-btn.primary {
+  background-color: #23548d;
+  color: white;
+}
+
+.channeling-btn.primary:hover {
+  background-color: #153e6b;
+}
+
+.channeling-btn.outline {
+  background-color: white;
+  color: #23548d;
+  border: 2px solid #23548d;
+}
+
+.channeling-btn.outline:hover {
+  background-color: #eef5fc;
+}
