@@ -140,6 +140,15 @@
   color: #23548d;
 }
 
+.service-form select {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
 .service-form input {
   width: 100%;
   padding: 12px;

@@ -81,9 +81,11 @@ const Services = () => {
       <div className="service-card-wrapper">
         {allServices.map((service) => (
           <div className="service-card" key={service.id}>
+            {/* Card header */}
             <div className="card-header">
               <h3>{service.name}</h3>
             </div>
+            {/* Card body */}
             <div className="card-body">
               <p>
                 <MdOutlineFormatListNumbered className="icon" />
@@ -110,20 +112,26 @@ const Services = () => {
         ))}
       </div>
 
-      {/* Modal */}
+      {/*New service Modal */}
       {showModel && (
         <div className="modal-overlay">
           <div className="modal-content">
             <h2>Add New Service</h2>
             <form onSubmit={handleFormSubmit} className="service-form">
-              <input
-                type="text"
+              <select
                 name="name"
-                placeholder="Service Name"
-                // value={}
+                placeholder="Select Test Type"
                 onChange={handleInputChange}
                 required
-              />
+                defaultValue=""
+              >
+                <option value="Blood Test">Blood Test</option>
+                <option value="X-Ray">X-Ray</option>
+                <option value="MRI Scan">MRI Scan</option>
+                <option value="CT Scan">CT Scan</option>
+                <option value="Urine Test">Urine Test</option>
+              </select>
+
               <input
                 type="text"
                 name="patientName"
