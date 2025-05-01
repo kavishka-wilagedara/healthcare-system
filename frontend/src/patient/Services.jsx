@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Services.css";
 import { FcPlus } from "react-icons/fc";
-import { MdOutlineDateRange } from "react-icons/md";
-import { IoTimeOutline } from "react-icons/io5";
-import { IoLocationOutline } from "react-icons/io5";
+import {
+  MdOutlineDateRange,
+  MdOutlineFormatListNumbered,
+} from "react-icons/md";
+import { IoTimeOutline, IoLocationOutline } from "react-icons/io5";
+import { IoPersonOutline } from "react-icons/io5";
 
 const Services = () => {
   const allServices = [
@@ -14,65 +17,152 @@ const Services = () => {
       time: "9.00 AM",
       roomNum: "ABC-001",
       instruction:
-        "fast for a specific duration (usually 8-12 hours), drink water, and avoid certain foods and drinks.",
+        "Fast for 8-12 hours, drink water, and avoid certain foods/drinks.",
     },
     {
       id: 2,
       name: "Urine Test",
       date: "May 5, 2025",
       time: "9.00 AM",
-      roomNum: "ABC-001",
-      instruction:
-        "fast for a specific duration (usually 8-12 hours), drink water, and avoid certain foods and drinks.",
+      roomNum: "ABC-002",
+      instruction: "Provide a clean catch sample in the provided container.",
     },
     {
       id: 3,
       name: "X-Ray",
       date: "May 8, 2025",
       time: "9.00 AM",
-      roomNum: "ABC-001",
-      instruction:
-        "fast for a specific duration (usually 8-12 hours), drink water, and avoid certain foods and drinks.",
+      roomNum: "ABC-003",
+      instruction: "Wear comfortable clothes and avoid jewelry.",
+    },
+    {
+      id: 3,
+      name: "X-Ray",
+      date: "May 8, 2025",
+      time: "9.00 AM",
+      roomNum: "ABC-003",
+      instruction: "Wear comfortable clothes and avoid jewelry.",
     },
   ];
+  const [showModel, setShowModel] = useState(false);
+  const [newService, setNewService] = useState({
+    name: "",
+    date: "",
+    time: "",
+  });
+
+  const handleNewService = () => {
+    setShowModel(true);
+  };
+
+  const handleCloseModel = () => {
+    setShowModel(false);
+    setNewService({ name: "", date: "", time: "" });
+  };
+
+  const handleInputChange = () => {};
+
+  const handleFormSubmit = () => {};
 
   return (
-    <div class="service-container">
-      <h2>Your Upcoming Services</h2>
-      <p>
+    <div className="service-container">
+      <div className="title-section">
+        <h1>Diagnostic & Lab Services</h1>
+        <button className="add-btn" onClick={handleNewService}>
+          <FcPlus className="icon" />
+          Add New Service
+        </button>
+      </div>
+
+      <p className="subtitle">
         Here are your upcoming services. We’re with you every step of the way!
       </p>
 
-      <button>
-        <FcPlus className="icon" />
-        add new service
-      </button>
-
       <div className="service-card-wrapper">
         {allServices.map((service) => (
-          <div class="service-card" key={service.id}>
-            <h3>{service.name}</h3>
-            <p>
-              <MdOutlineDateRange className="icon" />
-              {service.date}
-            </p>
-            <p>
-              <IoTimeOutline className="icon" />
-              {service.time}
-            </p>
-            <p>
-              <IoLocationOutline className="icon" />
-              {service.roomNum}
-            </p>
-            <p>
-              Instruction:<br></br>
-              {service.instruction}
-            </p>
-
-            <button>View Details</button>
+          <div className="service-card" key={service.id}>
+            <div className="card-header">
+              <h3>{service.name}</h3>
+            </div>
+            <div className="card-body">
+              <p>
+                <MdOutlineFormatListNumbered className="icon" />
+                <strong>Appointment No:</strong>&nbsp;{service.id}
+              </p>
+              <p>
+                <IoPersonOutline className="icon" />
+                <strong>Patient Name:</strong>&nbsp;{service.id}
+              </p>
+              <p>
+                <MdOutlineDateRange className="icon" />
+                <strong>Date:</strong>&nbsp;{service.date}
+              </p>
+              <p>
+                <IoTimeOutline className="icon" />
+                <strong>Time:</strong>&nbsp;{service.time}
+              </p>
+              <p>
+                <IoLocationOutline className="icon" />
+                <strong>Location:</strong>&nbsp;{service.roomNum}
+              </p>
+            </div>
           </div>
         ))}
       </div>
+
+      {/* Modal */}
+      {showModel && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2>Add New Service</h2>
+            <form onSubmit={handleFormSubmit} className="service-form">
+              <input
+                type="text"
+                name="name"
+                placeholder="Service Name"
+                // value={}
+                onChange={handleInputChange}
+                required
+              />
+              <input
+                type="text"
+                name="patientName"
+                placeholder="Patient Name"
+                // value={}
+                onChange={handleInputChange}
+                required
+              />
+              <input
+                type="date"
+                name="date"
+                // value={}
+                onChange={handleInputChange}
+                required
+              />
+              <input
+                type="time"
+                name="time"
+                // value={}
+                onChange={handleInputChange}
+                required
+              />
+
+              <div className="modal-buttons">
+                <button type="submit" className="submit-btn">
+                  Add Service
+                </button>
+                <button
+                  type="button"
+                  className="cancel-btn"
+                  onClick={handleCloseModel}
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

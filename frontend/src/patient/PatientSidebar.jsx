@@ -29,7 +29,7 @@ const PatientSidebar = () => {
           to="/patient/dashboard/services"
           className="nav-item"
         >
-          <MdMedicalServices className="icon" /> Services
+          <MdMedicalServices className="icon" /> Clinical Services
         </Nav.Link>
         <Nav.Link
           as={Link}

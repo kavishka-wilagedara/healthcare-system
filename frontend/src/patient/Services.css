@@ -1,98 +1,183 @@
 .service-container {
-  text-align: left;
-  padding: 20px;
+  padding: 40px 30px;
+  background-color: #f9f9f9;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.service-container h2 {
-  font-size: 24px;
-  margin-bottom: 10px;
+.title-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
-.service-container p {
-  font-size: 16px;
-  margin-bottom: 20px;
-  color: #555;
+.service-container h1 {
+  font-size: 42px;
+  font-weight: bold;
+  color: #1f3b57;
+  margin-bottom: 15px;
 }
 
-.service-container button {
+.add-btn {
   display: flex;
   align-items: center;
-  margin-top: 40px;
-  margin-left: 10px;
-  justify-content: center;
-  padding: 10px 15px;
+  gap: 8px;
+  padding: 10px 20px;
   background-color: #23548d;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
+  font-weight: 500;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.service-container button .icon {
-  display: flex;
-  width: 20px;
-  height: 20px;
-  justify-content: center;
-}
-
-.service-container button:hover {
+.add-btn:hover {
   background-color: #0c2a4d;
+}
+
+.subtitle {
+  font-size: 16px;
+  color: #555;
+  margin-top: 10px;
+  margin-bottom: 30px;
 }
 
 .service-card-wrapper {
-  margin-top: 10px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  gap: 25px;
+  justify-content: start;
 }
 
-/* Styling each card */
 .service-card {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  background-color: lightgray;
-  width: 30%;
-  height: 350px;
-  margin: 10px;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  padding: 0;
+  width: 100%;
+  max-width: 320px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.card-header {
+  background-color: #23548d;
+  color: white;
   padding: 20px;
-  border: 1px solid #23548d;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  text-align: left;
+  border-bottom: 1px solid #ddd;
 }
 
-.service-card h3 {
-  font-size: 30px;
-  margin-top: 1px;
+.card-header h3 {
+  margin: 0;
+  font-size: 22px;
 }
 
-.service-card p {
-  display: flex; /* Enable flexbox */
-  align-items: center; /* Vertically align the icon and text */
-  justify-content: center; /* Horizontally align the icon and text */
-  font-size: 16px;
-
-  margin-bottom: 12px;
-  color: #000000;
+.card-body {
+  padding: 20px;
 }
 
-.service-card p .icon {
-  width: 16px; /* Size of the icon */
-  height: 25px; /* Size of the icon */
-  margin-right: 8px; /* Space between the icon and the text */
+.card-body p {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 15px;
+  color: #333;
 }
-.service-card button {
-  margin-top: 1px;
-  margin-left: 210px;
-  padding: 8px 5px;
+
+.card-body .icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  color: #23548d;
+}
+
+.card-body .details-btn {
+  margin-top: 10px;
+  padding: 8px 12px;
   background-color: #23548d;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.card-body .details-btn:hover {
+  background-color: #0c2a4d;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 30px 25px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.modal-content h2 {
+  margin-bottom: 20px;
+  font-size: 26px;
+  color: #23548d;
+}
+
+.service-form input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.submit-btn,
+.cancel-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
   cursor: pointer;
 }
 
-.service-card button:hover {
+.submit-btn {
+  background-color: #23548d;
+  color: white;
+}
+
+.cancel-btn {
+  background-color: #ddd;
+  color: #333;
+}
+
+.submit-btn:hover {
   background-color: #0c2a4d;
+}
+
+.cancel-btn:hover {
+  background-color: #bbb;
 }
