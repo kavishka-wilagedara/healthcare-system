@@ -1,41 +1,67 @@
 import React from "react";
 import { Nav, Navbar, Container, Dropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { FaSignOutAlt } from "react-icons/fa";
+import { FaSignOutAlt, FaUserCircle, FaBell } from "react-icons/fa";
 import "./PatientNavbar.css";
 
 const PatientNavbar = () => {
   return (
-    <Navbar bg="light" expand="lg" className="patient-navbar px-4">
+    <Navbar
+      bg="primary"
+      variant="dark"
+      expand="lg"
+      className="patient-navbar px-4 shadow-sm"
+    >
       <Container fluid>
-        <Navbar.Brand as={Link} to="/patient/dashboard">
+        <Navbar.Brand as={Link} to="/patient/dashboard" className="fw-bold">
           <span className="navbar-title">Health Care</span>
         </Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            {/* Left-align the Nav items */}
-            <Nav.Link as={Link} to="/patient/dashboard/channeling">
+            <Nav.Link
+              as={Link}
+              to="/patient/dashboard/channeling"
+              className="mx-1 nav-link-custom"
+            >
               Channeling
             </Nav.Link>
-            <Nav.Link as={Link} to="/patient/dashboard/clinical-services">
+            <Nav.Link
+              as={Link}
+              to="/patient/dashboard/clinical-services"
+              className="mx-1 nav-link-custom"
+            >
               Clinical Services
             </Nav.Link>
-            <Nav.Link as={Link} to="/patient/dashboard/pharmacy">
+            <Nav.Link
+              as={Link}
+              to="/patient/dashboard/pharmacy"
+              className="mx-1 nav-link-custom"
+            >
               Pharmacy
             </Nav.Link>
-            <Nav.Link as={Link} to="/patient/dashboard/notification">
-              Notification
+            <Nav.Link
+              as={Link}
+              to="/patient/dashboard/notification"
+              className="mx-1 nav-link-custom"
+            >
+              <FaBell className="me-1" /> Notification
             </Nav.Link>
             <Dropdown align="end">
-              <Dropdown.Toggle variant="link" id="dropdown-profile">
-                Profile
+              <Dropdown.Toggle
+                variant="link"
+                id="dropdown-profile"
+                className="nav-link-custom text-white"
+              >
+                <FaUserCircle className="me-1" /> Profile
               </Dropdown.Toggle>
-              <Dropdown.Menu>
+              <Dropdown.Menu className="dropdown-menu-dark">
                 <Dropdown.Item as={Link} to="/patient/dashboard/profile">
                   View Profile
                 </Dropdown.Item>
-                <Dropdown.Item as={Link} to="/logout">
-                  <FaSignOutAlt className="icon" /> Logout
+                <Dropdown.Divider />
+                <Dropdown.Item as={Link} to="/logout" className="text-danger">
+                  <FaSignOutAlt className="me-2" /> Logout
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
