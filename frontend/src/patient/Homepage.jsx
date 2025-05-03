@@ -14,7 +14,7 @@ function Homepage() {
       {
         appointmentId: "ClI-0001",
         name: "Blood Test",
-        appointmentDate: "May 3, 2025",
+        appointmentDate: "2025-09-10",
         appointmentTime: "9.00 AM",
         clinicRomm: "4th Floor, Room-0029",
       },
@@ -24,7 +24,7 @@ function Homepage() {
         appointmentId: "APT-0001",
         doctorName: "Dr. Kavindya Perera",
         specialization: "Cardiologist",
-        appointmentDate: "2025-05-10",
+        appointmentDate: "2025-09-20",
         appointmentTime: "10:30 AM",
         consultationRoom: "4th Floor, Room-0029",
       },
@@ -104,8 +104,25 @@ function Homepage() {
                     <div className="appointment-details">
                       <div className="appointment-calendar">
                         <div className="calendar-date">
-                          <span className="date-number">7</span>
-                          <span className="date-month">MAY</span>
+                          <span className="date-number">
+                            {new Date(
+                              data.pendingDoctorAppoinments[
+                                data.pendingDoctorAppoinments.length - 1
+                              ].appointmentDate
+                            )
+                              .getDate()
+                              .toString()
+                              .padStart(2, "0")}
+                          </span>
+                          <span className="date-month">
+                            {new Date(
+                              data.pendingDoctorAppoinments[
+                                data.pendingDoctorAppoinments.length - 1
+                              ].appointmentDate
+                            ).toLocaleString("default", {
+                              month: "short",
+                            })}
+                          </span>
                         </div>
                       </div>
 
