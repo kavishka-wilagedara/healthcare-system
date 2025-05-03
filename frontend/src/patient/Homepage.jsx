@@ -76,7 +76,7 @@ function Homepage() {
                 Welcome, <span className="patient-name">{data.name}</span>
               </h1>
               <p className="hero-subtitle">
-                You're one step closer to feeling your best , let's make today
+                You're one step closer to feeling your best , Let's make today
                 count!
               </p>
             </Col>
@@ -99,15 +99,16 @@ function Homepage() {
             <Card className="shadow-sm upcoming-card">
               <Card.Body>
                 <h3 className="card-title">Your Upcoming Appointment</h3>
-                <div className="appointment-details">
-                  <div className="appointment-calendar">
-                    <div className="calendar-date">
-                      <span className="date-number">7</span>
-                      <span className="date-month">MAY</span>
-                    </div>
-                  </div>
-                  {data.pendingDoctorAppoinments.length > 0 && (
-                    <>
+                {data.pendingDoctorAppoinments.length > 0 ? (
+                  <>
+                    <div className="appointment-details">
+                      <div className="appointment-calendar">
+                        <div className="calendar-date">
+                          <span className="date-number">7</span>
+                          <span className="date-month">MAY</span>
+                        </div>
+                      </div>
+
                       <div className="appointment-info">
                         <p className="appointment-time">
                           {
@@ -136,9 +137,23 @@ function Homepage() {
                           View Details
                         </Button>
                       </div>
-                    </>
-                  )}
-                </div>
+                    </div>
+                  </>
+                ) : (
+                  <div className="new-appoinment">
+                    <p>
+                      No pending doctor appointments at the moment. Please book
+                      one!
+                    </p>
+                    <Button
+                      variant="outline-primary"
+                      className="mt-0"
+                      href="/patient/dashboard/view-all-doctors"
+                    >
+                      View Doctors
+                    </Button>
+                  </div>
+                )}
               </Card.Body>
             </Card>
           </Col>
@@ -146,25 +161,35 @@ function Homepage() {
             <Card className="shadow-sm notification-card">
               <Card.Body>
                 <h3 className="card-title">Your Notifications</h3>
-                <div className="notification-item">
-                  <div className="notification-badge pending-results">
-                    {data.pendingClinicalService.length}
-                  </div>
-                  Pending Service Appoinments
-                </div>
-                <div className="notification-item">
-                  <div className="notification-badge active-prescriptions">
-                    {data.pendingDoctorAppoinments.length}
-                  </div>
-                  Pending Doctor Channeling
-                </div>
-                <Button
-                  variant="link"
-                  className="view-all-link"
-                  href="/patient/dashboard/notification"
-                >
-                  View All
-                </Button>
+                {data.pendingClinicalService.length +
+                  data.pendingDoctorAppoinments.length >
+                0 ? (
+                  <>
+                    <div className="notification-item">
+                      <div className="notification-badge pending-results">
+                        {data.pendingClinicalService.length}
+                      </div>
+                      Pending Service Appoinments
+                    </div>
+                    <div className="notification-item">
+                      <div className="notification-badge active-prescriptions">
+                        {data.pendingDoctorAppoinments.length}
+                      </div>
+                      Pending Doctor Channeling
+                    </div>
+                    <Button
+                      variant="link"
+                      className="view-all-link"
+                      href="/patient/dashboard/notification"
+                    >
+                      View All
+                    </Button>
+                  </>
+                ) : (
+                  <p>
+                    You're all caught up , No pending appointments at the moment
+                  </p>
+                )}
               </Card.Body>
             </Card>
           </Col>

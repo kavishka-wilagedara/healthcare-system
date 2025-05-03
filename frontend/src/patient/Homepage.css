@@ -130,6 +130,7 @@
 
 .appointment-info {
   flex-grow: 1;
+  margin-left: 40px;
 }
 
 .appointment-time {
