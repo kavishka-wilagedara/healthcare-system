@@ -35,10 +35,10 @@ const PatientNavbar = () => {
             </Nav.Link>
             <Nav.Link
               as={Link}
-              to="/patient/dashboard/pharmacy"
+              to="/patient/dashboard/my-history"
               className="mx-1 nav-link-custom"
             >
-              Pharmacy
+              Medical Records
             </Nav.Link>
             <Nav.Link
               as={Link}

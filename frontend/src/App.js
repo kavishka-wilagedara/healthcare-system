@@ -19,9 +19,9 @@ import PatientDashboard from "./patient/PatientDashboard";
 import Homepage from "./patient/Homepage";
 import Channeling from "./patient/Channeling";
 import Services from "./patient/Services";
-import Pharmacy from "./patient/Pharmacy";
 import Messages from "./patient/Messages";
 import Profile from "./patient/Profile";
+import MyHistory from "./patient/MyHistory";
 
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -66,7 +66,7 @@ function App() {
             <Route index element={<Homepage />} />
             <Route path="channeling" element={<Channeling />} />
             <Route path="clinical-services" element={<Services />} />
-            <Route path="pharmacy" element={<Pharmacy />} />
+            <Route path="my-history" element={<MyHistory />} />
             <Route path="notification" element={<Messages />} />
             <Route path="profile" element={<Profile />} />
           </Route>

@@ -1,8 +1,9 @@
 import React from "react";
 import "./Homepage.css";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
-import { FaCalendarCheck, FaPills, FaFileMedical } from "react-icons/fa";
+import { FaCalendarCheck, FaFileMedical } from "react-icons/fa";
 import { FaUserDoctor } from "react-icons/fa6";
+import { RiFileHistoryFill } from "react-icons/ri";
 import doctorPatientImg from "../assets/images/doctor-patient.png";
 import medicalBackgroundImg from "../assets/images/medical-background.jpg";
 import healthTipImg from "../assets/images/health-tip.jpg";
@@ -40,11 +41,11 @@ function Homepage() {
       link: "/patient/dashboard/channeling",
     },
     {
-      title: "Medications",
-      icon: <FaPills className="feature-icon" />,
-      description: "Quick and secure prescription refills at your fingertips",
-      buttonText: "View Medications",
-      link: "/patient/dashboard/pharmacy",
+      title: "Medical Records",
+      icon: <RiFileHistoryFill className="feature-icon" />,
+      description: "Access your health records securely anytime",
+      buttonText: "View Medical Records",
+      link: "/patient/dashboard/my-history",
     },
     {
       title: "Diagnostic & Lab Services",
