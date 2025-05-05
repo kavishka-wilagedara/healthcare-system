@@ -55,7 +55,7 @@ const PatientNavbar = () => {
               >
                 <FaUserCircle className="me-1" />
               </Dropdown.Toggle>
-              <Dropdown.Menu className="dropdown-menu-dark">
+              <Dropdown.Menu className="dropdown-menu-light">
                 <Dropdown.Item as={Link} to="/patient/dashboard/profile">
                   View Profile
                 </Dropdown.Item>

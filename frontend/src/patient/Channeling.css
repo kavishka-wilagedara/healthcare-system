@@ -55,13 +55,13 @@
 
 .feature-icon {
   font-size: 24px;
-  color: #0a2e52;
+  color: #17b87e;
 }
 
 .feature-title {
   font-size: 20px;
   font-weight: 700;
-  color: #0a2e52;
+  color: #17b87e;
   margin-bottom: 0;
 }
 
@@ -114,7 +114,7 @@
   margin-top: 50px;
   padding: 40px;
   background: #ffffff;
-  border: 2px solid #23548d;
+  border: 2px solid #17b87e;
   border-radius: 20px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
   max-width: 800px;
@@ -125,7 +125,7 @@
 }
 
 .channeling-form h3 {
-  color: #23548d;
+  color: #17b87e;
   font-size: 32px;
   margin-bottom: 30px;
   text-align: center;
@@ -133,7 +133,7 @@
 
 .channeling-form .form-label {
   font-weight: 600;
-  color: #0a2e52;
+  color: #17b87e;
 }
 
 .channeling-form .form-control,
@@ -147,7 +147,7 @@
 
 .channeling-form .form-control:focus,
 .channeling-form .form-select:focus {
-  border-color: #23548d;
+  border-color: #17b87e;
   box-shadow: 0 0 5px rgba(35, 84, 141, 0.2);
 }
 
@@ -171,7 +171,7 @@
 }
 
 .view-appointments-section h3 {
-  color: #1f3f6c;
+  color: #17b87e;
   font-size: 36px;
   text-align: center;
   font-weight: 700;
@@ -183,7 +183,7 @@
   content: "";
   width: 80px;
   height: 4px;
-  background-color: #23548d;
+  background-color: #17b87e;
   position: absolute;
   bottom: -10px;
   left: 50%;
@@ -204,7 +204,7 @@
   margin-bottom: 0;
   box-shadow: 0 10px 25px rgba(35, 84, 141, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border-left: 6px solid #23548d;
+  border-left: 6px solid #17b87e;
   position: relative;
   overflow: hidden;
 }
@@ -238,7 +238,7 @@
 .appointment-doctor-info h4 {
   font-size: 22px;
   font-weight: 600;
-  color: #1f3f6c;
+  color: #17b87e;
   margin-bottom: 5px;
   display: flex;
   align-items: center;
@@ -300,7 +300,7 @@
 }
 
 .detail-icon {
-  color: #23548d;
+  color: #17b87e;
   margin-right: 10px;
   font-size: 16px;
   min-width: 18px;
@@ -312,7 +312,7 @@
 
 .detail-item span {
   font-weight: 600;
-  color: #0a2e52;
+  color: #17b87e;
   margin-right: 8px;
 }
 
@@ -341,7 +341,7 @@
 
 .action-btn.reschedule {
   background-color: #e5f0ff;
-  color: #1f3f6c;
+  color: #17b87e;
 }
 
 .action-btn.reschedule:hover {
@@ -358,7 +358,7 @@
 }
 
 .action-btn.details {
-  background-color: #23548d;
+  background-color: #17b87e;
   color: white;
 }
 
@@ -386,7 +386,7 @@
 
 .empty-state h4 {
   font-size: 24px;
-  color: #1f3f6c;
+  color: #17b87e;
   margin-bottom: 10px;
 }
 

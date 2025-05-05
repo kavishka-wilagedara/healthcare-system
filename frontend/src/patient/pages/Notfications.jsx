@@ -26,7 +26,7 @@ const Notifications = () => {
                   <h5 className="mb-1 text-teal">{note.title}</h5>
                   <small className="text-muted">Appointment Date: {note.date}</small>
                 </div>
-                <span className="badge bg-warning text-dark">Reminder</span>
+                <span className="badge bg-warning text-light">Reminder</span>
               </div>
             </div>
           </div>
