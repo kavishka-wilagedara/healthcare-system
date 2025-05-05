@@ -24,7 +24,7 @@
   align-items: center;
   gap: 8px;
   padding: 10px 20px;
-  background-color: #23548d;
+  background-color: #17b87e;
   color: white;
   border: none;
   border-radius: 6px;
@@ -72,7 +72,7 @@
 }
 
 .card-header {
-  background-color: #23548d;
+  background-color: #17b87e;
   color: white;
   padding: 20px;
   border-bottom: 1px solid #ddd;
@@ -99,7 +99,7 @@
   width: 20px;
   height: 20px;
   margin-right: 8px;
-  color: #23548d;
+  color: #17b87e;
 }
 
 /* Modal Styles */
@@ -128,7 +128,7 @@
 .modal-content h2 {
   margin-bottom: 20px;
   font-size: 26px;
-  color: #23548d;
+  color: #17b87e;
 }
 
 .service-form select {
@@ -165,7 +165,7 @@
 }
 
 .submit-btn {
-  background-color: #23548d;
+  background-color: #17b87e;
   color: white;
 }
 

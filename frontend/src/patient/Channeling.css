@@ -18,7 +18,7 @@
 .channeling-info-card h1 {
   margin-top: 0;
   font-size: 48px;
-  color: #23548d;
+  color: #17b87e;
   margin-bottom: 16px;
 }
 
@@ -37,7 +37,7 @@
   height: 120px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   text-align: center;
-  border: 2px solid #23548d;
+  border: 2px solid #17b87e;
   border-radius: 12px;
 }
 
@@ -45,7 +45,7 @@
   color: white;
   transform: translateY(-5px);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
-  background-color: #23548d;
+  background-color: #17b87e;
 }
 
 .channeling-feature-card:hover .feature-title,
@@ -74,14 +74,14 @@
 }
 
 .channeling-btn:hover {
-  background-color: #23548d;
+  background-color: #17b87e;
   color: white;
 }
 
 .channeling-btn {
   padding: 14px 24px;
   font-size: 20px;
-  border: 2px solid #23548d;
+  border: 2px solid #17b87e;
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -92,7 +92,7 @@
 }
 
 .channeling-btn.primary {
-  background-color: #23548d;
+  background-color: #17b87e;
   color: white;
 }
 
@@ -102,8 +102,8 @@
 
 .channeling-btn.outline {
   background-color: white;
-  color: #23548d;
-  border: 2px solid #23548d;
+  color: #17b87e;
+  border: 2px solid #17b87e;
 }
 
 .channeling-btn.outline:hover {
