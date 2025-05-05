@@ -1,14 +1,12 @@
-/* Homepage.css */
-
 .homepage {
   padding-bottom: 60px;
-  background-color: #f8f9fa;
+  background-color: #f9fbfd;
 }
 
-/* Hero Section */
+/* Patient Section */
 .hero-section {
-  background-color: #17b87e;
-  color: white;
+  background-color: #e6f0fb;
+  color: #2c3e50;
   padding: 60px 0;
   margin-bottom: 30px;
   position: relative;
@@ -23,7 +21,7 @@
   bottom: 0;
   left: 0;
   background-size: cover;
-  opacity: 0.1;
+  opacity: 0.05;
   z-index: 0;
 }
 
@@ -39,12 +37,12 @@
 }
 
 .patient-name {
-  color: #4dabf7;
+  color: #4a90e2;
 }
 
 .hero-subtitle {
   font-size: 18px;
-  opacity: 0.9;
+  opacity: 0.85;
   line-height: 1.6;
 }
 
@@ -74,32 +72,35 @@
 .section-title {
   font-size: 24px;
   font-weight: 600;
-  color: #17b87e;
+  color: #4a90e2;
   margin: 30px 0 20px;
   padding-bottom: 10px;
-  border-bottom: 2px solid #e9ecef;
+  border-bottom: 2px solid #dceaf9;
 }
 
 /* Appointment Card */
 .upcoming-card {
   border: none;
-  border-left: 4px solid #17b87e;
+  border-left: 4px solid #4a90e2;
+  background-color: #ffffff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
 }
 
 .card-title {
-  color: #17b87e;
+  color: #4a90e2;
   font-size: 20px;
   font-weight: 600;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 .appointment-details {
   display: flex;
   align-items: center;
+  margin-left: 1px;
 }
 
 .appointment-calendar {
-  background-color: #17b87e;
+  background-color: #4a90e2;
   color: white;
   width: 80px;
   height: 80px;
@@ -107,7 +108,7 @@
   justify-content: center;
   align-items: center;
   border-radius: 8px;
-  margin-right: 20px;
+  margin-left: 50px;
   flex-shrink: 0;
 }
 
@@ -130,7 +131,7 @@
 
 .appointment-info {
   flex-grow: 1;
-  margin-left: 40px;
+  margin-left: 1px;
 }
 
 .appointment-time {
@@ -148,7 +149,9 @@
 .notification-card {
   height: 100%;
   border: none;
-  border-left: 4px solid #ffc107;
+  border-left: 4px solid #f7c873;
+  background-color: #fffdf7;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
 }
 
 .notification-item {
@@ -171,15 +174,15 @@
 }
 
 .pending-results {
-  background-color: #fd7e14;
+  background-color: #f5a623;
 }
 
 .active-prescriptions {
-  background-color: #20c997;
+  background-color: #50e3c2;
 }
 
 .view-all-link {
-  color: #17b87e;
+  color: #4a90e2;
   text-decoration: none;
   padding: 0;
   margin-top: 5px;
@@ -191,30 +194,32 @@
 .feature-card {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   border: none;
+  background-color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 .feature-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.06) !important;
 }
 
 .feature-icon {
   font-size: 36px;
-  color: #17b87e;
+  color: #4a90e2;
   margin: 10px 0 20px;
 }
 
 .feature-title {
   font-size: 18px;
   font-weight: 600;
-  color: #17b87e;
+  color: #4a90e2;
   margin-bottom: 12px;
 }
 
 .feature-description {
-  color: #6c757d;
+  color: #5f6b7a;
   font-size: 14px;
-  margin-bottom: 20px;
+  margin-top: 15px;
 }
 
 /* Health Tips */
@@ -234,6 +239,7 @@
   margin-right: 20px;
   flex-shrink: 0;
   overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
 }
 
 .tip-image img {
@@ -247,31 +253,31 @@
 }
 
 .tip-text strong {
-  color: #051b33;
+  color: #4a90e2;
 }
+
 /* Buttons */
 .btn-primary {
-  background-color: #17b87e;
-  border-color: #17b87e;
+  background-color: #4a90e2;
+  border-color: #4a90e2;
 }
 
 .btn-primary:hover {
-  background-color: #051b33;
-  border-color: #051b33;
+  background-color: #357ab8;
+  border-color: #357ab8;
 }
 
 .btn-outline-primary {
-  color: #17b87e;
-  border-color: #17b87e;
+  color: #4a90e2;
+  border-color: #4a90e2;
 }
 
 .btn-outline-primary:hover {
-  background-color: #17b87e;
-  border-color: #17b87e;
+  background-color: #4a90e2;
+  border-color: #4a90e2;
   color: white;
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
   .hero-section {
     padding: 40px 0;
