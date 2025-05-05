@@ -13,7 +13,27 @@
       "intime": "09:00",
       "outtime": "10:00",
       "day": "Monday",
-      "status": "pending"
+      "medicine": "Levothyroxine 50mcg daily",
+      "description": "Patient has hypothyroidism. Continue monitoring TSH levels.",
+      "status": "completed"
+    },
+    {
+      "appointment_ID": "A0011",
+      "patient_ID": "P001",
+      "name": "Kasun Perera",
+      "nic": "801234567V",
+      "age": 40,
+      "gender": "Male",
+      "phone": "077-1234567",
+      "email": "kasun.perera@example.lk",
+      "address": "No. 12, Galle Road, Colombo 03",
+      "medical_history": ["Diabetes", "High Cholesterol"],
+      "intime": "09:00",
+      "outtime": "10:00",
+      "day": "Monday",
+      "medicine": "Levothyroxine 50mcg daily",
+      "description": "Patient has hypothyroidism. Continue monitoring TSH levels.",
+      "status": "completed"
     },
     {
       "appointment_ID": "A002",

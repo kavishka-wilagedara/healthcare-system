@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import patientsData from '../data/patients.json';
 
 const Patients = () => {
   const [data, setData] = useState([]);
   const [nicSearch, setNicSearch] = useState('');
   const [filteredData, setFilteredData] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setData(patientsData);
@@ -18,6 +20,10 @@ const Patients = () => {
       patient.nic.toLowerCase().includes(value.toLowerCase())
     );
     setFilteredData(filtered);
+  };
+
+  const handleView = (id) => {
+    navigate(`/doc-patient-profile/${id}`);
   };
 
   return (
@@ -51,6 +57,7 @@ const Patients = () => {
                   <th>Email</th>
                   <th>Address</th>
                   <th>Medical History</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -68,6 +75,14 @@ const Patients = () => {
                       {patient.medical_history.length > 0
                         ? patient.medical_history.join(', ')
                         : 'None'}
+                    </td>
+                    <td>
+                      <button
+                        className="btn btn-sm btn-primary"
+                        onClick={() => handleView(patient.patient_ID)}
+                      >
+                        View
+                      </button>
                     </td>
                   </tr>
                 ))}
