@@ -156,3 +156,242 @@
   justify-content: center;
   margin-top: 30px;
 }
+
+.view-appointments-section {
+  margin-top: 70px;
+  padding: 50px;
+  background: linear-gradient(to bottom, #f0f8ff, #ffffff);
+  border-radius: 20px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.07);
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  transition: all 0.3s ease-in-out;
+}
+
+.view-appointments-section h3 {
+  color: #1f3f6c;
+  font-size: 36px;
+  text-align: center;
+  font-weight: 700;
+  margin-bottom: 40px;
+  position: relative;
+}
+
+.view-appointments-section h3::after {
+  content: "";
+  width: 80px;
+  height: 4px;
+  background-color: #23548d;
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 2px;
+}
+
+.appointments-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.appointment-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 25px 30px;
+  margin-bottom: 0;
+  box-shadow: 0 10px 25px rgba(35, 84, 141, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-left: 6px solid #23548d;
+  position: relative;
+  overflow: hidden;
+}
+
+.appointment-card::before {
+  content: "";
+  position: absolute;
+  top: -10%;
+  right: -10%;
+  width: 150px;
+  height: 150px;
+  background: rgba(35, 84, 141, 0.05);
+  border-radius: 50%;
+  z-index: 0;
+}
+
+.appointment-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+}
+
+.appointment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e8f0fb;
+}
+
+.appointment-doctor-info h4 {
+  font-size: 22px;
+  font-weight: 600;
+  color: #1f3f6c;
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.specialty {
+  color: #5c86b0;
+  font-size: 16px;
+  margin-left: 28px;
+  margin-top: -2px;
+}
+
+.appointment-status {
+  padding: 6px 15px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.status-confirmed {
+  background-color: #e5f7ed;
+  color: #156b39;
+  border: 1px solid #a8e5c3;
+}
+
+.status-pending {
+  background-color: #fff8e5;
+  color: #a67c00;
+  border: 1px solid #ffe7a0;
+}
+
+.status-cancelled {
+  background-color: #ffe5e5;
+  color: #cc3333;
+  border: 1px solid #ffb3b3;
+}
+
+.appointment-details {
+  position: relative;
+  z-index: 1;
+  font-size: 16px;
+  color: #1c2d45;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+}
+
+.detail-item.full-width {
+  grid-column: span 2;
+}
+
+.detail-icon {
+  color: #23548d;
+  margin-right: 10px;
+  font-size: 16px;
+  min-width: 18px;
+}
+
+.icon-md {
+  font-size: 20px;
+}
+
+.detail-item span {
+  font-weight: 600;
+  color: #0a2e52;
+  margin-right: 8px;
+}
+
+.detail-item span.value {
+  font-weight: 500;
+  color: #333;
+  flex-grow: 1;
+}
+
+.appointment-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.action-btn {
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.action-btn.reschedule {
+  background-color: #e5f0ff;
+  color: #1f3f6c;
+}
+
+.action-btn.reschedule:hover {
+  background-color: #c5deff;
+}
+
+.action-btn.cancel {
+  background-color: #ffe5e5;
+  color: #cc3333;
+}
+
+.action-btn.cancel:hover {
+  background-color: #ffcccc;
+}
+
+.action-btn.details {
+  background-color: #23548d;
+  color: white;
+}
+
+.action-btn.details:hover {
+  background-color: #1a3c66;
+}
+
+.no-appointments {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 30px;
+}
+
+.empty-icon {
+  font-size: 60px;
+  color: #c5d7e9;
+  margin-bottom: 20px;
+}
+
+.empty-state h4 {
+  font-size: 24px;
+  color: #1f3f6c;
+  margin-bottom: 10px;
+}
+
+.empty-state p {
+  color: #5d7997;
+  margin-bottom: 25px;
+  font-size: 16px;
+}
