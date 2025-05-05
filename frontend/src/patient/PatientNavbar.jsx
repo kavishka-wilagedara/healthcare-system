@@ -45,7 +45,7 @@ const PatientNavbar = () => {
               to="/patient/dashboard/notification"
               className="mx-1 nav-link-custom"
             >
-              <FaBell className="me-1" /> Notification
+              <FaBell className="me-1" />
             </Nav.Link>
             <Dropdown align="end">
               <Dropdown.Toggle
@@ -53,7 +53,7 @@ const PatientNavbar = () => {
                 id="dropdown-profile"
                 className="nav-link-custom text-white"
               >
-                <FaUserCircle className="me-1" /> Profile
+                <FaUserCircle className="me-1" />
               </Dropdown.Toggle>
               <Dropdown.Menu className="dropdown-menu-dark">
                 <Dropdown.Item as={Link} to="/patient/dashboard/profile">
