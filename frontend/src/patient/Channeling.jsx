@@ -23,11 +23,11 @@ function Channeling() {
       icon: <FaCalendarAlt className="feature-icon" />,
     },
     {
-      title: "Connect with Leading Specialists",
+      title: "Connect with Trusted Leading Specialists",
       icon: <FaUserMd className="feature-icon" />,
     },
     {
-      title: "Instant Availability & Confirmation",
+      title: "Instant Availability & Guaranteed Confirmation",
       icon: <FaCheckCircle className="feature-icon" />,
     },
     {
