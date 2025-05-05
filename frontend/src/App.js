@@ -26,6 +26,7 @@ import MyHistory from "./patient/MyHistory";
 //common 
 import Register from "./common/Register";
 import Login from "./common/Login";
+import DoctorRegister from "./common/DoctorRegister";
 
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -45,7 +46,8 @@ function App() {
       <Layout>
         <Routes>
           <Route path="/" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/register" element={<DoctorRegister/>}/>
+          <Route path="/patient-register" element={<Register />} />
           <Route path="/doc-home" element={<Dashboard />} />
           <Route path="/doc-dashboard" element={<Dashboard />} />
           <Route path="/doc-patient-profile/:id" element={<Profile />} />

@@ -7,7 +7,7 @@
 
 /* Hero Section */
 .hero-section {
-  background-color: #0a2e52;
+  background-color: #17b87e;
   color: white;
   padding: 60px 0;
   margin-bottom: 30px;
@@ -74,7 +74,7 @@
 .section-title {
   font-size: 24px;
   font-weight: 600;
-  color: #0a2e52;
+  color: #17b87e;
   margin: 30px 0 20px;
   padding-bottom: 10px;
   border-bottom: 2px solid #e9ecef;
@@ -83,11 +83,11 @@
 /* Appointment Card */
 .upcoming-card {
   border: none;
-  border-left: 4px solid #0a2e52;
+  border-left: 4px solid #17b87e;
 }
 
 .card-title {
-  color: #0a2e52;
+  color: #17b87e;
   font-size: 20px;
   font-weight: 600;
   margin-bottom: 20px;
@@ -99,7 +99,7 @@
 }
 
 .appointment-calendar {
-  background-color: #0a2e52;
+  background-color: #17b87e;
   color: white;
   width: 80px;
   height: 80px;
@@ -179,7 +179,7 @@
 }
 
 .view-all-link {
-  color: #0a2e52;
+  color: #17b87e;
   text-decoration: none;
   padding: 0;
   margin-top: 5px;
@@ -200,14 +200,14 @@
 
 .feature-icon {
   font-size: 36px;
-  color: #0a2e52;
+  color: #17b87e;
   margin: 10px 0 20px;
 }
 
 .feature-title {
   font-size: 18px;
   font-weight: 600;
-  color: #0a2e52;
+  color: #17b87e;
   margin-bottom: 12px;
 }
 
@@ -251,8 +251,8 @@
 }
 /* Buttons */
 .btn-primary {
-  background-color: #0a2e52;
-  border-color: #0a2e52;
+  background-color: #17b87e;
+  border-color: #17b87e;
 }
 
 .btn-primary:hover {
@@ -261,13 +261,13 @@
 }
 
 .btn-outline-primary {
-  color: #0a2e52;
-  border-color: #0a2e52;
+  color: #17b87e;
+  border-color: #17b87e;
 }
 
 .btn-outline-primary:hover {
-  background-color: #0a2e52;
-  border-color: #0a2e52;
+  background-color: #17b87e;
+  border-color: #17b87e;
   color: white;
 }
 

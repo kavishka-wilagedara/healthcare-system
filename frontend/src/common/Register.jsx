@@ -49,53 +49,53 @@ const navigate = useNavigate();
   const validatePage = (currentPage) => {
     const newErrors = {};
     if (currentPage === 1) {
-      if (!formData.fullName) newErrors.fullName = 'Full name is required';
-      if (!formData.nic || !/^\d{9}[vV]|\d{12}$/.test(formData.nic))
-        newErrors.nic = 'Valid NIC number is required';
-      if (!formData.dob) newErrors.dob = 'Date of birth is required';
-      if (!formData.gender) newErrors.gender = 'Gender is required';
+      // if (!formData.fullName) newErrors.fullName = 'Full name is required';
+      // if (!formData.nic || !/^\d{9}[vV]|\d{12}$/.test(formData.nic))
+      //   newErrors.nic = 'Valid NIC number is required';
+      // if (!formData.dob) newErrors.dob = 'Date of birth is required';
+      // if (!formData.gender) newErrors.gender = 'Gender is required';
     } else if (currentPage === 2) {
-      if (!formData.mobileNumber || !/^\+94\d{9}$/.test(formData.mobileNumber))
-        newErrors.mobileNumber = 'Valid mobile number is required';
-      if (!formData.email || !/\S+@\S+\.\S+/.test(formData.email))
-        newErrors.email = 'Valid email is required';
-      if (!formData.preferredContact)
-        newErrors.preferredContact = 'Preferred contact method is required';
-      if (!formData.residentialStreet)
-        newErrors.residentialStreet = 'Street address is required';
-      if (!formData.residentialCity)
-        newErrors.residentialCity = 'City is required';
+      // if (!formData.mobileNumber || !/^\+94\d{9}$/.test(formData.mobileNumber))
+      //   newErrors.mobileNumber = 'Valid mobile number is required';
+      // if (!formData.email || !/\S+@\S+\.\S+/.test(formData.email))
+      //   newErrors.email = 'Valid email is required';
+      // if (!formData.preferredContact)
+      //   newErrors.preferredContact = 'Preferred contact method is required';
+      // if (!formData.residentialStreet)
+      //   newErrors.residentialStreet = 'Street address is required';
+      // if (!formData.residentialCity)
+      //   newErrors.residentialCity = 'City is required';
     } else if (currentPage === 3) {
-      if (!formData.emergencyName)
-        newErrors.emergencyName = 'Emergency contact name is required';
-      if (!formData.emergencyMobile || !/^\+94\d{9}$/.test(formData.emergencyMobile))
-        newErrors.emergencyMobile = 'Valid mobile number is required';
+      // if (!formData.emergencyName)
+      //   newErrors.emergencyName = 'Emergency contact name is required';
+      // if (!formData.emergencyMobile || !/^\+94\d{9}$/.test(formData.emergencyMobile))
+      //   newErrors.emergencyMobile = 'Valid mobile number is required';
     } else if (currentPage === 4) {
-      if (formData.allergies === 'yes' && !formData.allergyList)
-        newErrors.allergyList = 'Please list allergies';
-      if (formData.chronicConditions === 'yes' && !formData.chronicList)
-        newErrors.chronicList = 'Please list chronic conditions';
+      // if (formData.allergies === 'yes' && !formData.allergyList)
+      //   newErrors.allergyList = 'Please list allergies';
+      // if (formData.chronicConditions === 'yes' && !formData.chronicList)
+      //   newErrors.chronicList = 'Please list chronic conditions';
     } else if (currentPage === 5) {
-      if (formData.insurance === 'yes' && !formData.insuranceProvider)
-        newErrors.insuranceProvider = 'Insurance provider is required';
-      if (formData.insurance === 'yes' && !formData.policyNumber)
-        newErrors.policyNumber = 'Policy number is required';
+      // if (formData.insurance === 'yes' && !formData.insuranceProvider)
+      //   newErrors.insuranceProvider = 'Insurance provider is required';
+      // if (formData.insurance === 'yes' && !formData.policyNumber)
+      //   newErrors.policyNumber = 'Policy number is required';
     } else if (currentPage === 6) {
-      if (!formData.username) newErrors.username = 'Username is required';
-      if (
-        !formData.password ||
-        !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
-          formData.password
-        )
-      )
-        newErrors.password =
-          'Password must be at least 8 characters with uppercase, lowercase, number, and special character';
-      if (!formData.securityQuestion)
-        newErrors.securityQuestion = 'Security question is required';
-      if (!formData.securityAnswer)
-        newErrors.securityAnswer = 'Security answer is required';
-      if (!formData.consent) newErrors.consent = 'Consent is required';
-      if (!formData.terms) newErrors.terms = 'Terms agreement is required';
+      // if (!formData.username) newErrors.username = 'Username is required';
+      // if (
+      //   !formData.password ||
+      //   !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
+      //     formData.password
+      //   )
+      // )
+      //   newErrors.password =
+      //     'Password must be at least 8 characters with uppercase, lowercase, number, and special character';
+      // if (!formData.securityQuestion)
+      //   newErrors.securityQuestion = 'Security question is required';
+      // if (!formData.securityAnswer)
+      //   newErrors.securityAnswer = 'Security answer is required';
+      // if (!formData.consent) newErrors.consent = 'Consent is required';
+      // if (!formData.terms) newErrors.terms = 'Terms agreement is required';
     }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -815,7 +815,7 @@ const navigate = useNavigate();
 
       <style>{`
         .text-teal {
-          color: #17a2b8;
+          color: #17b87e;
         }
         .healthcare-card {
           border: none;
@@ -827,7 +827,7 @@ const navigate = useNavigate();
           transform: translateY(-5px);
         }
         .healthcare-card-header {
-          background: linear-gradient(135deg, #17a2b8, #138496);
+          background: linear-gradient(135deg, #17b87e,rgb(19, 150, 117));
           border-radius: 12px 12px 0 0;
           padding: 1.5rem;
         }
@@ -836,8 +836,8 @@ const navigate = useNavigate();
           border-radius: 0 0 12px 12px;
         }
         .btn-teal {
-          background-color: #17a2b8;
-          border-color: #17a2b8;
+          background-color: #17b87e;
+          border-color: #17b87e;
           color: #ffffff;
           transition: all 0.3s ease;
         }
@@ -856,7 +856,7 @@ const navigate = useNavigate();
         }
         .form-control:focus,
         .form-select:focus {
-          border-color: #17a2b8;
+          border-color: #17b87e;
           box-shadow: 0 0 0 0.2rem rgba(23, 162, 184, 0.25);
         }
         .form-check-group.is-invalid .form-check-input {

@@ -106,7 +106,7 @@ const Login = () => {
                     Login as Patient
                   </button>
                   <p className="text-center">
-                    Not registered? <Link to="/register" className="text-teal">Register here</Link>
+                    Not registered? <Link to="/patient-register" className="text-teal">Register here</Link>
                   </p>
                 </>
               ) : (
