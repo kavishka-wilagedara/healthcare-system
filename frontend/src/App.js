@@ -15,13 +15,17 @@ import AppointmentDetailsPage from "./doctor/pages/AppointmentDetailsPage";
 import ViewAppointmentDetailsPage from "./doctor/pages/ViewAppointmentDetailsPage";
 import DocNavbar from "./doctor/components/DocNavbar";
 // Patient
-import PatientDashboard from "./patient/PatientDashboard";
+import PatientDashboard from "./patient/patientDashboard";
 import Homepage from "./patient/Homepage";
 import Channeling from "./patient/Channeling";
 import Services from "./patient/Services";
 import Messages from "./patient/Messages";
 import Profile from "./patient/Profile";
 import MyHistory from "./patient/MyHistory";
+
+//common 
+import Register from "./common/Register";
+import Login from "./common/Login";
 
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -40,8 +44,11 @@ function App() {
     <Router>
       <Layout>
         <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/doc-home" element={<Dashboard />} />
           <Route path="/doc-dashboard" element={<Dashboard />} />
+          <Route path="/doc-patient-profile/:id" element={<Profile />} />
           <Route path="/doc-add-time" element={<AddTimeForm />} />
           <Route path="/doc-appointments" element={<Appointments />} />
           <Route
