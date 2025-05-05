@@ -37,7 +37,7 @@
   height: 120px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   text-align: center;
-  border: 2px solid #23548d;
+  border: 1px solid #23548d;
   border-radius: 12px;
 }
 
@@ -81,7 +81,7 @@
 .channeling-btn {
   padding: 14px 24px;
   font-size: 20px;
-  border: 2px solid #23548d;
+  border: 1px solid #23548d;
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -103,9 +103,56 @@
 .channeling-btn.outline {
   background-color: white;
   color: #23548d;
-  border: 2px solid #23548d;
+  border: 1px solid #23548d;
 }
 
 .channeling-btn.outline:hover {
   background-color: #eef5fc;
+}
+
+.channeling-form {
+  margin-top: 50px;
+  padding: 40px;
+  background: #ffffff;
+  border: 2px solid #23548d;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.channeling-form h3 {
+  color: #23548d;
+  font-size: 32px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.channeling-form .form-label {
+  font-weight: 600;
+  color: #0a2e52;
+}
+
+.channeling-form .form-control,
+.channeling-form .form-select {
+  border: 2px solid #cfd8e3;
+  border-radius: 10px;
+  padding: 12px 15px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+.channeling-form .form-control:focus,
+.channeling-form .form-select:focus {
+  border-color: #23548d;
+  box-shadow: 0 0 5px rgba(35, 84, 141, 0.2);
+}
+
+.form-submit-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
 }

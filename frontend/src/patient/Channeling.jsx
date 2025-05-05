@@ -1,5 +1,5 @@
-import React from "react";
-import { Row, Col, Card } from "react-bootstrap";
+import React, { useState } from "react";
+import { Row, Col, Card, Form } from "react-bootstrap";
 import "./Channeling.css";
 import {
   FaCheckCircle,
@@ -9,6 +9,8 @@ import {
 } from "react-icons/fa";
 
 function Channeling() {
+  const [showForm, setShowForm] = useState(false);
+
   const featureCards = [
     {
       title: "Quick & Secure Appointment Booking",
@@ -27,6 +29,11 @@ function Channeling() {
       icon: <FaSyncAlt className="feature-icon" />,
     },
   ];
+
+  const handleBookClick = () => {
+    setShowForm(true);
+    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+  };
 
   return (
     <div className="channeling-info-card">
@@ -53,11 +60,50 @@ function Channeling() {
       </Row>
 
       <div className="channeling-buttons">
-        <button className="channeling-btn">📅 Book New Channeling</button>
+        <button className="channeling-btn" onClick={handleBookClick}>
+          📅 Book New Channeling
+        </button>
         <button className="channeling-btn outline">
           👨‍⚕️ View My Channelings
         </button>
       </div>
+
+      {showForm && (
+        <div className="channeling-form mt-5">
+          <h3>New Channeling Appointment</h3>
+          <Form>
+            <Form.Group className="mb-3">
+              <Form.Label>Full Name</Form.Label>
+              <Form.Control type="text" placeholder="Enter your full name" />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Select Doctor</Form.Label>
+              <Form.Select>
+                <option>Dr. John Smith</option>
+                <option>Dr. Emily Brown</option>
+                <option>Dr. Sarah Lee</option>
+              </Form.Select>
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Appointment Date</Form.Label>
+              <Form.Control type="date" />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Preferred Time</Form.Label>
+              <Form.Control type="time" />
+            </Form.Group>
+
+            <div className="form-submit-container">
+              <button type="submit" className="channeling-btn primary">
+                Confirm Booking
+              </button>
+            </div>
+          </Form>
+        </div>
+      )}
     </div>
   );
 }
