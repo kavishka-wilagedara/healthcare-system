@@ -15,7 +15,7 @@ import AppointmentDetailsPage from "./doctor/pages/AppointmentDetailsPage";
 import ViewAppointmentDetailsPage from "./doctor/pages/ViewAppointmentDetailsPage";
 import DocNavbar from "./doctor/components/DocNavbar";
 // Patient
-import PatientDashboard from "./patient/patientDashboard";
+import PatientDashboard from "./patient/PatientDashboard";
 import Homepage from "./patient/Homepage";
 import Channeling from "./patient/Channeling";
 import Services from "./patient/Services";
