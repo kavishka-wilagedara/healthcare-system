@@ -78,6 +78,7 @@ const Services = () => {
   const handleNewServiceClick = () => {
     setShowForm(true);
     setShowServices(false);
+    setShowHeader(false);
     window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
   };
 
@@ -184,6 +185,17 @@ const Services = () => {
                         <IoLocationOutline className="icon" />
                         <strong>Location:</strong>&nbsp;{service.roomNum}
                       </p>
+                    </div>
+                    <div className="service-actions">
+                      <button className="service-action-btn reschedule">
+                        Reschedule
+                      </button>
+                      <button className="service-action-btn cancel">
+                        Cancel
+                      </button>
+                      <button className="service-action-btn details">
+                        View Details
+                      </button>
                     </div>
                   </div>
                 ))}

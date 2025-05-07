@@ -243,18 +243,19 @@
 
 /* Service Cards Display */
 .service-card-wrapper {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 24px;
+  display: contents;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  row-gap: 16px;
   margin-top: 24px;
 }
 
 .service-card {
   background-color: #f8f9fa;
-  border-radius: 8px;
+  border-radius: 0.8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 24px;
+  transition: transform 0.3s ease;
+  margin-top: 20px;
 }
 
 .service-card:hover {
@@ -263,16 +264,22 @@
 }
 
 .service-card .card-header {
-  background-color: #0d6efd;
-  color: white;
-  padding: 16px;
-  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #dee2e6;
 }
 
 .service-card .card-header h4 {
-  margin: 0;
-  font-weight: 600;
   font-size: 20px;
+  font-weight: 600;
+  color: #212529;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .service-card .card-body {
@@ -283,7 +290,7 @@
   display: flex;
   align-items: center;
   margin-bottom: 12px;
-  font-size: 15.2px;
+  font-size: 15px;
 }
 
 .service-card .card-body .icon {
@@ -297,6 +304,50 @@
   color: #495057;
 }
 
+.service-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.service-action-btn {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.service-action-btn.reschedule {
+  background-color: #0d6efd;
+  color: white;
+}
+
+.service-action-btn.reschedule:hover {
+  background-color: #0b5ed7;
+}
+
+.service-action-btn.cancel {
+  background-color: #dc3545;
+  color: white;
+}
+
+.service-action-btn.cancel:hover {
+  background-color: #bb2d3b;
+}
+
+.service-action-btn.details {
+  background-color: #6c757d;
+  color: white;
+}
+
+.service-action-btn.details:hover {
+  background-color: #5c636a;
+}
+
 /* Empty State */
 .empty-service {
   text-align: center;
@@ -305,7 +356,7 @@
 }
 
 .empty-service p {
-  font-size: 17.6px;
+  font-size: 17px;
   max-width: 500px;
   margin: 0 auto;
 }
