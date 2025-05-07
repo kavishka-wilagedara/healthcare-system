@@ -66,6 +66,7 @@ function Channeling() {
   const handleBookClick = () => {
     setShowForm(true);
     setShowAppointments(false);
+    setShowHeader(false);
     window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
   };
 
