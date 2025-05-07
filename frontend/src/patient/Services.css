@@ -213,139 +213,151 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* View Services Section */
+/* View appointments section */
 .view-appointments-section {
+  padding: 32px;
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
   position: relative;
-  padding: 16px;
 }
 
 .view-appointments-section h3 {
-  color: #0d6efd;
   text-align: center;
-  margin: 24px 0 32px;
+  font-size: 32px;
+  margin-bottom: 32px;
+  color: #333;
   font-weight: 600;
+  position: relative;
+  padding-bottom: 12px;
+}
+
+.view-appointments-section h3:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(135deg, #0d6efd, #0b5ed7);
 }
 
 .back-btn {
   position: absolute;
-  top: 16px;
-  left: 16px;
+  top: 24px;
+  left: 24px;
   font-size: 32px;
   color: #0d6efd;
-  cursor: pointer;
-  transition: transform 0.3s ease;
-}
-
-.back-btn:hover {
-  transform: scale(1.1);
-  color: #0b5ed7;
-}
-
-/* Service Cards Display */
-.service-card-wrapper {
-  display: contents;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  row-gap: 16px;
-  margin-top: 24px;
-}
-
-.service-card {
-  background-color: #f8f9fa;
-  border-radius: 0.8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 24px;
-  transition: transform 0.3s ease;
-  margin-top: 20px;
-}
-
-.service-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-}
-
-.service-card .card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid #dee2e6;
-}
-
-.service-card .card-header h4 {
-  font-size: 20px;
-  font-weight: 600;
-  color: #212529;
-  margin-bottom: 4px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.service-card .card-body {
-  padding: 24px;
-}
-
-.service-card .card-body p {
-  display: flex;
-  align-items: center;
-  margin-bottom: 12px;
-  font-size: 15px;
-}
-
-.service-card .card-body .icon {
-  font-size: 20px;
-  color: #0d6efd;
-  margin-right: 8px;
-}
-
-.service-card .card-body strong {
-  margin-right: 4px;
-  color: #495057;
-}
-
-.service-actions {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.service-action-btn {
-  flex: 1;
-  padding: 8px;
-  border: none;
-  border-radius: 4px;
-  font-weight: 600;
-  font-size: 14px;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
-.service-action-btn.reschedule {
+.back-btn:hover {
+  color: #0b5ed7;
+  transform: scale(1.1);
+}
+
+/* Service card styling */
+.service-card-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 32px;
+  margin-top: 32px;
+}
+
+.service-card {
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  background-color: #fff;
+  border: 1px solid #eaeaea;
+}
+
+.service-card:hover {
+  transform: translateY(-7px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+}
+
+.card-header {
+  background: linear-gradient(135deg, #0d6efd, #0b5ed7);
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+.card-header h4 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.card-body {
+  padding: 24px;
+}
+
+.card-body p {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  color: #555;
+  font-size: 15px;
+}
+
+.card-body .icon {
+  margin-right: 12px;
+  color: #0d6efd;
+  font-size: 20px;
+  min-width: 24px;
+}
+
+.service-actions {
+  display: flex;
+  padding: 16px;
+  gap: 8px;
+  background-color: #f8f9fa;
+  border-top: 1px solid #eaeaea;
+  justify-content: space-between;
+}
+
+.service-action-btn {
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  flex: 1;
+  transition: all 0.2s ease;
+}
+
+.reschedule {
   background-color: #0d6efd;
   color: white;
 }
 
-.service-action-btn.reschedule:hover {
+.reschedule:hover {
   background-color: #0b5ed7;
 }
 
-.service-action-btn.cancel {
-  background-color: #dc3545;
+.cancel {
+  background-color: #ef4444;
   color: white;
 }
 
-.service-action-btn.cancel:hover {
-  background-color: #bb2d3b;
+.cancel:hover {
+  background-color: #dc2626;
 }
 
-.service-action-btn.details {
-  background-color: #6c757d;
-  color: white;
+.details {
+  background-color: #f3f4f6;
+  color: #1f2937;
+  border: 1px solid #e5e7eb;
 }
 
-.service-action-btn.details:hover {
-  background-color: #5c636a;
+.details:hover {
+  background-color: #e5e7eb;
 }
 
 /* Empty State */
