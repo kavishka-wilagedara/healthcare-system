@@ -223,7 +223,7 @@ const Services = () => {
       {showForm && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <h2>Add New Service</h2>
+            <h3>Add New Service</h3>
             <form onSubmit={handleFormSubmit} className="service-form">
               <div className="form-group">
                 <label htmlFor="testType">Test Type</label>

@@ -37,7 +37,7 @@
 }
 
 .patient-name {
-  color: #4a90e2;
+  color: #0d6efd;
 }
 
 .hero-subtitle {
@@ -72,7 +72,7 @@
 .section-title {
   font-size: 24px;
   font-weight: 600;
-  color: #4a90e2;
+  color: #0d6efd;
   margin: 30px 0 20px;
   padding-bottom: 10px;
   border-bottom: 2px solid #dceaf9;
@@ -81,13 +81,13 @@
 /* Appointment Card */
 .upcoming-card {
   border: none;
-  border-left: 4px solid #4a90e2;
+  border-left: 4px solid #0d6efd;
   background-color: #ffffff;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
 }
 
 .card-title {
-  color: #4a90e2;
+  color: #0d6efd;
   font-size: 20px;
   font-weight: 600;
   margin-bottom: 30px;
@@ -100,7 +100,7 @@
 }
 
 .appointment-calendar {
-  background-color: #4a90e2;
+  background-color: #0d6efd;
   color: white;
   width: 80px;
   height: 80px;
@@ -182,7 +182,7 @@
 }
 
 .view-all-link {
-  color: #4a90e2;
+  color: #0d6efd;
   text-decoration: none;
   padding: 0;
   margin-top: 5px;
@@ -205,14 +205,14 @@
 
 .feature-icon {
   font-size: 36px;
-  color: #4a90e2;
+  color: #0d6efd;
   margin: 10px 0 20px;
 }
 
 .feature-title {
   font-size: 18px;
   font-weight: 600;
-  color: #4a90e2;
+  color: #0d6efd;
   margin-bottom: 12px;
   justify-content: center;
 }
@@ -254,13 +254,13 @@
 }
 
 .tip-text strong {
-  color: #4a90e2;
+  color: #0d6efd;
 }
 
 /* Buttons */
 .btn-primary {
-  background-color: #4a90e2;
-  border-color: #4a90e2;
+  background-color: #0d6efd;
+  border-color: #0d6efd;
 }
 
 .btn-primary:hover {
@@ -269,13 +269,13 @@
 }
 
 .btn-outline-primary {
-  color: #4a90e2;
-  border-color: #4a90e2;
+  color: #0d6efd;
+  border-color: #0d6efd;
 }
 
 .btn-outline-primary:hover {
-  background-color: #4a90e2;
-  border-color: #4a90e2;
+  background-color: #0d6efd;
+  border-color: #0d6efd;
   color: white;
 }
 
