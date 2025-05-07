@@ -64,7 +64,7 @@
   font-weight: 600;
   margin-bottom: 10px;
   display: flex;
-  align-items: flex-start;
+  justify-content: center;
 }
 
 .feature-icon {

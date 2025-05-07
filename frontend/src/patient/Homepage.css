@@ -214,6 +214,7 @@
   font-weight: 600;
   color: #4a90e2;
   margin-bottom: 12px;
+  justify-content: center;
 }
 
 .feature-description {
