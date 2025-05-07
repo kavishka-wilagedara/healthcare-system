@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Row, Col, Card, Form } from "react-bootstrap";
 import "./Services.css";
-import { FcPlus } from "react-icons/fc";
 import {
   MdOutlineDateRange,
   MdOutlineFormatListNumbered,
@@ -70,25 +69,28 @@ const Services = () => {
       instruction: "Wear comfortable clothes and avoid jewelry.",
     },
   ];
-  const [showModel, setShowModel] = useState(false);
-  const [newService, setNewService] = useState({
-    name: "",
-    date: "",
-    time: "",
-  });
+  const [showForm, setShowForm] = useState(false);
+  const [showServices, setShowServices] = useState(false);
 
-  const handleNewService = () => {
-    setShowModel(true);
+  const handleNewServiceClick = () => {
+    setShowForm(true);
+    setShowServices(false);
+    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
   };
 
-  const handleCloseModel = () => {
-    setShowModel(false);
-    setNewService({ name: "", date: "", time: "" });
+  const handleViewServiceClick = () => {
+    setShowServices(true);
+    setShowForm(false);
+    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
   };
 
   const handleInputChange = () => {};
 
   const handleFormSubmit = () => {};
+
+  const handleCloseForm = () => {
+    setShowForm(false);
+  };
 
   return (
     <div className="service-container">
@@ -96,8 +98,8 @@ const Services = () => {
         <h1>Diagnostic & Lab Services</h1>
         <p>
           We offer fast, accurate diagnostic and lab services including blood
-          tests, scans, and health checkups — all under one roof, ensuring
-          timely results and trusted care for your peace of mind.
+          tests, scans, and health checkups, All under one roof, Ensuring timely
+          results and trusted care for your peace of mind.
         </p>
 
         <Row className="feature-section">
@@ -115,110 +117,132 @@ const Services = () => {
           ))}
         </Row>
         <div className="buttons">
-          <button className="add-btn" onClick={handleNewService}>
+          <button className="add-btn" onClick={handleNewServiceClick}>
             Add New Service
           </button>
-          <button className="view-service-btn">View My Service</button>
+          <button className="view-service-btn" onClick={handleViewServiceClick}>
+            View My Service
+          </button>
         </div>
       </div>
-      {allServices.length > 0 ? (
-        <>
-          <p className="subtitle">
-            Here are your upcoming services. We’re with you every step of the
-            way!
-          </p>
 
-          <div className="service-card-wrapper">
-            {allServices.map((service) => (
-              <div className="service-card" key={service.id}>
-                {/* Card header */}
-                <div className="card-header">
-                  <h3>{service.name}</h3>
-                </div>
-                {/* Card body */}
-                <div className="card-body">
-                  <p>
-                    <MdOutlineFormatListNumbered className="icon" />
-                    <strong>Appointment No:</strong>&nbsp;{service.id}
-                  </p>
-                  <p>
-                    <IoPersonOutline className="icon" />
-                    <strong>Patient Name:</strong>&nbsp;{service.id}
-                  </p>
-                  <p>
-                    <MdOutlineDateRange className="icon" />
-                    <strong>Date:</strong>&nbsp;{service.date}
-                  </p>
-                  <p>
-                    <IoTimeOutline className="icon" />
-                    <strong>Time:</strong>&nbsp;{service.time}
-                  </p>
-                  <p>
-                    <IoLocationOutline className="icon" />
-                    <strong>Location:</strong>&nbsp;{service.roomNum}
-                  </p>
-                </div>
+      {showServices && (
+        <div className="view-appointments-section">
+          {allServices.length > 0 ? (
+            <>
+              <h3>My Appointments</h3>
+              <div className="service-card-wrapper">
+                {allServices.map((service) => (
+                  <div className="service-card" key={service.id}>
+                    {/* Card header */}
+                    <div className="card-header">
+                      <h4>{service.name}</h4>
+                    </div>
+                    {/* Card body */}
+                    <div className="card-body">
+                      <p>
+                        <MdOutlineFormatListNumbered className="icon" />
+                        <strong>Appointment No:</strong>&nbsp;{service.id}
+                      </p>
+                      <p>
+                        <IoPersonOutline className="icon" />
+                        <strong>Patient Name:</strong>&nbsp;{service.id}
+                      </p>
+                      <p>
+                        <MdOutlineDateRange className="icon" />
+                        <strong>Date:</strong>&nbsp;{service.date}
+                      </p>
+                      <p>
+                        <IoTimeOutline className="icon" />
+                        <strong>Time:</strong>&nbsp;{service.time}
+                      </p>
+                      <p>
+                        <IoLocationOutline className="icon" />
+                        <strong>Location:</strong>&nbsp;{service.roomNum}
+                      </p>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </>
-      ) : (
-        <div className="empty-service">
-          <p>No pending appointments at the moment. Please book one!</p>
+            </>
+          ) : (
+            <div className="empty-service">
+              <p>No pending appointments at the moment. Please book one!</p>
+            </div>
+          )}
         </div>
       )}
 
       {/*New service Modal */}
-      {showModel && (
+      {showForm && (
         <div className="modal-overlay">
           <div className="modal-content">
             <h2>Add New Service</h2>
             <form onSubmit={handleFormSubmit} className="service-form">
-              <select
-                name="name"
-                placeholder="Select Test Type"
-                onChange={handleInputChange}
-                required
-                defaultValue=""
-              >
-                <option value="Blood Test">Blood Test</option>
-                <option value="X-Ray">X-Ray</option>
-                <option value="MRI Scan">MRI Scan</option>
-                <option value="CT Scan">CT Scan</option>
-                <option value="Urine Test">Urine Test</option>
-              </select>
+              <div className="form-group">
+                <label htmlFor="testType">Test Type</label>
+                <select
+                  id="testType"
+                  name="name"
+                  onChange={handleInputChange}
+                  required
+                  defaultValue=""
+                >
+                  <option value="" disabled>
+                    Select a test
+                  </option>
+                  <option value="Blood Test">Blood Test</option>
+                  <option value="X-Ray">X-Ray</option>
+                  <option value="MRI Scan">MRI Scan</option>
+                  <option value="CT Scan">CT Scan</option>
+                  <option value="Urine Test">Urine Test</option>
+                </select>
+              </div>
 
-              <input
-                type="text"
-                name="patientName"
-                placeholder="Patient Name"
-                // value={}
-                onChange={handleInputChange}
-                required
-              />
-              <input
-                type="date"
-                name="date"
-                // value={}
-                onChange={handleInputChange}
-                required
-              />
-              <input
-                type="time"
-                name="time"
-                // value={}
-                onChange={handleInputChange}
-                required
-              />
+              <div className="form-group">
+                <label htmlFor="patientName">Patient Name</label>
+                <input
+                  type="text"
+                  id="patientName"
+                  name="patientName"
+                  placeholder="Enter patient name"
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+
+              <div className="form-row">
+                <div className="form-group">
+                  <label htmlFor="date">Date</label>
+                  <input
+                    type="date"
+                    id="date"
+                    name="date"
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="time">Time</label>
+                  <input
+                    type="time"
+                    id="time"
+                    name="time"
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+              </div>
 
               <div className="modal-buttons">
                 <button type="submit" className="submit-btn">
                   Add Service
                 </button>
                 <button
-                  type="button"
+                  type="submit"
                   className="cancel-btn"
-                  onClick={handleCloseModel}
+                  onClick={handleCloseForm}
                 >
                   Cancel
                 </button>

@@ -107,6 +107,13 @@
   background-color: var(--primary-light);
 }
 
+.view-appointments-section h3 {
+  color: var(--primary-color);
+  margin-bottom: 25px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 25px;
+}
 .subtitle {
   font-size: 16px;
   color: var(--text-muted);
@@ -115,6 +122,7 @@
 }
 
 .service-card-wrapper {
+  margin-top: 50px;
   display: flex;
   flex-wrap: wrap;
   gap: 30px;
@@ -173,44 +181,55 @@
   color: var(--primary-color);
 }
 
-/* Modal Styles */
+/* New service Styles */
 .modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
+  background-color: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: var(--card-shadow);
+  max-width: 500px;
+  text-align: center;
+  margin: 40px auto 0 auto; /* Adds spacing from content above */
 }
 
 .modal-content {
-  background-color: var(--bg-white);
-  padding: 30px 25px;
-  border-radius: 12px;
-  width: 90%;
-  max-width: 500px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .modal-content h2 {
-  margin-bottom: 20px;
+  margin-top: 2px;
   font-size: 26px;
   color: var(--primary-color);
 }
 
-.service-form select,
-.service-form input {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 14px;
-  background-color: var(--bg-light);
+.service-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.form-row {
+  display: flex;
+  gap: 60px;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
+label {
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #3385d6;
 }
 
 .empty-service p {
@@ -221,7 +240,7 @@
 .modal-buttons {
   display: flex;
   justify-content: space-between;
-  margin-top: 20px;
+  margin-top: 25px;
 }
 
 .submit-btn,
