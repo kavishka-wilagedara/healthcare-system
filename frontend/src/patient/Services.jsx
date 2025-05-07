@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Row, Col, Card, Form } from "react-bootstrap";
+import { Row, Col, Card } from "react-bootstrap";
 import "./Services.css";
 import {
   MdOutlineDateRange,
@@ -13,6 +13,8 @@ import {
   FaUserNurse,
   FaStethoscope,
 } from "react-icons/fa";
+import { IoArrowBackCircleSharp } from "react-icons/io5";
+import { FaCalendarAlt } from "react-icons/fa";
 
 const Services = () => {
   const serviceFeatureCards = [
@@ -71,6 +73,7 @@ const Services = () => {
   ];
   const [showForm, setShowForm] = useState(false);
   const [showServices, setShowServices] = useState(false);
+  const [showHeader, setShowHeader] = useState(true);
 
   const handleNewServiceClick = () => {
     setShowForm(true);
@@ -81,6 +84,7 @@ const Services = () => {
   const handleViewServiceClick = () => {
     setShowServices(true);
     setShowForm(false);
+    setShowHeader(false);
     window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
   };
 
@@ -90,44 +94,64 @@ const Services = () => {
 
   const handleCloseForm = () => {
     setShowForm(false);
+    setShowHeader(true);
+  };
+
+  const handleBackButton = () => {
+    setShowForm(false);
+    setShowServices(false);
+    setShowHeader(true);
   };
 
   return (
     <div className="service-container">
-      <div className="title-section">
-        <h1>Diagnostic & Lab Services</h1>
-        <p>
-          We offer fast, accurate diagnostic and lab services including blood
-          tests, scans, and health checkups, All under one roof, Ensuring timely
-          results and trusted care for your peace of mind.
-        </p>
+      {showHeader && (
+        <>
+          <div className="title-section">
+            <h1>Diagnostic & Lab Services</h1>
+            <p>
+              We offer fast, accurate diagnostic and lab services including
+              blood tests, scans, and health checkups, All under one roof,
+              Ensuring timely results and trusted care for your peace of mind.
+            </p>
 
-        <Row className="feature-section">
-          {serviceFeatureCards.map((card, index) => (
-            <Col md={3} sm={6} className="mb-4" key={index}>
-              <Card className="service-feature-card">
-                <Card.Body className="text-center">
-                  <Card.Title className="feature-title">
-                    <span className="feature-icon me-2">{card.icon}</span>
-                    <span>{card.title}</span>
-                  </Card.Title>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
-        </Row>
-        <div className="buttons">
-          <button className="add-btn" onClick={handleNewServiceClick}>
-            Add New Service
-          </button>
-          <button className="view-service-btn" onClick={handleViewServiceClick}>
-            View My Service
-          </button>
-        </div>
-      </div>
+            <Row className="feature-section">
+              {serviceFeatureCards.map((card, index) => (
+                <Col md={3} sm={6} className="mb-4" key={index}>
+                  <Card className="service-feature-card">
+                    <Card.Body className="text-center">
+                      <Card.Title className="service-feature-title">
+                        <span className="service-feature-icon me-2">
+                          {card.icon}
+                        </span>
+                        <span>{card.title}</span>
+                      </Card.Title>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
+            <div className="buttons">
+              <button className="add-btn" onClick={handleNewServiceClick}>
+                Add New Service
+              </button>
+              <button
+                className="view-service-btn"
+                onClick={handleViewServiceClick}
+              >
+                View My Service
+              </button>
+            </div>
+          </div>
+        </>
+      )}
 
       {showServices && (
         <div className="view-appointments-section">
+          <IoArrowBackCircleSharp
+            className="back-btn"
+            onClick={handleBackButton}
+          />
           {allServices.length > 0 ? (
             <>
               <h3>My Appointments</h3>
@@ -166,8 +190,18 @@ const Services = () => {
               </div>
             </>
           ) : (
-            <div className="empty-service">
-              <p>No pending appointments at the moment. Please book one!</p>
+            <div className="no-appointments">
+              <div className="empty-state">
+                <FaCalendarAlt className="empty-icon" />
+                <h4>No Appointments Found</h4>
+                <p>You don't have any scheduled appointments at the moment.</p>
+                <button
+                  className="channeling-btn"
+                  onClick={handleNewServiceClick}
+                >
+                  Book Your First Appointment
+                </button>
+              </div>
             </div>
           )}
         </div>
@@ -235,13 +269,13 @@ const Services = () => {
                 </div>
               </div>
 
-              <div className="modal-buttons">
-                <button type="submit" className="submit-btn">
+              <div className="service-buttons">
+                <button type="submit" className="service-submit-btn">
                   Add Service
                 </button>
                 <button
                   type="submit"
-                  className="cancel-btn"
+                  className="service-cancel-btn"
                   onClick={handleCloseForm}
                 >
                   Cancel

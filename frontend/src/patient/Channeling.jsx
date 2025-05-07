@@ -96,9 +96,10 @@ function Channeling() {
 
   const handleCloseForm = () => {
     setShowForm(false);
+    setShowHeader(true);
   };
 
-  const handleViewAppointmentsBack = () => {
+  const handleBackButton = () => {
     setShowForm(false);
     setShowAppointments(false);
     setShowHeader(true);
@@ -158,6 +159,9 @@ function Channeling() {
             <Form.Group className="mb-3">
               <Form.Label>Select Doctor</Form.Label>
               <Form.Select>
+                <option value="" disabled>
+                  Select a Doctor
+                </option>
                 <option>Dr. John Smith</option>
                 <option>Dr. Emily Brown</option>
                 <option>Dr. Sarah Lee</option>
@@ -175,13 +179,13 @@ function Channeling() {
             </Form.Group>
 
             <div className="form-submit-container text-center">
-              <div className="submit-buttons">
-                <button type="submit" className="submit-btn">
+              <div className="channel-submit-buttons">
+                <button type="submit" className="channel-submit-btn">
                   Confirm Booking
                 </button>
                 <button
                   type="submit"
-                  className="cancel-btn"
+                  className="channel-cancel-btn"
                   onClick={handleCloseForm}
                 >
                   Cancel
@@ -196,7 +200,7 @@ function Channeling() {
         <div className="view-appointments-section">
           <IoArrowBackCircleSharp
             className="back-btn"
-            onClick={handleViewAppointmentsBack}
+            onClick={handleBackButton}
           />
 
           <h3>My Channeling Appointments</h3>

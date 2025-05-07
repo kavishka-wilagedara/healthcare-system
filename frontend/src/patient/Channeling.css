@@ -112,13 +112,13 @@
   margin-top: 32px;
 }
 
-.submit-buttons {
+.channel-submit-buttons {
   display: flex;
   gap: 16px;
   justify-content: center;
 }
 
-.submit-btn {
+.channel-submit-btn {
   padding: 12px 24px;
   font-size: 16px;
   font-weight: 600;
@@ -126,16 +126,16 @@
   transition: all 0.3s ease;
   cursor: pointer;
   border: none;
-  background-color: #198754;
+  background-color: #0d6efd;
   color: white;
 }
 
-.submit-btn:hover {
-  background-color: #157347;
+.channel-submit-btn:hover {
+  background-color: #0b5ed7;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-.cancel-btn {
+.channel-cancel-btn {
   padding: 12px 24px;
   font-size: 16px;
   font-weight: 600;
@@ -147,7 +147,7 @@
   color: white;
 }
 
-.cancel-btn:hover {
+.channel-cancel-btn:hover {
   background-color: #bb2d3b;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
