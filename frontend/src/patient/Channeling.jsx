@@ -12,10 +12,12 @@ import {
   FaPhoneAlt,
   FaRegCalendarCheck,
 } from "react-icons/fa";
+import { IoArrowBackCircleSharp } from "react-icons/io5";
 
 function Channeling() {
   const [showForm, setShowForm] = useState(false);
   const [showAppointments, setShowAppointments] = useState(false);
+  const [showHeader, setShowHeader] = useState(true);
 
   const featureCards = [
     {
@@ -70,6 +72,7 @@ function Channeling() {
   const handleViewAppointmentsClick = () => {
     setShowAppointments(true);
     setShowForm(false);
+    setShowHeader(false);
     window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
   };
 
@@ -95,41 +98,53 @@ function Channeling() {
     setShowForm(false);
   };
 
+  const handleViewAppointmentsBack = () => {
+    setShowForm(false);
+    setShowAppointments(false);
+    setShowHeader(true);
+  };
+
   return (
     <div className="channeling-info-card">
-      <h1>Your Wellness Journey Starts Here</h1>
-      <p>
-        Welcome to our doctor channeling platform. Easily book appointments with
-        your preferred specialists. Choose a doctor, pick a convenient date and
-        time, and confirm your visit with just a few clicks.
-      </p>
+      {showHeader && (
+        <>
+          <h1>Your Wellness Journey Starts Here</h1>
+          <p>
+            Welcome to our doctor channeling platform. Easily book appointments
+            with your preferred specialists. Choose a doctor, pick a convenient
+            date and time, and confirm your visit with just a few clicks.
+          </p>
 
-      <Row className="features-section">
-        {featureCards.map((card, index) => (
-          <Col md={3} sm={6} className="mb-4" key={index}>
-            <Card className="channeling-feature-card">
-              <Card.Body className="text-center">
-                <Card.Title className="feature-title">
-                  <span className="feature-icon me-2">{card.icon}</span>
-                  <span>{card.title}</span>
-                </Card.Title>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
+          <Row className="channeling-features-section">
+            {featureCards.map((card, index) => (
+              <Col md={3} sm={6} className="mb-4" key={index}>
+                <Card className="channeling-feature-card">
+                  <Card.Body className="text-center">
+                    <Card.Title className="channeling-feature-title">
+                      <span className="channeling-feature-icon me-2">
+                        {card.icon}
+                      </span>
+                      <span>{card.title}</span>
+                    </Card.Title>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
+          </Row>
 
-      <div className="channeling-buttons">
-        <button className="channeling-btn" onClick={handleBookClick}>
-          📅 Book New Channeling
-        </button>
-        <button
-          className="channeling-btn outline"
-          onClick={handleViewAppointmentsClick}
-        >
-          👨‍⚕️ View My Channelings
-        </button>
-      </div>
+          <div className="channeling-buttons">
+            <button className="channeling-btn" onClick={handleBookClick}>
+              📅 Book New Channeling
+            </button>
+            <button
+              className="channeling-btn outline"
+              onClick={handleViewAppointmentsClick}
+            >
+              👨‍⚕️ View My Channelings
+            </button>
+          </div>
+        </>
+      )}
 
       {showForm && (
         <div className="channeling-form mt-5">
@@ -179,8 +194,12 @@ function Channeling() {
 
       {showAppointments && (
         <div className="view-appointments-section">
-          <h3>My Channeling Appointments</h3>
+          <IoArrowBackCircleSharp
+            className="back-btn"
+            onClick={handleViewAppointmentsBack}
+          />
 
+          <h3>My Channeling Appointments</h3>
           {bookedAppointments.length > 0 ? (
             <div className="appointments-container">
               {bookedAppointments.map((appt) => (
