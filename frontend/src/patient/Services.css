@@ -1,8 +1,8 @@
 .service-container {
   max-width: 1200px;
   margin: 32px auto;
-  padding: 32px;
-  background-color: #fff;
+  padding: 60px;
+  background-color: whitesmoke;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.075);
 }
@@ -11,15 +11,15 @@
 .title-section h1 {
   color: #0d6efd;
   font-weight: 700;
-  margin-bottom: 24px;
+  margin-bottom: 25px;
   text-align: center;
 }
 
 .title-section p {
-  font-size: 17.6px;
+  font-size: 18px;
   color: #6c757d;
   text-align: center;
-  margin-bottom: 32px;
+  margin-bottom: 30px;
 }
 
 /* Feature Cards */
@@ -115,7 +115,7 @@
 }
 
 .modal-content {
-  background-color: #fff;
+  background-color: whitesmoke;
   border-radius: 8px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
   padding: 32px;
@@ -123,7 +123,7 @@
   max-width: 600px;
 }
 
-.modal-content h2 {
+.modal-content h3 {
   color: #0d6efd;
   font-weight: 600;
   margin-bottom: 24px;
