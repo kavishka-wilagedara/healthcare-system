@@ -128,16 +128,15 @@
   border-radius: 12px;
   padding: 30px;
   box-shadow: var(--card-shadow);
-  max-width: 800px;
-  margin: 0 auto;
+  max-width: 700px;
+  margin: 40px auto 0 auto;
 }
 
 .channeling-form h3 {
-  color: var(--primary-color);
-  margin-bottom: 25px;
   text-align: center;
+  font-size: 26px;
   font-weight: 600;
-  font-size: 25px;
+  color: var(--primary-color);
 }
 
 .form-submit-container {
@@ -145,6 +144,7 @@
 }
 
 .form-label {
+  margin-top: 15px;
   font-weight: 500;
   color: var(--primary-dark);
 }
@@ -161,6 +161,39 @@
 .form-select:focus {
   border-color: var(--primary-color);
   box-shadow: 0 0 0 2px rgba(51, 133, 214, 0.25);
+}
+
+.submit-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 25px;
+}
+
+.submit-btn,
+.cancel-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.submit-btn {
+  background-color: var(--primary-color);
+  color: var(--bg-white);
+}
+
+.submit-btn:hover {
+  background-color: var(--primary-hover);
+}
+
+.cancel-btn {
+  background-color: #ddd;
+  color: var(--text-dark);
+}
+
+.cancel-btn:hover {
+  background-color: #bbb;
 }
 
 /* Appointments Section */

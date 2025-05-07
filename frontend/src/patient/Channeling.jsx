@@ -91,6 +91,10 @@ function Channeling() {
     }
   };
 
+  const handleCloseForm = () => {
+    setShowForm(false);
+  };
+
   return (
     <div className="channeling-info-card">
       <h1>Your Wellness Journey Starts Here</h1>
@@ -156,9 +160,18 @@ function Channeling() {
             </Form.Group>
 
             <div className="form-submit-container text-center">
-              <button type="submit" className="channeling-btn primary">
-                Confirm Booking
-              </button>
+              <div className="submit-buttons">
+                <button type="submit" className="submit-btn">
+                  Confirm Booking
+                </button>
+                <button
+                  type="submit"
+                  className="cancel-btn"
+                  onClick={handleCloseForm}
+                >
+                  Cancel
+                </button>
+              </div>
             </div>
           </Form>
         </div>
