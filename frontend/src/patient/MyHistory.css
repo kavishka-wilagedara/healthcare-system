@@ -1,0 +1,381 @@
+/* MyHistory.css */
+.medical-history-container {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  color: #333;
+}
+
+.medical-history-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.medical-history-header h2 {
+  color: #1f3f6c;
+  font-size: 34px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  position: relative;
+  display: inline-block;
+}
+
+.medical-history-header h2::after {
+  content: "";
+  width: 60px;
+  height: 4px;
+  background-color: #23548d;
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 2px;
+}
+
+.history-description {
+  color: #5d7997;
+  font-size: 16px;
+  max-width: 700px;
+  margin: 20px auto 0;
+}
+
+/* Controls - Search and Filter */
+.history-controls {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.history-search {
+  flex-grow: 1;
+  position: relative;
+}
+
+.search-icon,
+.filter-icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6c87a5;
+}
+
+.history-search input {
+  width: 100%;
+  padding: 13px 15px 13px 45px;
+  border-radius: 8px;
+  border: 1px solid #d9e2ec;
+  background-color: #f9fbfd;
+  font-size: 15px;
+  transition: all 0.2s ease;
+}
+
+.history-search input:focus {
+  outline: none;
+  border-color: #23548d;
+  box-shadow: 0 0 0 2px rgba(35, 84, 141, 0.1);
+}
+
+.history-filter {
+  position: relative;
+  min-width: 160px;
+}
+
+.history-filter select {
+  width: 100%;
+  padding: 13px 15px 13px 45px;
+  border-radius: 8px;
+  border: 1px solid #d9e2ec;
+  background-color: #f9fbfd;
+  font-size: 15px;
+  appearance: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.history-filter select:focus {
+  outline: none;
+  border-color: #23548d;
+  box-shadow: 0 0 0 2px rgba(35, 84, 141, 0.1);
+}
+
+.history-filter::after {
+  content: "▼";
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6c87a5;
+  font-size: 12px;
+  pointer-events: none;
+}
+
+/* Tabs Navigation */
+.history-tabs {
+  display: flex;
+  border-bottom: 1px solid #d9e2ec;
+  margin-bottom: 30px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.history-tab {
+  padding: 15px 25px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #5d7997;
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.history-tab:hover {
+  color: #23548d;
+  background-color: rgba(35, 84, 141, 0.04);
+}
+
+.history-tab.active {
+  color: #23548d;
+  border-bottom-color: #23548d;
+}
+
+.tab-icon {
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+/* History Content */
+.history-content {
+  min-height: 400px;
+}
+
+.history-items-container {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.history-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(35, 84, 141, 0.08);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-left: 5px solid #23548d;
+}
+
+.history-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(35, 84, 141, 0.12);
+}
+
+.history-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px 25px;
+  background-color: #f9fbfd;
+  border-bottom: 1px solid #e8f0fb;
+}
+
+.history-card-title {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.history-icon {
+  font-size: 24px;
+  color: #23548d;
+  background-color: rgba(35, 84, 141, 0.1);
+  padding: 12px;
+  border-radius: 12px;
+}
+
+.history-card-title h4 {
+  margin: 0 0 5px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1f3f6c;
+}
+
+.history-subtitle {
+  color: #6c87a5;
+  margin: 0;
+  font-size: 14px;
+}
+
+.appoinment-number,
+.medication-period {
+  display: flex;
+  align-items: center;
+  color: #6c87a5;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.appoinment-number-icon {
+  margin-right: 12px;
+  width: 20px;
+  height: 20px;
+  justify-content: space-between;
+}
+
+.appoinment-number span {
+  margin-top: 10px;
+  font-size: 15px;
+}
+
+.history-card-content {
+  padding: 20px 25px;
+}
+
+.history-detail-item {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.history-detail-item:last-child {
+  margin-bottom: 0;
+}
+
+.detail-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #5d7997;
+  margin-bottom: 5px;
+}
+
+.detail-value {
+  font-size: 15px;
+  color: #333;
+}
+
+/* Vitals specific styling */
+.vitals-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.vital-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.vital-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #5d7997;
+  margin-bottom: 5px;
+}
+
+.vital-value {
+  font-size: 16px;
+  font-weight: 500;
+  color: #1f3f6c;
+}
+
+/* Test result colors */
+.result-normal {
+  color: #22a45d;
+  font-weight: 600;
+}
+
+.result-abnormal {
+  color: #e74c3c;
+  font-weight: 600;
+}
+
+/* Medication status */
+.status-indicator {
+  margin-top: 5px;
+}
+
+.active-medication,
+.completed-medication {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.active-medication {
+  background-color: #e5f7ed;
+  color: #156b39;
+}
+
+.completed-medication {
+  background-color: #edf2f7;
+  color: #4a5568;
+}
+
+/* Empty state */
+.empty-history-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #6c87a5;
+}
+
+.empty-history-icon {
+  font-size: 50px;
+  color: #d9e2ec;
+  margin-bottom: 20px;
+}
+
+.empty-history-state h4 {
+  font-size: 20px;
+  color: #1f3f6c;
+  margin-bottom: 10px;
+}
+
+.empty-history-state p {
+  color: #6c87a5;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .history-controls {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .vitals-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .history-card-header {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .history-date,
+  .medication-period {
+    align-self: flex-start;
+  }
+
+  .history-tab {
+    padding: 12px 16px;
+    font-size: 14px;
+  }
+
+  .tab-icon {
+    margin-right: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .vitals-grid {
+    grid-template-columns: 1fr;
+  }
+}
