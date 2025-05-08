@@ -136,13 +136,13 @@ function Channeling() {
 
           <div className="channeling-buttons">
             <button className="channeling-btn" onClick={handleBookClick}>
-              📅 Book New Channeling
+              Book New Channeling
             </button>
             <button
               className="channeling-btn outline"
               onClick={handleViewAppointmentsClick}
             >
-              👨‍⚕️ View My Channelings
+              View My Channelings
             </button>
           </div>
         </>
