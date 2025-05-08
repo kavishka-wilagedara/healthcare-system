@@ -49,6 +49,9 @@ function Channeling() {
       location: "Clinical Room-001",
       status: "Pending",
       phone: "+94 77 123 4567",
+      reason: "",
+      diagnosis: "",
+      recommendations: "",
     },
     {
       id: 2,
@@ -60,6 +63,9 @@ function Channeling() {
       location: "Clinical Room-001",
       status: "Confirmed",
       phone: "+94 77 123 4567",
+      reason: "",
+      diagnosis: "",
+      recommendations: "",
     },
   ];
 

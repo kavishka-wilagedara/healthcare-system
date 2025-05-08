@@ -18,60 +18,78 @@ function MyHistory() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterYear, setFilterYear] = useState("all");
 
-  // Sample medical history data
   const medicalHistory = [
     {
       id: 1,
-      date: "2025-04-15",
-      doctor: "Dr. Sarah Williams",
-      specialty: "General Physician",
-      reason: "Annual checkup",
-      diagnosis: "Healthy, minor vitamin D deficiency",
-      recommendations: "Vitamin D supplements, regular exercise",
+      name: "Ashan Vimod",
+      doctor: "Dr. Kavindya Perera",
+      specialty: "Neurologist",
+      date: "2025-05-14",
+      time: "2:30 PM",
+      location: "Clinical Room-001",
+      status: "Pending",
+      phone: "+94 77 123 4567",
+      reason: "cscscsdscs",
+      diagnosis: "123444",
+      recommendations: "sdfscsdcsd",
     },
     {
       id: 2,
-      date: "2025-02-10",
-      doctor: "Dr. Michael Chen",
-      specialty: "Cardiologist",
-      reason: "Chest pain investigation",
-      diagnosis: "Mild anxiety-induced chest pain",
-      recommendations: "Stress management techniques, follow-up in 3 months",
+      name: "Ashan Vimod",
+      doctor: "Dr. Isuru Perera",
+      specialty: "Dental",
+      date: "2025-05-14",
+      time: "2:30 PM",
+      location: "Clinical Room-001",
+      status: "Confirmed",
+      phone: "+94 77 123 4567",
+      reason: "nam cmasc ",
+      diagnosis: " jc nakca",
+      recommendations: "ajsjcnjasc",
     },
     {
       id: 3,
-      date: "2024-11-22",
-      doctor: "Dr. Emma Rodriguez",
-      specialty: "Dermatologist",
-      reason: "Skin rash",
-      diagnosis: "Contact dermatitis",
-      recommendations: "Apply prescribed cream twice daily, avoid allergen",
+      name: "Ashan Vimod",
+      doctor: "Dr. Isuru Perera",
+      specialty: "Dental",
+      date: "2025-05-14",
+      time: "2:30 PM",
+      location: "Clinical Room-001",
+      status: "Confirmed",
+      phone: "+94 77 123 4567",
+      reason: "ffffffffffffffff",
+      diagnosis: "hhhh",
+      recommendations: "ajcb habcasj",
     },
   ];
 
   const serviceHistory = [
     {
       id: 1,
-      date: "2025-04-15",
-      name: "Complete Blood Count",
-      result: "Normal",
-      notes: "All parameters within normal range",
+      name: "Blood Test",
+      date: "2025-05-14",
+      time: "9.00 AM",
+      roomNum: "ABC-001",
+      result: "normal",
+      notes: "ewjfuirhuh hbioj oejrgore ok",
     },
     {
       id: 2,
-      date: "2025-02-10",
-      name: "ECG",
-      requestedBy: "Dr. Michael Chen",
-      result: "Normal",
-      notes: "Regular sinus rhythm, no abnormalities detected",
+      name: "Blood Test",
+      date: "2025-05-14",
+      time: "9.00 AM",
+      roomNum: "ABC-001",
+      result: "normal",
+      notes: "d cd kdmcksdm lkmv;slv,s",
     },
     {
       id: 3,
-      date: "2025-02-10",
-      name: "Cardiac Enzyme Panel",
-      requestedBy: "Dr. Michael Chen",
-      result: "Normal",
-      notes: "Troponin, CK-MB within normal limits",
+      name: "Blood Test",
+      date: "2025-05-14",
+      time: "9.00 AM",
+      roomNum: "ABC-001",
+      result: "abnormal",
+      notes: "kdcnalkcnlkmc k klwcv  dlsnckldnv",
     },
   ];
 
@@ -79,40 +97,55 @@ function MyHistory() {
   const getAllYears = () => {
     const years = new Set();
 
-    const allHistory = [medicalHistory, serviceHistory];
-
-    allHistory.forEach((history) => {
-      Object.values(history).forEach((category) => {
-        if (!Array.isArray(category)) {
-          console.warn("Expected array but got:", category);
-          return;
-        }
-
-        category.forEach((item) => {
-          const year = new Date(item.date).getFullYear();
-          if (!NaN(year)) years.add(year);
-        });
+    // use medicalHistory and serviceHistory
+    [medicalHistory, serviceHistory].forEach((items) => {
+      items.forEach((item) => {
+        const year = new Date(item.date).getFullYear();
+        if (!isNaN(year)) years.add(year);
       });
     });
 
     return Array.from(years).sort((a, b) => b - a); // Sort descending
   };
 
-  // Filter data based on search term and year
-  const filterData = (data) => {
-    const combinedHistory = [];
+  // Filter visits data based on search term and year
+  const getFilteredVisits = () => {
+    return medicalHistory.filter((visit) => {
+      // Apply year filter
+      const visitYear = new Date(visit.date).getFullYear().toString();
+      const yearMatch = filterYear === "all" || visitYear === filterYear;
 
-    const allHistories = [medicalHistory, serviceHistory];
+      // Apply search filter with case insensitive
+      const searchLower = searchTerm.toLowerCase();
+      const searchMatch =
+        searchTerm === "" ||
+        visit.doctor.toLowerCase().includes(searchLower) ||
+        visit.specialty.toLowerCase().includes(searchLower) ||
+        visit.reason.toLowerCase().includes(searchLower) ||
+        visit.diagnosis.toLowerCase().includes(searchLower) ||
+        visit.recommendations.toLowerCase().includes(searchLower);
 
-    allHistories.forEach((history) => {
-      Object.values(history).forEach((category) => {
-        if (Array.isArray(category)) {
-          combined.push(...category);
-        }
-      });
+      return yearMatch && searchMatch;
     });
+  };
 
-    return combinedHistory;
+  // Filter tests data based on search term and year
+  const getFilteredTests = () => {
+    return serviceHistory.filter((test) => {
+      // Apply year filter
+      const testYear = new Date(test.date).getFullYear().toString();
+      const yearMatch = filterYear === "all" || testYear === filterYear;
+
+      // Apply search filter case insensitive
+      const searchLower = searchTerm.toLowerCase();
+      const searchMatch =
+        searchTerm === "" ||
+        test.name.toLowerCase().includes(searchLower) ||
+        test.result.toLowerCase().includes(searchLower) ||
+        test.notes.toLowerCase().includes(searchLower);
+
+      return yearMatch && searchMatch;
+    });
   };
 
   // Render different content based on active tab
@@ -129,17 +162,18 @@ function MyHistory() {
 
   // Render doctor visits
   const renderVisits = () => {
-    if (medicalHistory.length === 0) {
+    const filteredVisits = getFilteredVisits();
+
+    if (filteredVisits.length === 0) {
       return renderEmptyState("No doctor visits found matching your criteria");
     }
 
     return (
       <div className="history-items-container">
-        {medicalHistory.map((visit) => (
+        {filteredVisits.map((visit) => (
           <div className="history-card" key={visit.id}>
             <div className="history-card-header">
               <div className="history-card-title">
-                <FaUserMd className="history-icon" />
                 <div>
                   <h4>{visit.doctor}</h4>
                   <p className="history-subtitle">{visit.specialty}</p>
@@ -148,7 +182,7 @@ function MyHistory() {
               <div className="appoinment-number">
                 <span>
                   <MdOutlineFormatListNumbered className="appoinment-number-icon" />
-                  Appoinment No:
+                  <span>Appointment No:</span>
                 </span>
                 <span> {visit.id}</span>
               </div>
@@ -183,13 +217,15 @@ function MyHistory() {
 
   // Render medical tests
   const renderTests = () => {
-    if (serviceHistory.length === 0) {
+    const filteredTests = getFilteredTests();
+
+    if (filteredTests.length === 0) {
       return renderEmptyState("No medical tests found matching your criteria");
     }
 
     return (
       <div className="history-items-container">
-        {serviceHistory.map((test) => (
+        {filteredTests.map((test) => (
           <div className="history-card" key={test.id}>
             <div className="history-card-header">
               <div className="history-card-title">
@@ -201,6 +237,7 @@ function MyHistory() {
               <div className="appoinment-number">
                 <span>
                   <MdOutlineFormatListNumbered className="appoinment-number-icon" />
+                  <span className="appointment-title">Appoinment No:</span>
                 </span>
                 <span>{test.id}</span>
               </div>
@@ -249,10 +286,11 @@ function MyHistory() {
     <div className="channeling-info-card">
       <div className="medical-history-container">
         <div className="medical-history-header">
-          <h2>My Medical History</h2>
+          <h1>My Medical History</h1>
           <p className="history-description">
-            View and track your complete medical history including doctor
-            visits, test results, medications, and vital signs.
+            Access and monitor your comprehensive medical history, Including
+            doctor consultations, diagnostic reports, and test results, All in
+            one secure and organized platform for improved health oversight.
           </p>
         </div>
 
