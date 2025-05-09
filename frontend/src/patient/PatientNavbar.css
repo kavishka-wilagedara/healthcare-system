@@ -1,6 +1,12 @@
 :root {
-  --bs-primary: #17b87e !important;
-  --bs-primary-rgb: 10, 46, 82 !important;
+  --bs-primary: #3385d6 !important;
+  --bs-primary-rgb: 51, 133, 214 !important;
+  --bg-light: #f9fbfd;
+  --bg-white: #ffffff;
+}
+
+.body {
+  background-color: var(--bg-light);
 }
 
 .patient-navbar {
@@ -11,13 +17,13 @@
 .navbar-title {
   color: #ffffff;
   font-size: 24px;
-  font-weight: 600;
+  font-weight: bold;
   letter-spacing: 0.5px;
 }
 
 .nav-link-custom {
   color: rgba(255, 255, 255, 0.85) !important;
-  font-weight: 500;
+  font-weight: bold;
   padding: 8px 16px !important;
   transition: all 0.2s ease;
   border-radius: 4px;
@@ -38,7 +44,7 @@
 }
 
 .dropdown-menu-dark {
-  background-color: #051b33 !important;
+  background-color: var(--bs-primary) !important;
   border: none;
   box-shadow: 0 0 16px rgba(0, 0, 0, 0.2);
 }

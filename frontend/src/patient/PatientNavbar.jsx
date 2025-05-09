@@ -60,8 +60,8 @@ const PatientNavbar = () => {
                   View Profile
                 </Dropdown.Item>
                 <Dropdown.Divider />
-                <Dropdown.Item as={Link} to="/logout" className="text-danger">
-                  <FaSignOutAlt className="me-2" /> Logout
+                <Dropdown.Item as={Link} to="/logout" className="">
+                  <FaSignOutAlt className="text-danger me-2" /> Logout
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>

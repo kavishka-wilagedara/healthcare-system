@@ -12,10 +12,12 @@ import {
   FaPhoneAlt,
   FaRegCalendarCheck,
 } from "react-icons/fa";
+import { IoArrowBackCircleSharp } from "react-icons/io5";
 
 function Channeling() {
   const [showForm, setShowForm] = useState(false);
   const [showAppointments, setShowAppointments] = useState(false);
+  const [showHeader, setShowHeader] = useState(true);
 
   const featureCards = [
     {
@@ -23,11 +25,11 @@ function Channeling() {
       icon: <FaCalendarAlt className="feature-icon" />,
     },
     {
-      title: "Connect with Leading Specialists",
+      title: "Connect with Trusted Leading Specialists",
       icon: <FaUserMd className="feature-icon" />,
     },
     {
-      title: "Instant Availability & Confirmation",
+      title: "Instant Availability & Guaranteed Confirmation",
       icon: <FaCheckCircle className="feature-icon" />,
     },
     {
@@ -47,6 +49,9 @@ function Channeling() {
       location: "Clinical Room-001",
       status: "Pending",
       phone: "+94 77 123 4567",
+      reason: "",
+      diagnosis: "",
+      recommendations: "",
     },
     {
       id: 2,
@@ -58,18 +63,23 @@ function Channeling() {
       location: "Clinical Room-001",
       status: "Confirmed",
       phone: "+94 77 123 4567",
+      reason: "",
+      diagnosis: "",
+      recommendations: "",
     },
   ];
 
   const handleBookClick = () => {
     setShowForm(true);
     setShowAppointments(false);
+    setShowHeader(false);
     window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
   };
 
   const handleViewAppointmentsClick = () => {
     setShowAppointments(true);
     setShowForm(false);
+    setShowHeader(false);
     window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
   };
 
@@ -91,41 +101,58 @@ function Channeling() {
     }
   };
 
+  const handleCloseForm = () => {
+    setShowForm(false);
+    setShowHeader(true);
+  };
+
+  const handleBackButton = () => {
+    setShowForm(false);
+    setShowAppointments(false);
+    setShowHeader(true);
+  };
+
   return (
     <div className="channeling-info-card">
-      <h1>Your Wellness Journey Starts Here</h1>
-      <p>
-        Welcome to our doctor channeling platform. Easily book appointments with
-        your preferred specialists. Choose a doctor, pick a convenient date and
-        time, and confirm your visit with just a few clicks.
-      </p>
+      {showHeader && (
+        <>
+          <h1>Your Wellness Journey Starts Here</h1>
+          <p>
+            Welcome to our doctor channeling platform. Easily book appointments
+            with your preferred specialists. Choose a doctor, pick a convenient
+            date and time, and confirm your visit with just a few clicks.
+          </p>
 
-      <Row className="features-section">
-        {featureCards.map((card, index) => (
-          <Col md={3} sm={6} className="mb-4" key={index}>
-            <Card className="channeling-feature-card">
-              <Card.Body className="text-center">
-                <Card.Title className="feature-title">
-                  <span className="feature-icon me-2">{card.icon}</span>
-                  <span>{card.title}</span>
-                </Card.Title>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
+          <Row className="channeling-features-section">
+            {featureCards.map((card, index) => (
+              <Col md={3} sm={6} className="mb-4" key={index}>
+                <Card className="channeling-feature-card">
+                  <Card.Body className="text-center">
+                    <Card.Title className="channeling-feature-title">
+                      <span className="channeling-feature-icon me-2">
+                        {card.icon}
+                      </span>
+                      <span>{card.title}</span>
+                    </Card.Title>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
+          </Row>
 
-      <div className="channeling-buttons">
-        <button className="channeling-btn outline" onClick={handleBookClick}>
-           Book New Channeling
-        </button>
-        <button
-          className="channeling-btn outline"
-          onClick={handleViewAppointmentsClick}
-        >
-           View My Channelings
-        </button>
-      </div>
+          <div className="channeling-buttons">
+            <button className="channeling-btn" onClick={handleBookClick}>
+              Book New Channeling
+            </button>
+            <button
+              className="channeling-btn outline"
+              onClick={handleViewAppointmentsClick}
+            >
+              View My Channelings
+            </button>
+          </div>
+        </>
+      )}
 
       {showForm && (
         <div className="channeling-form mt-5">
@@ -139,6 +166,9 @@ function Channeling() {
             <Form.Group className="mb-3">
               <Form.Label>Select Doctor</Form.Label>
               <Form.Select>
+                <option value="" disabled>
+                  Select a Doctor
+                </option>
                 <option>Dr. John Smith</option>
                 <option>Dr. Emily Brown</option>
                 <option>Dr. Sarah Lee</option>
@@ -156,9 +186,18 @@ function Channeling() {
             </Form.Group>
 
             <div className="form-submit-container text-center">
-              <button type="submit" className="channeling-btn primary">
-                Confirm Booking
-              </button>
+              <div className="channel-submit-buttons">
+                <button type="submit" className="channel-submit-btn">
+                  Confirm Booking
+                </button>
+                <button
+                  type="submit"
+                  className="channel-cancel-btn"
+                  onClick={handleCloseForm}
+                >
+                  Cancel
+                </button>
+              </div>
             </div>
           </Form>
         </div>
@@ -166,8 +205,12 @@ function Channeling() {
 
       {showAppointments && (
         <div className="view-appointments-section">
-          <h3>My Channeling Appointments</h3>
+          <IoArrowBackCircleSharp
+            className="back-btn"
+            onClick={handleBackButton}
+          />
 
+          <h3>My Channeling Appointments</h3>
           {bookedAppointments.length > 0 ? (
             <div className="appointments-container">
               {bookedAppointments.map((appt) => (

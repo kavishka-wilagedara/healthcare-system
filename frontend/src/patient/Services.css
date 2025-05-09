@@ -1,183 +1,400 @@
 .service-container {
-  margin: 0;
-  padding: 40px 30px;
-  background-color: #f9f9f9;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 1200px;
+  margin: 32px auto;
+  padding: 60px;
+  background-color: whitesmoke;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.075);
 }
 
-.title-section {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
+/* Header Styling */
+.title-section h1 {
+  color: #0d6efd;
+  font-weight: 700;
+  margin-bottom: 25px;
+  text-align: center;
 }
 
-.service-container h1 {
-  font-size: 42px;
-  font-weight: bold;
-  color: #1f3b57;
-  margin-bottom: 15px;
-}
-
-.add-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 20px;
-  background-color: #17b87e;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.add-btn:hover {
-  background-color: #0c2a4d;
-}
-
-.subtitle {
-  font-size: 16px;
-  color: #555;
-  margin-top: 10px;
+.title-section p {
+  font-size: 18px;
+  color: #6c757d;
+  text-align: center;
   margin-bottom: 30px;
 }
 
-.service-card-wrapper {
+/* Feature Cards */
+.service-feature-card {
+  height: 100%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.service-feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.service-feature-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #495057;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.service-feature-icon {
+  font-size: 32px;
+  margin-bottom: 16px;
+  color: #0d6efd;
+}
+
+.feature-section {
+  margin-bottom: 40px;
+}
+
+/* Button Styles */
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 32px;
   flex-wrap: wrap;
-  gap: 30px;
-  justify-content: start;
+}
+
+.add-btn {
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+  background-color: #0d6efd;
+  color: white;
+}
+
+.add-btn:hover {
+  background-color: #0b5ed7;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.view-service-btn {
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: 2px solid #0d6efd;
+  background-color: transparent;
+  color: #0d6efd;
+}
+
+.view-service-btn:hover {
+  background-color: #0d6efd;
+  color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Service Modal Form */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: whitesmoke;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  padding: 32px;
+  width: 90%;
+  max-width: 600px;
+}
+
+.modal-content h3 {
+  color: #0d6efd;
+  font-weight: 600;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.service-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: #495057;
+}
+
+.form-group input,
+.form-group select {
+  padding: 12px;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #86b7fe;
+  outline: 0;
+  box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.25);
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
+.service-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.service-submit-btn {
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+  background-color: #0d6efd;
+  color: white;
+}
+
+.service-submit-btn:hover {
+  background-color: #0b5ed7;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.service-cancel-btn {
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+  background-color: #dc3545;
+  color: white;
+}
+
+.service-cancel-btn:hover {
+  background-color: #bb2d3b;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* View appointments section */
+.view-appointments-section {
+  padding: 32px;
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  position: relative;
+}
+
+.view-appointments-section h3 {
+  text-align: center;
+  font-size: 32px;
+  margin-bottom: 32px;
+  color: #333;
+  font-weight: 600;
+  position: relative;
+  padding-bottom: 12px;
+}
+
+.view-appointments-section h3:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(135deg, #0d6efd, #0b5ed7);
+}
+
+.back-btn {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  font-size: 32px;
+  color: #0d6efd;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+  color: #0b5ed7;
+  transform: scale(1.1);
+}
+
+/* Service card styling */
+.service-card-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 32px;
+  margin-top: 32px;
 }
 
 .service-card {
-  display: flex;
-  flex-direction: column;
-  background: white;
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-  padding: 0;
-  width: 100%;
-  max-width: 320px;
+  border-radius: 16px;
   overflow: hidden;
-  transition: transform 0.3s ease;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  background-color: #fff;
+  border: 1px solid #eaeaea;
 }
 
 .service-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-  z-index: 2;
+  transform: translateY(-7px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
 }
 
 .card-header {
-  background-color: #17b87e;
+  background: linear-gradient(135deg, #0d6efd, #0b5ed7);
   color: white;
   padding: 20px;
-  border-bottom: 1px solid #ddd;
+  text-align: center;
 }
 
-.card-header h3 {
+.card-header h4 {
   margin: 0;
   font-size: 22px;
+  font-weight: 600;
 }
 
 .card-body {
-  padding: 20px;
+  padding: 24px;
 }
 
 .card-body p {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
+  color: #555;
   font-size: 15px;
-  color: #333;
 }
 
 .card-body .icon {
-  width: 20px;
-  height: 20px;
-  margin-right: 8px;
-  color: #17b87e;
+  margin-right: 12px;
+  color: #0d6efd;
+  font-size: 20px;
+  min-width: 24px;
 }
 
-/* Modal Styles */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+.service-actions {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.modal-content {
-  background-color: white;
-  padding: 30px 25px;
-  border-radius: 12px;
-  width: 90%;
-  max-width: 500px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-}
-
-.modal-content h2 {
-  margin-bottom: 20px;
-  font-size: 26px;
-  color: #17b87e;
-}
-
-.service-form select {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 14px;
-}
-
-.service-form input {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 14px;
-}
-
-.modal-buttons {
-  display: flex;
+  padding: 16px;
+  gap: 8px;
+  background-color: #f8f9fa;
+  border-top: 1px solid #eaeaea;
   justify-content: space-between;
-  margin-top: 20px;
 }
 
-.submit-btn,
-.cancel-btn {
-  padding: 10px 20px;
+.service-action-btn {
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 4px;
   border: none;
-  border-radius: 6px;
-  font-weight: 500;
   cursor: pointer;
+  font-weight: 500;
+  flex: 1;
+  transition: all 0.2s ease;
 }
 
-.submit-btn {
-  background-color: #17b87e;
+.reschedule {
+  background-color: #0d6efd;
   color: white;
 }
 
-.cancel-btn {
-  background-color: #ddd;
-  color: #333;
+.reschedule:hover {
+  background-color: #0b5ed7;
 }
 
-.submit-btn:hover {
-  background-color: #0c2a4d;
+.cancel {
+  background-color: #ef4444;
+  color: white;
 }
 
-.cancel-btn:hover {
-  background-color: #bbb;
+.cancel:hover {
+  background-color: #dc2626;
+}
+
+.details {
+  background-color: #f3f4f6;
+  color: #1f2937;
+  border: 1px solid #e5e7eb;
+}
+
+.details:hover {
+  background-color: #e5e7eb;
+}
+
+/* Empty State */
+.empty-service {
+  text-align: center;
+  padding: 48px 16px;
+  color: #6c757d;
+}
+
+.empty-service p {
+  font-size: 17px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 767.98px) {
+  .service-container {
+    padding: 24px;
+    margin: 16px;
+  }
+
+  .title-section h1 {
+    font-size: 28px;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .modal-content {
+    padding: 24px;
+    width: 95%;
+  }
+
+  .service-card-wrapper {
+    grid-template-columns: 1fr;
+  }
 }
