@@ -815,7 +815,7 @@ const navigate = useNavigate();
 
       <style>{`
         .text-teal {
-          color: #17b87e;
+          color: #0d6efd;
         }
         .healthcare-card {
           border: none;
@@ -827,7 +827,7 @@ const navigate = useNavigate();
           transform: translateY(-5px);
         }
         .healthcare-card-header {
-          background: linear-gradient(135deg, #17b87e,rgb(19, 150, 117));
+          background: linear-gradient(135deg, #0d6efd,rgb(19, 150, 117));
           border-radius: 12px 12px 0 0;
           padding: 1.5rem;
         }
@@ -836,8 +836,8 @@ const navigate = useNavigate();
           border-radius: 0 0 12px 12px;
         }
         .btn-teal {
-          background-color: #17b87e;
-          border-color: #17b87e;
+          background-color: #0d6efd;
+          border-color: #0d6efd;
           color: #ffffff;
           transition: all 0.3s ease;
         }
@@ -856,7 +856,7 @@ const navigate = useNavigate();
         }
         .form-control:focus,
         .form-select:focus {
-          border-color: #17b87e;
+          border-color: #0d6efd;
           box-shadow: 0 0 0 0.2rem rgba(23, 162, 184, 0.25);
         }
         .form-check-group.is-invalid .form-check-input {

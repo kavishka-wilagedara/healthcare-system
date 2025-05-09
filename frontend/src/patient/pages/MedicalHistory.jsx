@@ -46,10 +46,10 @@ const MedicalHistory = () => {
 
       <style>{`
         .text-teal {
-          color: #17b87e;
+          color: #0d6efd;
         }
         .long-card {
-          border-left: 8px solid #17b87e;
+          border-left: 8px solid #0d6efd;
           border-radius: 12px;
           background-color: #ffffff;
           transition: transform 0.3s ease;

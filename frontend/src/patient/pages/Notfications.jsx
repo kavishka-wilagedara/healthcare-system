@@ -35,7 +35,7 @@ const Notifications = () => {
 
       <style>{`
         .text-teal {
-          color: #17b87e;
+          color: #0d6efd;
         }
         .notif-card {
           border-radius: 12px;

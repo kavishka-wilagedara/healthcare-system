@@ -63,7 +63,7 @@ const UserProfile = () => {
 
       <style>{`
         .text-teal {
-          color: #17b87e;
+          color: #0d6efd;
         }
         .healthcare-card {
           border: none;
@@ -71,7 +71,7 @@ const UserProfile = () => {
           background-color: #ffffff;
         }
         .healthcare-card-header {
-          background: linear-gradient(135deg, #17b87e, rgb(19, 150, 117));
+          background: linear-gradient(135deg, #0d6efd, rgb(19, 150, 117));
           border-radius: 12px 12px 0 0;
           padding: 1.5rem;
         }
