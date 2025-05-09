@@ -196,15 +196,19 @@
 
 .history-card-title h4 {
   margin: 0;
-  font-size: 17px;
+  font-size: 25px;
   font-weight: 600;
   color: #212529;
 }
 
-.history-subtitle {
+.history-card-title p {
+  color: #0d6efd;
   margin: 0;
-  font-size: 14px;
-  color: #6c757d;
+  font-size: 20px;
+}
+
+.history-card-title .history-icon {
+  color: #0d6efd;
 }
 
 .appoinment-number {
