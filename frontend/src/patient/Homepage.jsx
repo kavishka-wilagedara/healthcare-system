@@ -128,32 +128,34 @@ function Homepage() {
                       </div>
 
                       <div className="appointment-info">
-                        <p className="appointment-time">
-                          {
-                            data.pendingDoctorAppoinments[
-                              data.pendingDoctorAppoinments.length - 1
-                            ].appointmentDate
-                          }{" "}
-                          at{" "}
-                          {
-                            data.pendingDoctorAppoinments[
-                              data.pendingDoctorAppoinments.length - 1
-                            ].appointmentTime
-                          }
-                        </p>
-                        <p>
-                          <strong className="appointment-doctor">
-                            With{" "}
+                        <div className="appointment-infor-with-btn">
+                          <p className="appointment-time">
                             {
                               data.pendingDoctorAppoinments[
                                 data.pendingDoctorAppoinments.length - 1
-                              ].doctorName
+                              ].appointmentDate
+                            }{" "}
+                            at{" "}
+                            {
+                              data.pendingDoctorAppoinments[
+                                data.pendingDoctorAppoinments.length - 1
+                              ].appointmentTime
                             }
-                          </strong>
-                        </p>
-                        <Button variant="outline-primary" className="mt-0">
-                          View Details
-                        </Button>
+                          </p>
+                          <p>
+                            <strong className="appointment-doctor">
+                              With{" "}
+                              {
+                                data.pendingDoctorAppoinments[
+                                  data.pendingDoctorAppoinments.length - 1
+                                ].doctorName
+                              }
+                            </strong>
+                          </p>
+                          <Button variant="outline-primary" className="mt-0">
+                            View Details
+                          </Button>
+                        </div>
                       </div>
                     </div>
                   </>
