@@ -29,7 +29,7 @@ function Channeling() {
       icon: <FaUserMd className="feature-icon" />,
     },
     {
-      title: "Instant Availability & Guaranteed Confirmation",
+      title: "Swift Availability & Secured Confirmation",
       icon: <FaCheckCircle className="feature-icon" />,
     },
     {
