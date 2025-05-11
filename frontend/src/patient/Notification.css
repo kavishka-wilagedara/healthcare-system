@@ -1,0 +1,51 @@
+/* Notifications.css */
+.notifications-container {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  color: #333;
+}
+
+.notifications-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 30px;
+}
+
+.notifications-title h2 {
+  color: #1f3f6c;
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.notification-title-icon {
+  margin-right: 12px;
+  font-size: 28px;
+  color: #23548d;
+}
+
+.notification-badge {
+  background-color: #e74c3c;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 12px;
+}
+
+.notifications-subtitle {
+  color: #5d7997;
+  font-size: 16px;
+  margin-top: 5px;
+}

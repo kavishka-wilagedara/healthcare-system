@@ -19,11 +19,11 @@ import PatientDashboard from "./patient/PatientDashboard";
 import Homepage from "./patient/Homepage";
 import Channeling from "./patient/Channeling";
 import Services from "./patient/Services";
-import Messages from "./patient/Messages";
+import Notification from "./patient/Notification";
 import Profile from "./patient/Profile";
 import MyHistory from "./patient/MyHistory";
 
-//common 
+//common
 import Register from "./common/Register";
 import Login from "./common/Login";
 import DoctorRegister from "./common/DoctorRegister";
@@ -46,7 +46,7 @@ function App() {
       <Layout>
         <Routes>
           <Route path="/" element={<Login />} />
-          <Route path="/register" element={<DoctorRegister/>}/>
+          <Route path="/register" element={<DoctorRegister />} />
           <Route path="/patient-register" element={<Register />} />
           <Route path="/doc-home" element={<Dashboard />} />
           <Route path="/doc-dashboard" element={<Dashboard />} />
@@ -76,7 +76,7 @@ function App() {
             <Route path="channeling" element={<Channeling />} />
             <Route path="clinical-services" element={<Services />} />
             <Route path="my-history" element={<MyHistory />} />
-            <Route path="notification" element={<Messages />} />
+            <Route path="notification" element={<Notification />} />
             <Route path="profile" element={<Profile />} />
           </Route>
         </Routes>
