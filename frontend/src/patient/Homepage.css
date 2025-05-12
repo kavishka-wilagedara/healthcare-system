@@ -158,10 +158,14 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
+.upcoming-card-title {
+  color: #2c3e50;
+  font-size: 20px;
+  font-weight: 700;
+}
 .notification-item {
   display: flex;
   align-items: center;
-  margin-bottom: 15px;
 }
 
 .notification-item p {
