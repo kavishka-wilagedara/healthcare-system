@@ -186,16 +186,16 @@ function Homepage() {
                 0 ? (
                   <>
                     <div className="notification-item">
-                      <div className="notification-badge pending-results">
+                      <div className="notification-count pending-results">
                         {data.pendingClinicalService.length}
                       </div>
-                      Pending Service Appoinments
+                      <p>Pending Service Appoinments</p>
                     </div>
                     <div className="notification-item">
-                      <div className="notification-badge active-prescriptions">
+                      <div className="notification-count active-prescriptions">
                         {data.pendingDoctorAppoinments.length}
                       </div>
-                      Pending Doctor Channeling
+                      <p>Pending Doctor Channeling</p>
                     </div>
                     <Button
                       variant="link"

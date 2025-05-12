@@ -46,6 +46,9 @@ const PatientNavbar = () => {
               className="mx-1 nav-link-custom"
             >
               <FaBell className="me-1" />
+              {/* {getUnreadCount() > 0 && (
+                <span className="notification-badge">{getUnreadCount()}</span>
+              )} */}
             </Nav.Link>
             <Dropdown align="end">
               <Dropdown.Toggle

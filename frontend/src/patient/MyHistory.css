@@ -1,16 +1,11 @@
 .channeling-info-card {
-  width: 100%;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   max-width: 1200px;
-  margin: 32px auto;
-  background: whitesmoke;
-  border-radius: 12px;
-  box-shadow: 0 6px 16px rgba(13, 110, 253, 0.08);
-  overflow: hidden;
-}
-
-.medical-history-container {
-  width: 100%;
-  padding: 24px;
+  margin: 60px auto;
+  padding: 60px;
+  background-color: whitesmoke;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.075);
 }
 
 .medical-history-header {
@@ -28,7 +23,7 @@
 
 .history-description {
   font-size: 18px;
-  color: #6c757d;
+  color: #5d7997;
   text-align: center;
   margin-bottom: 30px;
 }
