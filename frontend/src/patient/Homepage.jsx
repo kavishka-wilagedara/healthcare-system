@@ -180,7 +180,7 @@ function Homepage() {
           <Col md={4} className="mb-4">
             <Card className="shadow-sm notification-card">
               <Card.Body>
-                <h3 className="card-title">Your Notifications</h3>
+                <h3 className="upcoming-card-title">Your Notifications</h3>
                 {data.pendingClinicalService.length +
                   data.pendingDoctorAppoinments.length >
                 0 ? (
@@ -189,13 +189,13 @@ function Homepage() {
                       <div className="notification-count pending-results">
                         {data.pendingClinicalService.length}
                       </div>
-                      <p>Pending Service Appoinments</p>
+                      <p>Clinical Service Appoinments</p>
                     </div>
                     <div className="notification-item">
                       <div className="notification-count active-prescriptions">
                         {data.pendingDoctorAppoinments.length}
                       </div>
-                      <p>Pending Doctor Channeling</p>
+                      <p>Doctor Channeling</p>
                     </div>
                     <Button
                       variant="link"
