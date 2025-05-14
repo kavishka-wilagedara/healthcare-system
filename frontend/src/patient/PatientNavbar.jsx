@@ -3,8 +3,11 @@ import { Nav, Navbar, Container, Dropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FaSignOutAlt, FaUserCircle, FaBell } from "react-icons/fa";
 import "./PatientNavbar.css";
+import { useNotification } from "./context/NotificationContext";
 
 const PatientNavbar = () => {
+  const { getUnreadCount } = useNotification();
+
   return (
     <Navbar
       bg="primary"
@@ -46,9 +49,9 @@ const PatientNavbar = () => {
               className="mx-1 nav-link-custom"
             >
               <FaBell className="me-1" />
-              {/* {getUnreadCount() > 0 && (
-                <span className="notification-badge">{getUnreadCount()}</span>
-              )} */}
+              {getUnreadCount() > 0 && (
+                <span className="nav-notification-badge">{getUnreadCount()}</span>
+              )}
             </Nav.Link>
             <Dropdown align="end">
               <Dropdown.Toggle

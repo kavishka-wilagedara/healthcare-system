@@ -11,6 +11,7 @@ import {
   FaRegClock,
 } from "react-icons/fa";
 import "./Notification.css";
+import { useNotification } from "./context/NotificationContext";
 
 function Notification() {
   const [notifications, setNotifications] = useState([]);
@@ -198,9 +199,11 @@ function Notification() {
   };
 
   // Get unread count
-  const getUnreadCount = () => {
-    return notifications.filter((notification) => !notification.read).length;
-  };
+  // const getUnreadCount = () => {
+  //   return notifications.filter((notification) => !notification.read).length;
+  // };
+
+  const { getUnreadCount } = useNotification();
 
   return (
     <div className="notifications-container">

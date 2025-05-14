@@ -21,6 +21,22 @@
   letter-spacing: 0.5px;
 }
 
+.nav-notification-badge {
+  position: absolute;
+  top: 12px;
+  background-color: #e74c3c;
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 12px;
+}
+
 .nav-link-custom {
   color: rgba(255, 255, 255, 0.85) !important;
   font-weight: bold;
