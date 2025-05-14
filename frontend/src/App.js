@@ -21,6 +21,7 @@ import Channeling from "./patient/Channeling";
 import Services from "./patient/Services";
 import Notification from "./patient/Notification";
 import Profile from "./patient/Profile";
+import MyHistory from "./patient/MyHistory";
 
 //common
 import Register from "./common/Register";
