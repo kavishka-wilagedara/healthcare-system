@@ -27,6 +27,7 @@ import MyHistory from "./patient/MyHistory";
 import Register from "./common/Register";
 import Login from "./common/Login";
 import DoctorRegister from "./common/DoctorRegister";
+import { NotificationProvider } from "./patient/context/NotificationContext";
 
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -71,7 +72,14 @@ function App() {
           />
 
           {/* Patient Routes */}
-          <Route path="/patient/dashboard" element={<PatientDashboard />}>
+          <Route
+            path="/patient/dashboard"
+            element={
+              <NotificationProvider>
+                <PatientDashboard />
+              </NotificationProvider>
+            }
+          >
             <Route index element={<Homepage />} />
             <Route path="channeling" element={<Channeling />} />
             <Route path="clinical-services" element={<Services />} />
