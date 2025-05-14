@@ -72,7 +72,7 @@
 .section-title {
   font-size: 24px;
   font-weight: 600;
-  color: #0d6efd;
+  color: #2c3e50;
   margin: 30px 0 20px;
   padding-bottom: 10px;
   border-bottom: 2px solid #dceaf9;
@@ -87,9 +87,9 @@
 }
 
 .card-title {
-  color: #0d6efd;
+  color: #2c3e50;
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 700;
   margin-bottom: 30px;
 }
 
@@ -134,6 +134,10 @@
   margin-left: 1px;
 }
 
+.appointment-info .appointment-infor-with-btn {
+  margin-left: 60px;
+}
+
 .appointment-time {
   font-size: 16px;
   font-weight: 600;
@@ -149,18 +153,27 @@
 .notification-card {
   height: 100%;
   border: none;
-  border-left: 4px solid #f7c873;
+  border-left: 4px solid #0d6efd;
   background-color: #fffdf7;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
+.upcoming-card-title {
+  color: #2c3e50;
+  font-size: 20px;
+  font-weight: 700;
+}
 .notification-item {
   display: flex;
   align-items: center;
-  margin-bottom: 15px;
 }
 
-.notification-badge {
+.notification-item p {
+  margin-top: 10px;
+  font-weight: 700;
+}
+
+.notification-count {
   width: 28px;
   height: 28px;
   border-radius: 50%;
@@ -211,8 +224,8 @@
 
 .feature-title {
   font-size: 18px;
-  font-weight: 600;
-  color: #0d6efd;
+  font-weight: 700;
+  color: #2c3e50;
   margin-bottom: 12px;
   justify-content: center;
 }

@@ -19,15 +19,14 @@ import PatientDashboard from "./patient/PatientDashboard";
 import Homepage from "./patient/Homepage";
 import Channeling from "./patient/Channeling";
 import Services from "./patient/Services";
+import Notification from "./patient/Notification";
 import Profile from "./patient/Profile";
 
-//common 
+//common
 import Register from "./common/Register";
 import Login from "./common/Login";
 import DoctorRegister from "./common/DoctorRegister";
-import UserProfile from "./patient/pages/UserProfile";
-import MedicalHistory from "./patient/pages/MedicalHistory";
-import Notifications from "./patient/pages/Notfications";
+import { NotificationProvider } from "./patient/context/NotificationContext";
 
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -47,7 +46,7 @@ function App() {
       <Layout>
         <Routes>
           <Route path="/" element={<Login />} />
-          <Route path="/register" element={<DoctorRegister/>}/>
+          <Route path="/register" element={<DoctorRegister />} />
           <Route path="/patient-register" element={<Register />} />
           <Route path="/doc-home" element={<Dashboard />} />
           <Route path="/doc-dashboard" element={<Dashboard />} />
@@ -72,13 +71,20 @@ function App() {
           />
 
           {/* Patient Routes */}
-          <Route path="/patient/dashboard" element={<PatientDashboard />}>
+          <Route
+            path="/patient/dashboard"
+            element={
+              <NotificationProvider>
+                <PatientDashboard />
+              </NotificationProvider>
+            }
+          >
             <Route index element={<Homepage />} />
             <Route path="channeling" element={<Channeling />} />
             <Route path="clinical-services" element={<Services />} />
-            <Route path="my-history" element={<MedicalHistory />} />
-            <Route path="notification" element={<Notifications />} />
-            <Route path="profile" element={<UserProfile />} />
+            <Route path="my-history" element={<MyHistory />} />
+            <Route path="notification" element={<Notification />} />
+            <Route path="profile" element={<Profile />} />
           </Route>
         </Routes>
       </Layout>

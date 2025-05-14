@@ -128,32 +128,34 @@ function Homepage() {
                       </div>
 
                       <div className="appointment-info">
-                        <p className="appointment-time">
-                          {
-                            data.pendingDoctorAppoinments[
-                              data.pendingDoctorAppoinments.length - 1
-                            ].appointmentDate
-                          }{" "}
-                          at{" "}
-                          {
-                            data.pendingDoctorAppoinments[
-                              data.pendingDoctorAppoinments.length - 1
-                            ].appointmentTime
-                          }
-                        </p>
-                        <p>
-                          <strong className="appointment-doctor">
-                            With{" "}
+                        <div className="appointment-infor-with-btn">
+                          <p className="appointment-time">
                             {
                               data.pendingDoctorAppoinments[
                                 data.pendingDoctorAppoinments.length - 1
-                              ].doctorName
+                              ].appointmentDate
+                            }{" "}
+                            at{" "}
+                            {
+                              data.pendingDoctorAppoinments[
+                                data.pendingDoctorAppoinments.length - 1
+                              ].appointmentTime
                             }
-                          </strong>
-                        </p>
-                        <Button variant="outline-primary" className="mt-0">
-                          View Details
-                        </Button>
+                          </p>
+                          <p>
+                            <strong className="appointment-doctor">
+                              With{" "}
+                              {
+                                data.pendingDoctorAppoinments[
+                                  data.pendingDoctorAppoinments.length - 1
+                                ].doctorName
+                              }
+                            </strong>
+                          </p>
+                          <Button variant="outline-primary" className="mt-0">
+                            View Details
+                          </Button>
+                        </div>
                       </div>
                     </div>
                   </>
@@ -178,22 +180,22 @@ function Homepage() {
           <Col md={4} className="mb-4">
             <Card className="shadow-sm notification-card">
               <Card.Body>
-                <h3 className="card-title">Your Notifications</h3>
+                <h3 className="upcoming-card-title">Your Notifications</h3>
                 {data.pendingClinicalService.length +
                   data.pendingDoctorAppoinments.length >
                 0 ? (
                   <>
                     <div className="notification-item">
-                      <div className="notification-badge pending-results">
+                      <div className="notification-count pending-results">
                         {data.pendingClinicalService.length}
                       </div>
-                      Pending Service Appoinments
+                      <p>Clinical Service Appoinments</p>
                     </div>
                     <div className="notification-item">
-                      <div className="notification-badge active-prescriptions">
+                      <div className="notification-count active-prescriptions">
                         {data.pendingDoctorAppoinments.length}
                       </div>
-                      Pending Doctor Channeling
+                      <p>Doctor Channeling</p>
                     </div>
                     <Button
                       variant="link"
