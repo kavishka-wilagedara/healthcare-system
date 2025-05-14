@@ -4,6 +4,8 @@ const NotificationContext = createContext();
 
 export const NotificationProvider = ({ children }) => {
   const [notifications, setNotifications] = useState([]);
+  const [filteredNotifications, setFilteredNotifications] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setTimeout(() => {
@@ -29,7 +31,7 @@ export const NotificationProvider = ({ children }) => {
             "This is a reminder for your appointment with Dr. Michael Chen tomorrow at 2:30 PM.",
           date: "2025-05-04",
           time: "9.00 AM",
-          read: true,
+          read: false,
           sender: "Reminder System",
         },
         {
@@ -41,7 +43,7 @@ export const NotificationProvider = ({ children }) => {
             "Your recent lab test results are now available. Please check your health portal or contact your doctor.",
           date: "2025-05-02",
           time: "9.00 AM",
-          read: true,
+          read: false,
           sender: "Laboratory Department",
         },
 
@@ -60,6 +62,8 @@ export const NotificationProvider = ({ children }) => {
       ];
 
       setNotifications(sampleNotifications);
+      setFilteredNotifications(sampleNotifications);
+      setLoading(false);
     }, 1000);
   }, []);
 
@@ -69,7 +73,15 @@ export const NotificationProvider = ({ children }) => {
 
   return (
     <NotificationContext.Provider
-      value={{ notifications, getUnreadCount, setNotifications }}
+      value={{
+        notifications,
+        getUnreadCount,
+        setNotifications,
+        loading,
+        setLoading,
+        filteredNotifications,
+        setFilteredNotifications,
+      }}
     >
       {children}
     </NotificationContext.Provider>
