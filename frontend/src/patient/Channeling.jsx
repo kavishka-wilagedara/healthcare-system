@@ -18,6 +18,7 @@ function Channeling() {
   const [showForm, setShowForm] = useState(false);
   const [showAppointments, setShowAppointments] = useState(false);
   const [showHeader, setShowHeader] = useState(true);
+  const [showDoctors, setShowDoctors] = useState(false);
 
   const featureCards = [
     {
@@ -69,8 +70,57 @@ function Channeling() {
     },
   ];
 
+  const doctors = [
+    {
+      id: "1",
+      name: "Dr. Kavindra Perera",
+      speciality: "Cardiologist",
+      availableDate: "2025-05-18",
+      availableTime: "09:00 - 12:00",
+      imgUrl:
+        "https://www.pexels.com/photo/a-doctor-holding-a-clipboard-5215024/",
+    },
+    {
+      id: "2",
+      name: "Dr. Nadeesha Fernando",
+      speciality: "Dermatologist",
+      availableDate: "2025-05-19",
+      availableTime: "13:00 - 16:00",
+      imgUrl:
+        "https://www.pexels.com/photo/a-doctor-holding-a-clipboard-5215024/",
+    },
+    {
+      id: "3",
+      name: "Dr. Ruwan Jayasuriya",
+      speciality: "Orthopedic Surgeon",
+      availableDate: "2025-05-20",
+      availableTime: "10:00 - 14:00",
+      imgUrl:
+        "https://www.pexels.com/photo/a-doctor-holding-a-clipboard-5215024/",
+    },
+    {
+      id: "4",
+      name: "Dr. Maleesha Wijeratne",
+      speciality: "Pediatrician",
+      availableDate: "2025-05-21",
+      availableTime: "08:00 - 11:30",
+      imgUrl:
+        "https://www.pexels.com/photo/a-doctor-holding-a-clipboard-5215024/",
+    },
+    {
+      id: "5",
+      name: "Dr. Hashan Karunaratne",
+      speciality: "Neurologist",
+      availableDate: "2025-05-22",
+      availableTime: "14:00 - 17:00",
+      imgUrl:
+        "https://www.pexels.com/photo/a-doctor-holding-a-clipboard-5215024/",
+    },
+  ];
+
   const handleBookClick = () => {
-    setShowForm(true);
+    setShowDoctors(true);
+    // setShowForm(true);
     setShowAppointments(false);
     setShowHeader(false);
     window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
@@ -110,6 +160,7 @@ function Channeling() {
     setShowForm(false);
     setShowAppointments(false);
     setShowHeader(true);
+    setShowDoctors(false);
   };
 
   return (
@@ -154,7 +205,7 @@ function Channeling() {
         </>
       )}
 
-      {showForm && (
+      {/* {showForm && (
         <div className="channeling-form mt-5">
           <h3>New Channeling Appointment</h3>
           <Form>
@@ -200,6 +251,47 @@ function Channeling() {
               </div>
             </div>
           </Form>
+        </div>
+      )} */}
+
+      {showDoctors && (
+        <div className="view-doctors-section">
+          <IoArrowBackCircleSharp
+            className="back-btn"
+            onClick={handleBackButton}
+          />
+          <h3>Doctor Panel</h3>
+          {doctors.length > 0 ? (
+            <div className="doctors-container">
+              {doctors.map((doctor) => (
+                <div className="doctor-card" key={doctor.id}>
+                  <div className="doctor-header">
+                    <img className="doctor-image" src={doctor.imgUrl} />
+                  </div>
+
+                  <div className="doctor-details">
+                    <h4>
+                      <FaUserMd className="icon-md" /> {doctor.name}
+                    </h4>
+                    <p className="doctor-specialty">{doctor.speciality}</p>
+                  </div>
+
+                  <div className="doctor-availability">
+                    <span className="available-date">
+                      {doctor.availableDate}
+                    </span>
+                    <span className="available-time">
+                      {doctor.availableTime}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="empty-state">
+              <h4>No Doctors Found</h4>
+            </div>
+          )}
         </div>
       )}
 
