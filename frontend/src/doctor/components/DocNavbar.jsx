@@ -1,9 +1,18 @@
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { UserContext } from "../../common/UserContext";
 
 const DocNavbar = () => {
   const location = useLocation();
+
+  const {user , setUser} = useContext(UserContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () =>{
+   setUser(null);
+   navigate("/");
+  }
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark healthcare-navbar shadow-sm">
@@ -55,7 +64,11 @@ const DocNavbar = () => {
                 Channeled History
               </Link>
             </li>
+
+             
           </ul>
+
+          <button  onClick={handleLogout}>Logout</button>
         </div>
       </div>
 
