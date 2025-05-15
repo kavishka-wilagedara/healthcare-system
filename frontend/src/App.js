@@ -28,6 +28,7 @@ import Register from "./common/Register";
 import Login from "./common/Login";
 import DoctorRegister from "./common/DoctorRegister";
 import { NotificationProvider } from "./patient/context/NotificationContext";
+import Doctors from "./patient/Doctors";
 
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -86,6 +87,7 @@ function App() {
             <Route path="my-history" element={<MyHistory />} />
             <Route path="notification" element={<Notification />} />
             <Route path="profile" element={<Profile />} />
+            <Route path="view-all-doctors" element={<Doctors />} />
           </Route>
         </Routes>
       </Layout>
