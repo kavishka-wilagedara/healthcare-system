@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { use, useContext, useState } from "react";
+import { UserContext } from "../../common/UserContext";
+import axios from "axios";
 
 const AddTimeForm = () => {
+  const { user} = useContext(UserContext);
   const [formData, setFormData] = useState({
-    intime: '',
-    outtime: '',
-    day: '',
+    inTime: "",
+    outTime: "",
+    day: "",
   });
 
   const handleChange = (e) => {
@@ -15,14 +18,30 @@ const AddTimeForm = () => {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Form Data:', formData);
+  const handleSubmit = async (e) => {
+          e.preventDefault();
+    try {
+      const requestBody = {
+        id: user.doctor.id,
+        intime: formData.inTime,
+        outtime: formData.outTime,
+        day: formData.day,
+      };
+      const response = await axios.post(
+        `http://localhost:5000/api/doctor/time`,
+        requestBody
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <div className="container py-5">
-      <h3 className="display-6 fw-bold text-primary mb-4 text-center">Add Time</h3>
+      <h3 className="display-6 fw-bold text-primary mb-4 text-center">
+        Add Time
+      </h3>
       <div className="d-flex justify-content-center">
         <div className="card shadow-sm w-100 w-md-50">
           <div className="card-body p-4">
@@ -80,7 +99,10 @@ const AddTimeForm = () => {
                 </select>
               </div>
 
-              <button type="submit" className="btn btn-primary healthcare-btn w-100">
+              <button
+                type="submit"
+                className="btn btn-primary healthcare-btn w-100"
+              >
                 Submit
               </button>
             </form>
