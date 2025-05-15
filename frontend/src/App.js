@@ -29,6 +29,7 @@ import Login from "./common/Login";
 import DoctorRegister from "./common/DoctorRegister";
 import { NotificationProvider } from "./patient/context/NotificationContext";
 import Doctors from "./patient/Doctors";
+import { UserProvider } from "./common/UserContext";
 
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -44,6 +45,7 @@ const Layout = ({ children }) => {
 
 function App() {
   return (
+    <UserProvider>
     <Router>
       <Layout>
         <Routes>
@@ -92,6 +94,7 @@ function App() {
         </Routes>
       </Layout>
     </Router>
+    </UserProvider>
   );
 }
 
