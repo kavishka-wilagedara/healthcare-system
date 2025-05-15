@@ -2,6 +2,7 @@ import React from "react";
 import "./Doctors.css";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import doctorImg from "../assets/images/doctor-image.jpg";
 
 const Doctors = () => {
   const navigate = useNavigate();
@@ -48,8 +49,7 @@ const Doctors = () => {
       speciality: "Neurologist",
       availableDate: "2025-05-22",
       availableTime: "14:00 - 17:00",
-      imgUrl:
-        "https://images.pexels.com/photos/5215024/pexels-photo-5215024.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      imgUrl: "",
     },
   ];
 
@@ -94,11 +94,19 @@ const Doctors = () => {
             {doctors.map((doctor) => (
               <div className="doctor-card" key={doctor.id}>
                 <div className="doctor-header">
-                  <img
-                    className="doctor-image"
-                    src={doctor.imgUrl}
-                    alt="doctor-name"
-                  />
+                  {doctor.imgUrl ? (
+                    <img
+                      className="doctor-image"
+                      src={doctor.imgUrl}
+                      alt="doctor-name"
+                    />
+                  ) : (
+                    <img
+                      className="doctor-image"
+                      src={doctorImg}
+                      alt="doctor-name"
+                    />
+                  )}
                 </div>
 
                 <div className="doctor-details">
