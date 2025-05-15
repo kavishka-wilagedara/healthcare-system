@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Row, Col, Card, Form } from "react-bootstrap";
+import { Row, Col, Card } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import "./Channeling.css";
 import {
   FaCheckCircle,
@@ -15,10 +16,9 @@ import {
 import { IoArrowBackCircleSharp } from "react-icons/io5";
 
 function Channeling() {
-  const [showForm, setShowForm] = useState(false);
+  const navigate = useNavigate();
   const [showAppointments, setShowAppointments] = useState(false);
   const [showHeader, setShowHeader] = useState(true);
-  const [showDoctors, setShowDoctors] = useState(false);
 
   const featureCards = [
     {
@@ -70,65 +70,12 @@ function Channeling() {
     },
   ];
 
-  const doctors = [
-    {
-      id: "1",
-      name: "Dr. Kavindra Perera",
-      speciality: "Cardiologist",
-      availableDate: "2025-05-18",
-      availableTime: "09:00 - 12:00",
-      imgUrl:
-        "https://www.pexels.com/photo/a-doctor-holding-a-clipboard-5215024/",
-    },
-    {
-      id: "2",
-      name: "Dr. Nadeesha Fernando",
-      speciality: "Dermatologist",
-      availableDate: "2025-05-19",
-      availableTime: "13:00 - 16:00",
-      imgUrl:
-        "https://www.pexels.com/photo/a-doctor-holding-a-clipboard-5215024/",
-    },
-    {
-      id: "3",
-      name: "Dr. Ruwan Jayasuriya",
-      speciality: "Orthopedic Surgeon",
-      availableDate: "2025-05-20",
-      availableTime: "10:00 - 14:00",
-      imgUrl:
-        "https://www.pexels.com/photo/a-doctor-holding-a-clipboard-5215024/",
-    },
-    {
-      id: "4",
-      name: "Dr. Maleesha Wijeratne",
-      speciality: "Pediatrician",
-      availableDate: "2025-05-21",
-      availableTime: "08:00 - 11:30",
-      imgUrl:
-        "https://www.pexels.com/photo/a-doctor-holding-a-clipboard-5215024/",
-    },
-    {
-      id: "5",
-      name: "Dr. Hashan Karunaratne",
-      speciality: "Neurologist",
-      availableDate: "2025-05-22",
-      availableTime: "14:00 - 17:00",
-      imgUrl:
-        "https://www.pexels.com/photo/a-doctor-holding-a-clipboard-5215024/",
-    },
-  ];
-
   const handleBookClick = () => {
-    setShowDoctors(true);
-    // setShowForm(true);
-    setShowAppointments(false);
-    setShowHeader(false);
-    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+    navigate("/patient/dashboard/view-all-doctors");
   };
 
   const handleViewAppointmentsClick = () => {
     setShowAppointments(true);
-    setShowForm(false);
     setShowHeader(false);
     window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
   };
@@ -151,16 +98,9 @@ function Channeling() {
     }
   };
 
-  const handleCloseForm = () => {
-    setShowForm(false);
-    setShowHeader(true);
-  };
-
   const handleBackButton = () => {
-    setShowForm(false);
     setShowAppointments(false);
     setShowHeader(true);
-    setShowDoctors(false);
   };
 
   return (
@@ -203,96 +143,6 @@ function Channeling() {
             </button>
           </div>
         </>
-      )}
-
-      {/* {showForm && (
-        <div className="channeling-form mt-5">
-          <h3>New Channeling Appointment</h3>
-          <Form>
-            <Form.Group className="mb-3">
-              <Form.Label>Full Name</Form.Label>
-              <Form.Control type="text" placeholder="Enter your full name" />
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-              <Form.Label>Select Doctor</Form.Label>
-              <Form.Select>
-                <option value="" disabled>
-                  Select a Doctor
-                </option>
-                <option>Dr. John Smith</option>
-                <option>Dr. Emily Brown</option>
-                <option>Dr. Sarah Lee</option>
-              </Form.Select>
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-              <Form.Label>Appointment Date</Form.Label>
-              <Form.Control type="date" />
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-              <Form.Label>Preferred Time</Form.Label>
-              <Form.Control type="time" />
-            </Form.Group>
-
-            <div className="form-submit-container text-center">
-              <div className="channel-submit-buttons">
-                <button type="submit" className="channel-submit-btn">
-                  Confirm Booking
-                </button>
-                <button
-                  type="submit"
-                  className="channel-cancel-btn"
-                  onClick={handleCloseForm}
-                >
-                  Cancel
-                </button>
-              </div>
-            </div>
-          </Form>
-        </div>
-      )} */}
-
-      {showDoctors && (
-        <div className="view-doctors-section">
-          <IoArrowBackCircleSharp
-            className="back-btn"
-            onClick={handleBackButton}
-          />
-          <h3>Doctor Panel</h3>
-          {doctors.length > 0 ? (
-            <div className="doctors-container">
-              {doctors.map((doctor) => (
-                <div className="doctor-card" key={doctor.id}>
-                  <div className="doctor-header">
-                    <img className="doctor-image" src={doctor.imgUrl} />
-                  </div>
-
-                  <div className="doctor-details">
-                    <h4>
-                      <FaUserMd className="icon-md" /> {doctor.name}
-                    </h4>
-                    <p className="doctor-specialty">{doctor.speciality}</p>
-                  </div>
-
-                  <div className="doctor-availability">
-                    <span className="available-date">
-                      {doctor.availableDate}
-                    </span>
-                    <span className="available-time">
-                      {doctor.availableTime}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="empty-state">
-              <h4>No Doctors Found</h4>
-            </div>
-          )}
-        </div>
       )}
 
       {showAppointments && (
