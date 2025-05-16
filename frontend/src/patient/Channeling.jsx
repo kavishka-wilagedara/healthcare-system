@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Row, Col, Card, Form } from "react-bootstrap";
+import { Row, Col, Card } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import "./Channeling.css";
 import {
   FaCheckCircle,
@@ -15,7 +16,7 @@ import {
 import { IoArrowBackCircleSharp } from "react-icons/io5";
 
 function Channeling() {
-  const [showForm, setShowForm] = useState(false);
+  const navigate = useNavigate();
   const [showAppointments, setShowAppointments] = useState(false);
   const [showHeader, setShowHeader] = useState(true);
 
@@ -70,15 +71,11 @@ function Channeling() {
   ];
 
   const handleBookClick = () => {
-    setShowForm(true);
-    setShowAppointments(false);
-    setShowHeader(false);
-    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+    navigate("/patient/dashboard/view-all-doctors");
   };
 
   const handleViewAppointmentsClick = () => {
     setShowAppointments(true);
-    setShowForm(false);
     setShowHeader(false);
     window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
   };
@@ -101,13 +98,7 @@ function Channeling() {
     }
   };
 
-  const handleCloseForm = () => {
-    setShowForm(false);
-    setShowHeader(true);
-  };
-
   const handleBackButton = () => {
-    setShowForm(false);
     setShowAppointments(false);
     setShowHeader(true);
   };
@@ -152,55 +143,6 @@ function Channeling() {
             </button>
           </div>
         </>
-      )}
-
-      {showForm && (
-        <div className="channeling-form mt-5">
-          <h3>New Channeling Appointment</h3>
-          <Form>
-            <Form.Group className="mb-3">
-              <Form.Label>Full Name</Form.Label>
-              <Form.Control type="text" placeholder="Enter your full name" />
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-              <Form.Label>Select Doctor</Form.Label>
-              <Form.Select>
-                <option value="" disabled>
-                  Select a Doctor
-                </option>
-                <option>Dr. John Smith</option>
-                <option>Dr. Emily Brown</option>
-                <option>Dr. Sarah Lee</option>
-              </Form.Select>
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-              <Form.Label>Appointment Date</Form.Label>
-              <Form.Control type="date" />
-            </Form.Group>
-
-            <Form.Group className="mb-3">
-              <Form.Label>Preferred Time</Form.Label>
-              <Form.Control type="time" />
-            </Form.Group>
-
-            <div className="form-submit-container text-center">
-              <div className="channel-submit-buttons">
-                <button type="submit" className="channel-submit-btn">
-                  Confirm Booking
-                </button>
-                <button
-                  type="submit"
-                  className="channel-cancel-btn"
-                  onClick={handleCloseForm}
-                >
-                  Cancel
-                </button>
-              </div>
-            </div>
-          </Form>
-        </div>
       )}
 
       {showAppointments && (

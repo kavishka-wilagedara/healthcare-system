@@ -28,6 +28,8 @@ import Register from "./common/Register";
 import Login from "./common/Login";
 import DoctorRegister from "./common/DoctorRegister";
 import { NotificationProvider } from "./patient/context/NotificationContext";
+import Doctors from "./patient/Doctors";
+import { UserProvider } from "./common/UserContext";
 
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -43,6 +45,7 @@ const Layout = ({ children }) => {
 
 function App() {
   return (
+    <UserProvider>
     <Router>
       <Layout>
         <Routes>
@@ -86,10 +89,12 @@ function App() {
             <Route path="my-history" element={<MyHistory />} />
             <Route path="notification" element={<Notification />} />
             <Route path="profile" element={<Profile />} />
+            <Route path="view-all-doctors" element={<Doctors />} />
           </Route>
         </Routes>
       </Layout>
     </Router>
+    </UserProvider>
   );
 }
 

@@ -1,11 +1,50 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import axios from "axios";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { UserContext } from "./UserContext";
+import Swal from "sweetalert2";
 
 const Login = () => {
-  const [loginType, setLoginType] = useState('patient');
-  const [patientForm, setPatientForm] = useState({ email: '', password: '' });
-  const [doctorForm, setDoctorForm] = useState({ email: '', password: '' });
+  const [loginType, setLoginType] = useState("patient");
+  const [patientForm, setPatientForm] = useState({ email: "", password: "" });
+  const [doctorForm, setDoctorForm] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
+  const { setUser } = useContext(UserContext);
+
+  const handleDoctorLogin = async (e) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/doctor/login",
+        doctorForm
+      );
+      setUser(response.data);
+      console.log(response.data);
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Login Successful!",
+        showConfirmButton: false,
+        timer: 1500,
+        background: "#f8f9fa",
+      });
+
+      navigate("/doc-dashboard");
+    } catch (error) {
+      console.log("error while login : ", error);
+      Swal.fire({
+        icon: "error",
+        title: "Login Failed",
+        text:
+          error.response?.data?.message ||
+          "An error occurred during registration",
+        showConfirmButton: false,
+        timer: 4000,
+        timerProgressBar: true,
+        position: "center",
+      });
+    }
+  };
 
   const handleTypeChange = (type) => {
     setLoginType(type);
@@ -15,34 +54,34 @@ const Login = () => {
   const handlePatientChange = (e) => {
     const { name, value } = e.target;
     setPatientForm((prev) => ({ ...prev, [name]: value }));
-    setErrors((prev) => ({ ...prev, [name]: '' }));
+    setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
   const handleDoctorChange = (e) => {
     const { name, value } = e.target;
     setDoctorForm((prev) => ({ ...prev, [name]: value }));
-    setErrors((prev) => ({ ...prev, [name]: '' }));
+    setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
   const validateForm = (form) => {
     const newErrors = {};
-    if (!form.email) newErrors.email = 'Email is required';
-    if (!form.password) newErrors.password = 'Password is required';
+    if (!form.email) newErrors.email = "Email is required";
+    if (!form.password) newErrors.password = "Password is required";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handlePatientSubmit = () => {
     if (validateForm(patientForm)) {
-      console.log('Patient Login:', patientForm);
-      alert('Patient login submitted successfully!');
+      console.log("Patient Login:", patientForm);
+      alert("Patient login submitted successfully!");
     }
   };
 
   const handleDoctorSubmit = () => {
     if (validateForm(doctorForm)) {
-      console.log('Doctor Login:', doctorForm);
-      alert('Doctor login submitted successfully!');
+      console.log("Doctor Login:", doctorForm);
+      alert("Doctor login submitted successfully!");
     }
   };
 
@@ -58,25 +97,31 @@ const Login = () => {
             <div className="card-body">
               <div className="d-flex justify-content-center mb-4">
                 <button
-                  className={`btn ${loginType === 'patient' ? 'btn-teal' : 'btn-outline-teal'} healthcare-btn me-2`}
-                  onClick={() => handleTypeChange('patient')}
+                  className={`btn ${
+                    loginType === "patient" ? "btn-teal" : "btn-outline-teal"
+                  } healthcare-btn me-2`}
+                  onClick={() => handleTypeChange("patient")}
                 >
                   Patient Login
                 </button>
                 <button
-                  className={`btn ${loginType === 'doctor' ? 'btn-teal' : 'btn-outline-teal'} healthcare-btn`}
-                  onClick={() => handleTypeChange('doctor')}
+                  className={`btn ${
+                    loginType === "doctor" ? "btn-teal" : "btn-outline-teal"
+                  } healthcare-btn`}
+                  onClick={() => handleTypeChange("doctor")}
                 >
                   Doctor Login
                 </button>
               </div>
 
-              {loginType === 'patient' ? (
+              {loginType === "patient" ? (
                 <>
                   <div className="form-floating mb-3">
                     <input
                       type="email"
-                      className={`form-control ${errors.email ? 'is-invalid' : ''}`}
+                      className={`form-control ${
+                        errors.email ? "is-invalid" : ""
+                      }`}
                       id="patientEmail"
                       name="email"
                       value={patientForm.email}
@@ -84,12 +129,16 @@ const Login = () => {
                       placeholder="example@email.com"
                     />
                     <label htmlFor="patientEmail">Email Address</label>
-                    {errors.email && <div className="invalid-feedback">{errors.email}</div>}
+                    {errors.email && (
+                      <div className="invalid-feedback">{errors.email}</div>
+                    )}
                   </div>
                   <div className="form-floating mb-3">
                     <input
                       type="password"
-                      className={`form-control ${errors.password ? 'is-invalid' : ''}`}
+                      className={`form-control ${
+                        errors.password ? "is-invalid" : ""
+                      }`}
                       id="patientPassword"
                       name="password"
                       value={patientForm.password}
@@ -97,7 +146,9 @@ const Login = () => {
                       placeholder="Password"
                     />
                     <label htmlFor="patientPassword">Password</label>
-                    {errors.password && <div className="invalid-feedback">{errors.password}</div>}
+                    {errors.password && (
+                      <div className="invalid-feedback">{errors.password}</div>
+                    )}
                   </div>
                   <button
                     className="btn btn-teal healthcare-btn w-100 mb-3"
@@ -106,7 +157,10 @@ const Login = () => {
                     Login as Patient
                   </button>
                   <p className="text-center">
-                    Not registered? <Link to="/patient-register" className="text-teal">Register here</Link>
+                    Not registered?{" "}
+                    <Link to="/patient-register" className="text-teal">
+                      Register here
+                    </Link>
                   </p>
                 </>
               ) : (
@@ -114,7 +168,9 @@ const Login = () => {
                   <div className="form-floating mb-3">
                     <input
                       type="email"
-                      className={`form-control ${errors.email ? 'is-invalid' : ''}`}
+                      className={`form-control ${
+                        errors.email ? "is-invalid" : ""
+                      }`}
                       id="doctorEmail"
                       name="email"
                       value={doctorForm.email}
@@ -122,12 +178,16 @@ const Login = () => {
                       placeholder="example@email.com"
                     />
                     <label htmlFor="doctorEmail">Email Address</label>
-                    {errors.email && <div className="invalid-feedback">{errors.email}</div>}
+                    {errors.email && (
+                      <div className="invalid-feedback">{errors.email}</div>
+                    )}
                   </div>
                   <div className="form-floating mb-3">
                     <input
                       type="password"
-                      className={`form-control ${errors.password ? 'is-invalid' : ''}`}
+                      className={`form-control ${
+                        errors.password ? "is-invalid" : ""
+                      }`}
                       id="doctorPassword"
                       name="password"
                       value={doctorForm.password}
@@ -135,16 +195,21 @@ const Login = () => {
                       placeholder="Password"
                     />
                     <label htmlFor="doctorPassword">Password</label>
-                    {errors.password && <div className="invalid-feedback">{errors.password}</div>}
+                    {errors.password && (
+                      <div className="invalid-feedback">{errors.password}</div>
+                    )}
                   </div>
                   <button
                     className="btn btn-teal healthcare-btn w-100 mb-3"
-                    onClick={handleDoctorSubmit}
+                    onClick={handleDoctorLogin}
                   >
                     Login as Doctor
                   </button>
                   <p className="text-center">
-                    Not registered? <Link to="/register" className="text-teal">Register here</Link>
+                    Not registered?{" "}
+                    <Link to="/register" className="text-teal">
+                      Register here
+                    </Link>
                   </p>
                 </>
               )}

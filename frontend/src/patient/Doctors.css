@@ -1,0 +1,150 @@
+/* Doctors.css */
+.doctors-page {
+  padding: 32px 0;
+  background-color: white;
+  min-height: 100vh;
+}
+
+.view-doctors-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.section-title {
+  font-size: 40px;
+  color: #0d6efd;
+  font-weight: 700;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.doctors-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+  margin-top: 16px;
+}
+
+.doctor-card {
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.doctor-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.doctor-header {
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+  background-color: #e9ecef;
+}
+
+.doctor-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.doctor-card:hover .doctor-image {
+  transform: scale(1.02);
+}
+
+.doctor-details {
+  padding: 20px 20px 12px;
+  flex-grow: 1;
+}
+
+.doctor-details h4 {
+  color: #2c3e50;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.doctor-specialty {
+  color: #0d6efd;
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 8px;
+  display: inline-block;
+  background-color: rgba(91, 123, 227, 0.1);
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+.doctor-availability {
+  padding: 0 20px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.available-date,
+.available-time {
+  display: flex;
+  align-items: center;
+  color: #6c757d;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.available-date::before {
+  content: "📅";
+  margin-right: 12px;
+}
+
+.available-time::before {
+  content: "⏰";
+  margin-right: 12px;
+}
+
+.booking-buttons {
+  padding: 0 20px 20px;
+}
+
+.booking-button {
+  background-color: #0d6efd;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 24px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 15px;
+}
+
+.booking-button:hover {
+  background-color: #0b5ed7;
+}
+
+.booking-button:active {
+  transform: scale(0.98);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 48px 16px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.empty-state h4 {
+  align-items: center;
+  color: #6c757d;
+  font-size: 20px;
+}
