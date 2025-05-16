@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import patientsData from '../data/patients.json';
+import axios from 'axios';
 
 const Patients = () => {
   const [data, setData] = useState([]);
@@ -8,9 +8,20 @@ const Patients = () => {
   const [filteredData, setFilteredData] = useState([]);
   const navigate = useNavigate();
 
+  //get all patients
+    const fetchPatients = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/api/patients');  
+      setData(response.data.data);
+      setFilteredData(response.data.data);
+      console.log(response.data.data,"get all patients")
+    } catch (error) {
+      console.error("Error fetching patients:", error);
+    }
+  };
+
   useEffect(() => {
-    setData(patientsData);
-    setFilteredData(patientsData);
+    fetchPatients();
   }, []);
 
   const handleSearch = (e) => {
@@ -51,7 +62,7 @@ const Patients = () => {
                   <th>Patient ID</th>
                   <th>Name</th>
                   <th>NIC</th>
-                  <th>Age</th>
+                  <th>Date of Birth</th>
                   <th>Gender</th>
                   <th>Phone</th>
                   <th>Email</th>
@@ -62,19 +73,17 @@ const Patients = () => {
               </thead>
               <tbody>
                 {filteredData.map((patient) => (
-                  <tr key={patient.patient_ID}>
-                    <td>{patient.patient_ID}</td>
-                    <td>{patient.name}</td>
+                  <tr key={patient._id}>
+                    <td>{patient._id}</td>
+                    <td>{patient.fullName}</td>
                     <td>{patient.nic}</td>
-                    <td>{patient.age}</td>
+                    <td>{patient.dob}</td>
                     <td>{patient.gender}</td>
-                    <td>{patient.phone}</td>
+                    <td>{patient.mobileNumber}</td>
                     <td>{patient.email}</td>
-                    <td>{patient.address}</td>
+                    <td>{patient.residentialStreet},{patient.residentialProvince},{patient.residentialCity}</td>
                     <td>
-                      {patient.medical_history.length > 0
-                        ? patient.medical_history.join(', ')
-                        : 'None'}
+                      {patient?.familyMedicalHistory}
                     </td>
                     <td>
                       <button
