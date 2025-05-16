@@ -46,6 +46,40 @@ const Login = () => {
     }
   };
 
+  const handlePatientLogin = async (e) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/patients/login",
+        patientForm
+      );
+      setUser(response.data);
+      console.log(response.data);
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Login Successful!",
+        showConfirmButton: false,
+        timer: 1500,
+        background: "#f8f9fa",
+      });
+
+      navigate("/patient/dashboard");
+    } catch (error) {
+      console.log("error while login : ", error);
+      Swal.fire({
+        icon: "error",
+        title: "Login Failed",
+        text:
+          error.response?.data?.message ||
+          "An error occurred during registration",
+        showConfirmButton: false,
+        timer: 4000,
+        timerProgressBar: true,
+        position: "center",
+      });
+    }
+  };
+
   const handleTypeChange = (type) => {
     setLoginType(type);
     setErrors({});
@@ -152,7 +186,7 @@ const Login = () => {
                   </div>
                   <button
                     className="btn btn-teal healthcare-btn w-100 mb-3"
-                    onClick={handlePatientSubmit}
+                    onClick={handlePatientLogin}
                   >
                     Login as Patient
                   </button>

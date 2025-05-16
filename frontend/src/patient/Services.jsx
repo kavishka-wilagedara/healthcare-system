@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Row, Col, Card } from "react-bootstrap";
 import "./Services.css";
 import {
@@ -15,6 +15,7 @@ import {
 } from "react-icons/fa";
 import { IoArrowBackCircleSharp } from "react-icons/io5";
 import { FaCalendarAlt } from "react-icons/fa";
+import { UserContext } from "../common/UserContext";
 
 const Services = () => {
   const serviceFeatureCards = [
@@ -35,6 +36,8 @@ const Services = () => {
       icon: <FaStethoscope className="feature-icon" />,
     },
   ];
+
+  const { user } = useContext(UserContext);
 
   const allServices = [
     {
