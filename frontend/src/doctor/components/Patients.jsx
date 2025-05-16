@@ -14,7 +14,7 @@ const Patients = () => {
       const response = await axios.get('http://localhost:5000/api/patients');  
       setData(response.data.data);
       setFilteredData(response.data.data);
-      console.log(response.data.data,"get all patients")
+      console.log(response.data.data.map((m)=>(m.dob.split('T')[0])),"get all patients")
     } catch (error) {
       console.error("Error fetching patients:", error);
     }
@@ -77,7 +77,7 @@ const Patients = () => {
                     <td>{patient._id}</td>
                     <td>{patient.fullName}</td>
                     <td>{patient.nic}</td>
-                    <td>{patient.dob}</td>
+                    <td>{patient.dob.split('T')[0]}</td>
                     <td>{patient.gender}</td>
                     <td>{patient.mobileNumber}</td>
                     <td>{patient.email}</td>
