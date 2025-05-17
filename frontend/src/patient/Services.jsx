@@ -17,6 +17,7 @@ import { IoArrowBackCircleSharp } from "react-icons/io5";
 import { FaCalendarAlt } from "react-icons/fa";
 import { UserContext } from "../common/UserContext";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const Services = () => {
   const { user } = useContext(UserContext);
@@ -50,6 +51,7 @@ const Services = () => {
     time: "",
     notes: "",
     roomNum: "",
+    patientId: "",
   });
 
   const patientId = user?.patient?.patientId;
@@ -94,7 +96,47 @@ const Services = () => {
     }));
   };
 
-  const handleFormSubmit = () => {};
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+
+    const data = new FormData();
+    data.append("name", newService.name);
+    data.append("date", newService.date);
+    data.append("time", newService.time);
+    data.append("notes", newService.notes);
+    data.append("patientId", { patientId });
+
+    try {
+      const payload = {
+        ...newService,
+        patientId: patientId,
+      };
+      const response = await axios.post(
+        "http://localhost:5000/api/services/",
+        payload
+      );
+      console.log(response.data);
+
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Service Create Successful!",
+        showConfirmButton: false,
+        background: "#f8f9fa",
+      });
+      // Reset form after succesfully submission
+      setNewservice({
+        name: "",
+        date: "",
+        time: "",
+        notes: "",
+        roomNum: "",
+        patientId: "",
+      });
+    } catch (error) {
+      console.log("Error creating new service", error);
+    }
+  };
 
   const handleCloseForm = () => {
     setShowForm(false);
@@ -235,9 +277,10 @@ const Services = () => {
                 <select
                   id="testType"
                   name="name"
+                  value={newService.name}
                   onChange={handleInputChange}
                   required
-                  defaultValue=""
+                  // defaultValue=""
                 >
                   <option value="" disabled>
                     Select a test
@@ -269,6 +312,7 @@ const Services = () => {
                     type="date"
                     id="date"
                     name="date"
+                    value={newService.date}
                     onChange={handleInputChange}
                     required
                   />
@@ -280,6 +324,7 @@ const Services = () => {
                     type="time"
                     id="time"
                     name="time"
+                    value={newService.time}
                     onChange={handleInputChange}
                     required
                   />
@@ -290,9 +335,10 @@ const Services = () => {
                 <label htmlFor="patientNotes">Notes</label>
                 <input
                   type="text"
-                  id="patientNote"
-                  name="patientNote"
+                  id="notes"
+                  name="notes"
                   placeholder="Describe your current health condition"
+                  value={newService.notes}
                   onChange={handleInputChange}
                   required
                 />
