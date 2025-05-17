@@ -44,8 +44,16 @@ const Services = () => {
   const [services, setServices] = useState([]);
   const [showServices, setShowServices] = useState(false);
   const [showHeader, setShowHeader] = useState(true);
+  const [newService, setNewservice] = useState({
+    name: "",
+    date: "",
+    time: "",
+    notes: "",
+    roomNum: "",
+  });
 
-  const patientId = user?.id;
+  const patientId = user?.patient?.patientId;
+  const patientFullName = user?.patient?.fullName;
 
   const getAllServiceByPatientId = async () => {
     try {
@@ -55,7 +63,6 @@ const Services = () => {
       console.log(response.data);
       setServices(response.data?.data);
       setShowServices(true);
-      // setShowServices(true);
       window.scrollTo({
         top: document.body.scrollHeight,
         behavior: "smooth",
@@ -79,7 +86,13 @@ const Services = () => {
     window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
   };
 
-  const handleInputChange = () => {};
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewservice((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   const handleFormSubmit = () => {};
 
@@ -243,9 +256,9 @@ const Services = () => {
                   type="text"
                   id="patientName"
                   name="patientName"
-                  placeholder="Enter patient name"
-                  onChange={handleInputChange}
-                  required
+                  value={patientFullName}
+                  readOnly
+                  className="readonly-input"
                 />
               </div>
 
@@ -271,6 +284,18 @@ const Services = () => {
                     required
                   />
                 </div>
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="patientNotes">Notes</label>
+                <input
+                  type="text"
+                  id="patientNote"
+                  name="patientNote"
+                  placeholder="Describe your current health condition"
+                  onChange={handleInputChange}
+                  required
+                />
               </div>
 
               <div className="service-buttons">
