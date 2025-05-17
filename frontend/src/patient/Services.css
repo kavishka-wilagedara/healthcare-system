@@ -262,7 +262,7 @@
 /* Service card styling */
 .service-card-wrapper {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   gap: 32px;
   margin-top: 32px;
 }
@@ -304,6 +304,12 @@
   margin-bottom: 12px;
   color: #555;
   font-size: 15px;
+}
+
+.card-body span {
+  color: gray;
+  margin-left: 10px;
+  font-weight: 400;
 }
 
 .card-body .icon {

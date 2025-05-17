@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Row, Col, Card } from "react-bootstrap";
 import "./Services.css";
 import {
@@ -16,8 +16,11 @@ import {
 import { IoArrowBackCircleSharp } from "react-icons/io5";
 import { FaCalendarAlt } from "react-icons/fa";
 import { UserContext } from "../common/UserContext";
+import axios from "axios";
 
 const Services = () => {
+  const { user } = useContext(UserContext);
+
   const serviceFeatureCards = [
     {
       title: "24/7 Emergency Ambulance Service",
@@ -37,60 +40,36 @@ const Services = () => {
     },
   ];
 
-  const { user } = useContext(UserContext);
-
-  const allServices = [
-    {
-      id: 1,
-      name: "Blood Test",
-      date: "2025-05-14",
-      time: "9.00 AM",
-      roomNum: "ABC-001",
-      result: "",
-      notes: "",
-    },
-    {
-      id: 2,
-      name: "Urine Test",
-      date: "2025-05-14",
-      time: "9.00 AM",
-      roomNum: "ABC-002",
-      result: "",
-      notes: "",
-    },
-    {
-      id: 3,
-      name: "X-Ray",
-      date: "2025-05-14",
-      time: "9.00 AM",
-      roomNum: "ABC-003",
-      result: "",
-      notes: "",
-    },
-    {
-      id: 3,
-      name: "X-Ray",
-      date: "2025-05-14",
-      time: "9.00 AM",
-      roomNum: "ABC-003",
-      result: "",
-      notes: "",
-    },
-  ];
   const [showForm, setShowForm] = useState(false);
-  const [showServices, setShowServices] = useState(false);
+  const [showServices, setShowServices] = useState([]);
   const [showHeader, setShowHeader] = useState(true);
+
+  const patientId = user?.id;
+
+  useEffect(() => {
+    getAllServiceByPatientId();
+  }, []);
+
+  const getAllServiceByPatientId = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/api/services/patient/${patientId}`
+      );
+      console.log(response.data);
+      setShowServices(response.data?.data);
+      setShowForm(false);
+      setShowHeader(false);
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: "smooth",
+      });
+    } catch (error) {
+      console.log("Error while getting all admins", error);
+    }
+  };
 
   const handleNewServiceClick = () => {
     setShowForm(true);
-    setShowServices(false);
-    setShowHeader(false);
-    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
-  };
-
-  const handleViewServiceClick = () => {
-    setShowServices(true);
-    setShowForm(false);
     setShowHeader(false);
     window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
   };
@@ -106,7 +85,7 @@ const Services = () => {
 
   const handleBackButton = () => {
     setShowForm(false);
-    setShowServices(false);
+    // setShowServices(false);
     setShowHeader(true);
   };
 
@@ -144,7 +123,7 @@ const Services = () => {
               </button>
               <button
                 className="view-service-btn"
-                onClick={handleViewServiceClick}
+                onClick={getAllServiceByPatientId}
               >
                 View My Service
               </button>
@@ -153,77 +132,82 @@ const Services = () => {
         </>
       )}
 
-      {showServices && (
-        <div className="view-appointments-section">
-          <IoArrowBackCircleSharp
-            className="back-btn"
-            onClick={handleBackButton}
-          />
-          {allServices.length > 0 ? (
-            <>
-              <h3>My Appointments</h3>
-              <div className="service-card-wrapper">
-                {allServices.map((service) => (
-                  <div className="service-card" key={service.id}>
-                    {/* Card header */}
-                    <div className="card-header">
-                      <h4>{service.name}</h4>
-                    </div>
-                    {/* Card body */}
-                    <div className="card-body">
-                      <p>
-                        <MdOutlineFormatListNumbered className="icon" />
-                        <strong>Appointment No:</strong>&nbsp;{service.id}
-                      </p>
-                      <p>
-                        <IoPersonOutline className="icon" />
-                        <strong>Patient Name:</strong>&nbsp;{service.id}
-                      </p>
-                      <p>
-                        <MdOutlineDateRange className="icon" />
-                        <strong>Date:</strong>&nbsp;{service.date}
-                      </p>
-                      <p>
-                        <IoTimeOutline className="icon" />
-                        <strong>Time:</strong>&nbsp;{service.time}
-                      </p>
-                      <p>
-                        <IoLocationOutline className="icon" />
-                        <strong>Location:</strong>&nbsp;{service.roomNum}
-                      </p>
-                    </div>
-                    <div className="service-actions">
-                      <button className="service-action-btn reschedule">
-                        Reschedule
-                      </button>
-                      <button className="service-action-btn cancel">
-                        Cancel
-                      </button>
-                      <button className="service-action-btn details">
-                        View Details
-                      </button>
-                    </div>
+      <div className="view-appointments-section">
+        <IoArrowBackCircleSharp
+          className="back-btn"
+          onClick={handleBackButton}
+        />
+        {console.log("-----------------------------------------")}
+        {console.log(showServices.length)}
+        {console.log("-----------------------------------------")}
+
+        {showServices.length > 0 ? (
+          <>
+            <h3>My Appointments</h3>
+            <div className="service-card-wrapper">
+              {showServices.map((service) => (
+                <div className="service-card" key={service._id}>
+                  {/* Card header */}
+                  <div className="card-header">
+                    <h4>{service.name}</h4>
                   </div>
-                ))}
-              </div>
-            </>
-          ) : (
-            <div className="no-appointments">
-              <div className="empty-state">
-                <FaCalendarAlt className="empty-icon" />
-                <h4>No Appointments Found</h4>
-                <p>You don't have any scheduled appointments at the moment.</p>
-                <button
-                  className="channeling-btn"
-                  onClick={handleNewServiceClick}
-                >
-                  Book Your First Appointment
-                </button>
-              </div>
+                  {/* Card body */}
+                  <div className="card-body">
+                    <p>
+                      <MdOutlineFormatListNumbered className="icon" />
+                      <strong>Appointment No:</strong>&nbsp;
+                      <span>{service._id}</span>
+                    </p>
+                    <p>
+                      <IoPersonOutline className="icon" />
+                      <strong>Patient Name:</strong>&nbsp;
+                      <span>{service.patient?.fullName}</span>
+                    </p>
+                    <p>
+                      <MdOutlineDateRange className="icon" />
+                      <strong>Date:</strong>&nbsp;<span>{service.date}</span>
+                    </p>
+                    <p>
+                      <IoTimeOutline className="icon" />
+                      <strong>Time:</strong>&nbsp;<span>{service.time}</span>
+                    </p>
+                    <p>
+                      <IoLocationOutline className="icon" />
+                      <strong>Clinical Room:</strong>&nbsp;
+                      <span>{service.roomNum}</span>
+                    </p>
+                  </div>
+                  <div className="service-actions">
+                    <button className="service-action-btn reschedule">
+                      Reschedule
+                    </button>
+                    <button className="service-action-btn cancel">
+                      Cancel
+                    </button>
+                    <button className="service-action-btn details">
+                      View Details
+                    </button>
+                  </div>
+                </div>
+              ))}
             </div>
-          )}
-        </div>
-      )}
+          </>
+        ) : (
+          <div className="no-appointments">
+            <div className="empty-state">
+              <FaCalendarAlt className="empty-icon" />
+              <h4>No Appointments Found</h4>
+              <p>You don't have any scheduled appointments at the moment.</p>
+              <button
+                className="channeling-btn"
+                onClick={handleNewServiceClick}
+              >
+                Book Your First Appointment
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
 
       {/*New service Modal */}
       {showForm && (
