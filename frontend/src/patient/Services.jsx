@@ -168,7 +168,7 @@ const Services = () => {
       newService.date !== "" ||
       newService.time !== "" ||
       newService.notes !== "";
-    // If not update form close silently without swalfire
+    // If not insert items into form close silently without swalfire
     if (!isFormUpdated) {
       setShowForm(false);
       setShowServices(false);
@@ -221,15 +221,43 @@ const Services = () => {
   };
 
   const handleCancelUpdate = () => {
-    setIsUpdating(false);
-    // Reset form to original values
-    setUpdateService({
-      name: selectedService.name,
-      date: selectedService.date,
-      time: selectedService.time,
-      notes: selectedService.notes,
-      roomNum: selectedService.roomNum,
-      patientId: selectedService.patientId,
+    const isFormUpdated =
+      updateService.name !== selectedService.name ||
+      updateService.date !== selectedService.date ||
+      updateService.time !== selectedService.time ||
+      updateService.notes !== selectedService.notes;
+    // If not update form close silently without swalfire
+    if (!isFormUpdated) {
+      setIsUpdating(false);
+
+      setShowServiceDetails(true);
+      return;
+    }
+
+    Swal.fire({
+      title: "Discard Changes?",
+      text: "You have unsaved changes. Are you sure you want to leave without saving?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, discard",
+      cancelButtonText: "No, stay here",
+      reverseButtons: true,
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        setIsUpdating(false);
+        setShowServiceDetails(true);
+        // Reset form to original values
+        setUpdateService({
+          name: selectedService.name,
+          date: selectedService.date,
+          time: selectedService.time,
+          notes: selectedService.notes,
+          roomNum: selectedService.roomNum,
+          patientId: selectedService.patientId,
+        });
+      } else {
+        setIsUpdating(true);
+      }
     });
   };
 
