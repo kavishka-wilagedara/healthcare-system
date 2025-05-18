@@ -107,9 +107,7 @@ const Services = () => {
     data.append("patientId", { patientId });
 
     // Generate random room number
-    const randomRoomNumber = `Clinical-Room ${
-      Math.floor(Math.random() * 5) + 101
-    }`;
+    const randomRoomNumber = `Room ${Math.floor(Math.random() * 5) + 101}`;
 
     try {
       const payload = {
@@ -244,7 +242,7 @@ const Services = () => {
                       <p>
                         <MdOutlineFormatListNumbered className="icon" />
                         <strong>Appointment No:</strong>&nbsp;
-                        <span>{service._id}</span>
+                        <span>...{service._id.slice(-10)}</span>
                       </p>
                       <p>
                         <IoPersonOutline className="icon" />
