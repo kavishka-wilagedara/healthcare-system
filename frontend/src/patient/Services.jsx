@@ -116,9 +116,6 @@ const Services = () => {
     }));
   };
 
-  // Generate random room number
-  const randomRoomNumber = `Room ${Math.floor(Math.random() * 5) + 101}`;
-
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
@@ -128,6 +125,9 @@ const Services = () => {
     data.append("time", newService.time);
     data.append("notes", newService.notes);
     data.append("patientId", { patientId });
+
+    // Generate random room number
+    const randomRoomNumber = `Room ${Math.floor(Math.random() * 5) + 101}`;
 
     try {
       const payload = {
