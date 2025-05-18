@@ -71,6 +71,7 @@ const Services = () => {
       });
     } catch (error) {
       console.log("Error while getting all services", error);
+      setServices([]);
     }
   };
   useEffect(() => {}, []);
