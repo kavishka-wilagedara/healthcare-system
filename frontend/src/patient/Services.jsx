@@ -106,10 +106,16 @@ const Services = () => {
     data.append("notes", newService.notes);
     data.append("patientId", { patientId });
 
+    // Generate random room number
+    const randomRoomNumber = `Clinical-Room ${
+      Math.floor(Math.random() * 5) + 101
+    }`;
+
     try {
       const payload = {
         ...newService,
         patientId: patientId,
+        roomNum: randomRoomNumber,
       };
       const response = await axios.post(
         "http://localhost:5000/api/services/",
@@ -139,9 +145,35 @@ const Services = () => {
   };
 
   const handleCloseForm = () => {
-    setShowForm(false);
-    setShowServices(false);
-    setShowHeader(true);
+    const isFormUpdated =
+      newService.name !== "" ||
+      newService.date !== "" ||
+      newService.time !== "" ||
+      newService.notes !== "";
+    // If not update form close silently without swalfire
+    if (!isFormUpdated) {
+      setShowForm(false);
+      setShowServices(false);
+      setShowHeader(true);
+      return;
+    }
+    Swal.fire({
+      title: "Discard Changes?",
+      text: "You have unsaved changes. Are you sure you want to leave without saving?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, discard",
+      cancelButtonText: "No, stay here",
+      reverseButtons: true,
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        setShowForm(false);
+        setShowServices(false);
+        setShowHeader(true);
+      } else {
+        setShowForm(true);
+      }
+    });
   };
 
   const handleBackButton = () => {
@@ -280,7 +312,6 @@ const Services = () => {
                   value={newService.name}
                   onChange={handleInputChange}
                   required
-                  // defaultValue=""
                 >
                   <option value="" disabled>
                     Select a test
@@ -349,7 +380,7 @@ const Services = () => {
                   Add Service
                 </button>
                 <button
-                  type="submit"
+                  type="button"
                   className="service-cancel-btn"
                   onClick={handleCloseForm}
                 >
