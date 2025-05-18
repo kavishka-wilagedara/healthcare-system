@@ -168,7 +168,7 @@ const Services = () => {
       newService.date !== "" ||
       newService.time !== "" ||
       newService.notes !== "";
-    // If not insert items into form close silently without swalfire
+    // If not insert items into form then close silently without swalfire
     if (!isFormUpdated) {
       setShowForm(false);
       setShowServices(false);
@@ -229,7 +229,6 @@ const Services = () => {
     // If not update form close silently without swalfire
     if (!isFormUpdated) {
       setIsUpdating(false);
-
       setShowServiceDetails(true);
       return;
     }
@@ -420,9 +419,6 @@ const Services = () => {
                       </p>
                     </div>
                     <div className="service-actions">
-                      {/* <button className="service-action-btn reschedule">
-                        Reschedule
-                      </button> */}
                       <button
                         className="service-action-btn cancel"
                         onClick={() => {

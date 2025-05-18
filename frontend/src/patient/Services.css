@@ -344,15 +344,6 @@
   transition: all 0.2s ease;
 }
 
-.reschedule {
-  background-color: #0d6efd;
-  color: white;
-}
-
-.reschedule:hover {
-  background-color: #0b5ed7;
-}
-
 .cancel {
   background-color: #ef4444;
   color: white;
@@ -411,6 +402,7 @@
   }
 }
 
+/* Service Details CSS */
 .model-content-header {
   color: #0d6efd;
   font-weight: 700;
