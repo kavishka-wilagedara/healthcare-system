@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Row, Col, Card } from "react-bootstrap";
+import { Row, Col, Card, Form } from "react-bootstrap";
 import "./Services.css";
 import {
   MdOutlineDateRange,
@@ -45,6 +45,17 @@ const Services = () => {
   const [services, setServices] = useState([]);
   const [showServices, setShowServices] = useState(false);
   const [showHeader, setShowHeader] = useState(true);
+  const [showServiceDetails, setShowServiceDetails] = useState(false);
+  const [selectedService, setSelectedService] = useState(null);
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [updateService, setUpdateService] = useState({
+    name: "",
+    date: "",
+    time: "",
+    notes: "",
+    roomNum: "",
+    patientId: "",
+  });
   const [newService, setNewservice] = useState({
     name: "",
     date: "",
@@ -97,6 +108,17 @@ const Services = () => {
     }));
   };
 
+  const handleUpdateInputChange = (e) => {
+    const { name, value } = e.target;
+    setUpdateService((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  // Generate random room number
+  const randomRoomNumber = `Room ${Math.floor(Math.random() * 5) + 101}`;
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
@@ -106,9 +128,6 @@ const Services = () => {
     data.append("time", newService.time);
     data.append("notes", newService.notes);
     data.append("patientId", { patientId });
-
-    // Generate random room number
-    const randomRoomNumber = `Room ${Math.floor(Math.random() * 5) + 101}`;
 
     try {
       const payload = {
@@ -181,7 +200,38 @@ const Services = () => {
     setShowHeader(true);
   };
 
-  const handleViewDetails = () => {};
+  const handleViewDetails = (service) => {
+    setShowHeader(false);
+    setShowServices(false);
+    setSelectedService(service);
+    setUpdateService({
+      name: service.name,
+      date: service.date,
+      time: service.time,
+      notes: service.notes,
+      roomNum: service.roomNum,
+      patientId: service.patientId,
+    });
+    setShowServiceDetails(true);
+    setIsUpdating(false);
+  };
+
+  const handleStartUpdate = () => {
+    setIsUpdating(true);
+  };
+
+  const handleCancelUpdate = () => {
+    setIsUpdating(false);
+    // Reset form to original values
+    setUpdateService({
+      name: selectedService.name,
+      date: selectedService.date,
+      time: selectedService.time,
+      notes: selectedService.notes,
+      roomNum: selectedService.roomNum,
+      patientId: selectedService.patientId,
+    });
+  };
 
   const handleDelete = async (serviceId) => {
     Swal.fire({
@@ -225,6 +275,8 @@ const Services = () => {
       }
     });
   };
+
+  const handleUpdateSubmit = async (e) => {};
 
   return (
     <div className="service-container">
@@ -323,7 +375,9 @@ const Services = () => {
                       </button>
                       <button
                         className="service-action-btn details"
-                        onClick={handleViewDetails}
+                        onClick={() => {
+                          handleViewDetails(service);
+                        }}
                       >
                         View Details
                       </button>
@@ -346,6 +400,209 @@ const Services = () => {
                 </button>
               </div>
             </div>
+          )}
+        </div>
+      )}
+
+      {showServiceDetails && (
+        <div className="model-overlay">
+          <div className="model-content">
+            <h3 className="model-content-header">
+              {isUpdating ? "Update Service" : "Service Details"}
+            </h3>
+            {selectedService && (
+              <>
+                {!isUpdating ? (
+                  <div className="service-details">
+                    <Row>
+                      <Col md={6}>
+                        <Card className="app-infor">
+                          <Card.Header>
+                            <h5>Appoinment Information</h5>
+                          </Card.Header>
+                          <Card.Body>
+                            <div className="detail-items">
+                              <MdOutlineFormatListNumbered className="detail-icon" />
+                              <strong>Appointment No:</strong>
+                              <span>{selectedService._id}</span>
+                            </div>
+                            <div className="detail-items">
+                              <FaStethoscope className="detail-icon" />
+                              <strong>Service Type:</strong>
+                              <span>{selectedService.name}</span>
+                            </div>
+                            <div className="detail-items">
+                              <MdOutlineDateRange className="detail-icon" />
+                              <strong>Date:</strong>
+                              <span>{selectedService.date}</span>
+                            </div>
+                            <div className="detail-items">
+                              <IoTimeOutline className="detail-icon" />
+                              <strong>Time:</strong>
+                              <span>{selectedService.time}</span>
+                            </div>
+                            <div className="detail-items">
+                              <IoLocationOutline className="detail-icon" />
+                              <strong>Clinical Room:</strong>
+                              <span>{selectedService.roomNum}</span>
+                            </div>
+                          </Card.Body>
+                        </Card>
+                      </Col>
+                      <Col md={6}>
+                        <Card className="mb-3">
+                          <Card.Header>
+                            <h5>Patient Information</h5>
+                          </Card.Header>
+                          <Card.Body>
+                            <div className="detail-item">
+                              <IoPersonOutline className="detail-icon" />
+                              <strong>Patient Name:</strong>
+                              <span>{selectedService.patient?.fullName}</span>
+                            </div>
+                            <div className="detail-item">
+                              <MdOutlineFormatListNumbered className="detail-icon" />
+                              <strong>Patient ID:</strong>
+                              <span>{selectedService.patient?._id}</span>
+                            </div>
+                          </Card.Body>
+                        </Card>
+                        <Card>
+                          <Card.Header>
+                            <h5>Additional Notes</h5>
+                          </Card.Header>
+                          <Card.Body>
+                            <p className="notes-text">
+                              {selectedService.notes ||
+                                "No additional notes provided."}
+                            </p>
+                          </Card.Body>
+                        </Card>
+                      </Col>
+                    </Row>
+                  </div>
+                ) : (
+                  <Form onSubmit={handleUpdateSubmit}>
+                    <Row>
+                      <Col md={6}>
+                        <Form.Group className="update-form mb-3">
+                          <Form.Label>Test Type</Form.Label>
+                          <Form.Select
+                            name="name"
+                            value={updateService.name}
+                            onChange={handleUpdateInputChange}
+                            required
+                          >
+                            <option value="">Select a test</option>
+                            <option value="Blood Test">Blood Test</option>
+                            <option value="X-Ray">X-Ray</option>
+                            <option value="MRI Scan">MRI Scan</option>
+                            <option value="CT Scan">CT Scan</option>
+                            <option value="Urine Test">Urine Test</option>
+                          </Form.Select>
+                        </Form.Group>
+                      </Col>
+                      <Col md={6}>
+                        <Form.Group className="update-form mb-3">
+                          <Form.Label>Patient Name</Form.Label>
+                          <Form.Control
+                            type="text"
+                            value={patientFullName}
+                            readOnly
+                            disabled
+                          />
+                        </Form.Group>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col md={6}>
+                        <Form.Group className="mb-3">
+                          <Form.Label>Date</Form.Label>
+                          <Form.Control
+                            type="date"
+                            name="date"
+                            value={updateService.date}
+                            onChange={handleUpdateInputChange}
+                            required
+                          />
+                        </Form.Group>
+                      </Col>
+                      <Col md={6}>
+                        <Form.Group className="mb-3">
+                          <Form.Label>Time</Form.Label>
+                          <Form.Control
+                            type="time"
+                            name="time"
+                            value={updateService.time}
+                            onChange={handleUpdateInputChange}
+                            required
+                          />
+                        </Form.Group>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col md={6}>
+                        <Form.Group className="mb-3">
+                          <Form.Label>Clinical Room</Form.Label>
+                          <Form.Control
+                            type="text"
+                            name="roomNum"
+                            value={updateService.roomNum}
+                            readOnly
+                            disabled
+                          />
+                        </Form.Group>
+                      </Col>
+                      <Col md={6}>
+                        <Form.Group className="mb-3">
+                          <Form.Label>Notes</Form.Label>
+                          <Form.Control
+                            as="textarea"
+                            rows={3}
+                            name="notes"
+                            value={updateService.notes}
+                            onChange={handleUpdateInputChange}
+                            placeholder="Describe your current health condition"
+                            required
+                          />
+                        </Form.Group>
+                      </Col>
+                    </Row>
+                  </Form>
+                )}
+              </>
+            )}
+          </div>
+          {!isUpdating ? (
+            <>
+              <button
+                className="update-close-button me-5"
+                onClick={() => {
+                  setShowServiceDetails(false);
+                  setShowServices(true);
+                }}
+              >
+                Close
+              </button>
+              <button
+                className="click-update-button"
+                onClick={handleStartUpdate}
+              >
+                Update Service
+              </button>
+            </>
+          ) : (
+            <>
+              <button
+                className="update-close-button me-5"
+                onClick={handleCancelUpdate}
+              >
+                Cancel
+              </button>
+              <button className="update-button" onClick={handleUpdateSubmit}>
+                Save Changes
+              </button>
+            </>
           )}
         </div>
       )}
