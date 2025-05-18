@@ -180,6 +180,51 @@ const Services = () => {
     setShowHeader(true);
   };
 
+  const handleViewDetails = () => {};
+
+  const handleDelete = async (serviceId) => {
+    Swal.fire({
+      title: "Delete Service?",
+      text: "Are you sure you want to delete this service? This action cannot be undone.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete",
+      cancelButtonText: "Cancel",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const response = await axios.delete(
+            `http://localhost:5000/api/services/${serviceId}`
+          );
+          console.log(response.data);
+
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Service has been deleted!",
+            showConfirmButton: true,
+            confirmButtonColor: "#d33",
+            background: "#f8f9fa",
+          });
+          // Get updated services
+          getAllServiceByPatientId();
+        } catch (error) {
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "Failed to delete the service!",
+            showConfirmButton: true,
+            confirmButtonColor: "#d33",
+            background: "#f8f9fa",
+          });
+          console.log("Error deleting service", error);
+        }
+      }
+    });
+  };
+
   return (
     <div className="service-container">
       {showHeader && (
@@ -264,13 +309,21 @@ const Services = () => {
                       </p>
                     </div>
                     <div className="service-actions">
-                      <button className="service-action-btn reschedule">
+                      {/* <button className="service-action-btn reschedule">
                         Reschedule
+                      </button> */}
+                      <button
+                        className="service-action-btn cancel"
+                        onClick={() => {
+                          handleDelete(service._id);
+                        }}
+                      >
+                        Delete
                       </button>
-                      <button className="service-action-btn cancel">
-                        Cancel
-                      </button>
-                      <button className="service-action-btn details">
+                      <button
+                        className="service-action-btn details"
+                        onClick={handleViewDetails}
+                      >
                         View Details
                       </button>
                     </div>
