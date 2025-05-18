@@ -276,7 +276,37 @@ const Services = () => {
     });
   };
 
-  const handleUpdateSubmit = async (e) => {};
+  const handleUpdateSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const payload = {
+        ...updateService,
+        patientId: patientId,
+      };
+
+      const response = await axios.put(
+        `http://localhost:5000/api/services/${selectedService._id}`,
+        payload
+      );
+      console.log(response.data);
+
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Service Updated Successfully!",
+        showConfirmButton: false,
+        background: "#f8f9fa",
+      });
+
+      // Close and refresh services
+      setIsUpdating(false);
+      setShowServiceDetails(false);
+      getAllServiceByPatientId();
+      setShowServices(true);
+    } catch (error) {
+      console.log("Error updating service", error);
+    }
+  };
 
   return (
     <div className="service-container">
