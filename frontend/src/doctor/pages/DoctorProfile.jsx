@@ -3,15 +3,17 @@ import { UserContext } from '../../common/UserContext'
 import axios from 'axios';
 import { Modal, Button, Form } from 'react-bootstrap';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 import '../css/DoctorProfile.css';
 
 export default function DoctorProfile() {
-    const { user } = useContext(UserContext);
+    const { user, logout } = useContext(UserContext);
     const [doctor, setDoctor] = useState(null);
     const [appointments, setAppointments] = useState([]);
     const [loading, setLoading] = useState(true);
     const [appointmentsLoading, setAppointmentsLoading] = useState(true);
     const [showEditModal, setShowEditModal] = useState(false);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [formData, setFormData] = useState({
         fullName: '',
         email: '',
@@ -25,6 +27,7 @@ export default function DoctorProfile() {
         completed: 0
     });
 
+    const navigate = useNavigate();
     const doctorId = user?.doctor.id;
 
     useEffect(() => {
@@ -124,6 +127,14 @@ export default function DoctorProfile() {
         setShowEditModal(false);
     }
 
+    const handleShowDeleteModal = () => {
+        setShowDeleteModal(true);
+    }
+
+    const handleCloseDeleteModal = () => {
+        setShowDeleteModal(false);
+    }
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData({
@@ -168,6 +179,32 @@ export default function DoctorProfile() {
         }
     }
 
+    const handleDeleteAccount = async () => {
+        try {
+            await axios.delete(`http://localhost:5000/api/doctor/delete/${doctor._id}`);
+            
+            Swal.fire({
+                icon: 'success',
+                title: 'Account Deleted',
+                text: 'Your account has been deleted successfully',
+                timer: 2000,
+                showConfirmButton: false
+            }).then(() => {
+                logout();
+                navigate("/");
+            });
+        } catch (error) {
+            console.log('Error while deleting doctor account:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Failed to delete account',
+                timer: 3000,
+                showConfirmButton: false
+            });
+        }
+    }
+
     const formatDate = (dateString) => {
         const options = { year: 'numeric', month: 'short', day: 'numeric' };
         return new Date(dateString).toLocaleDateString(undefined, options);
@@ -194,8 +231,11 @@ export default function DoctorProfile() {
                             <p className="subtitle">Manage your profile and appointments</p>
                         </div>
                         <div className="col-md-4 text-md-end">
-                            <button className="btn btn-outline-light" onClick={handleEditProfile}>
+                            <button className="btn btn-outline-light me-2" onClick={handleEditProfile}>
                                 <i className="fas fa-edit me-2"></i> Edit Profile
+                            </button>
+                            <button className="btn btn-outline-danger" onClick={handleShowDeleteModal}>
+                                <i className="fas fa-trash-alt me-2"></i> Delete Account
                             </button>
                         </div>
                     </div>
@@ -453,6 +493,31 @@ export default function DoctorProfile() {
                         </div>
                     </Form>
                 </Modal.Body>
+            </Modal>
+
+            <Modal show={showDeleteModal} onHide={handleCloseDeleteModal} centered>
+                <Modal.Header closeButton>
+                    <Modal.Title><i className="fas fa-exclamation-triangle text-danger me-2"></i>Delete Account</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <div className="alert alert-danger">
+                        <h5 className="alert-heading">Warning!</h5>
+                        <p>Are you sure you want to delete your account? This action cannot be undone.</p>
+                        <ul className="mb-0">
+                            <li>All your profile information will be permanently removed</li>
+                            <li>All your appointments will be canceled</li>
+                            <li>You will need to register again to use the system</li>
+                        </ul>
+                    </div>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseDeleteModal}>
+                        <i className="fas fa-times me-1"></i> Cancel
+                    </Button>
+                    <Button variant="danger" onClick={handleDeleteAccount}>
+                        <i className="fas fa-trash-alt me-1"></i> Delete Account
+                    </Button>
+                </Modal.Footer>
             </Modal>
         </div>
     );
