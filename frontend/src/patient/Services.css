@@ -173,6 +173,11 @@
   flex: 1;
 }
 
+.readonly-input {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+}
+
 .service-buttons {
   display: flex;
   justify-content: center;
@@ -306,6 +311,12 @@
   font-size: 15px;
 }
 
+.card-body span {
+  color: gray;
+  margin-left: 10px;
+  font-weight: 400;
+}
+
 .card-body .icon {
   margin-right: 12px;
   color: #0d6efd;
@@ -331,15 +342,6 @@
   font-weight: 500;
   flex: 1;
   transition: all 0.2s ease;
-}
-
-.reschedule {
-  background-color: #0d6efd;
-  color: white;
-}
-
-.reschedule:hover {
-  background-color: #0b5ed7;
 }
 
 .cancel {
@@ -398,4 +400,81 @@
   .service-card-wrapper {
     grid-template-columns: 1fr;
   }
+}
+
+/* Service Details CSS */
+.model-content-header {
+  color: #0d6efd;
+  font-weight: 700;
+  font-size: 35px;
+  border-bottom: 2px solid #0d89fd;
+  display: inline-block;
+  padding-bottom: 4px;
+}
+
+.service-details {
+  margin-top: 25px;
+}
+
+.update-form {
+  margin-top: 25px;
+}
+
+.app-infor {
+  height: 361px;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.detail-items {
+  display: flex;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.detail-icon {
+  margin-right: 10px;
+  color: #007bff;
+}
+
+button.update-close-button,
+button.click-update-button,
+button.update-button {
+  margin-top: 30px;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+button.update-close-button {
+  background-color: #6c757d;
+  color: white;
+}
+
+button.update-close-button:hover {
+  background-color: #5a6268;
+}
+
+button.click-update-button {
+  background-color: #007bff;
+  color: white;
+}
+
+button.click-update-button:hover {
+  background-color: #0056b3;
+}
+
+button.update-button {
+  background-color: #28a745;
+  color: white;
+}
+
+button.update-button:hover {
+  background-color: #218838;
 }
