@@ -111,13 +111,15 @@ function Channeling() {
   };
 
   const getStatusClass = (status) => {
-    switch (status) {
-      case true:
+   switch (status.toLowerCase()) {
+      case "confirmed":
         return "status-confirmed";
-      case false:
+      case "pending":
         return "status-pending";
+      case "cancelled":
+        return "status-cancelled";
       default:
-        return false;
+        return "";
     }
   };
 
