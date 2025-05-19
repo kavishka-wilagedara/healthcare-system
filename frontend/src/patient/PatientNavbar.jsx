@@ -1,12 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Nav, Navbar, Container, Dropdown } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaSignOutAlt, FaUserCircle, FaBell } from "react-icons/fa";
 import "./PatientNavbar.css";
 import { useNotification } from "./context/NotificationContext";
+import { UserContext } from "../common/UserContext";
 
 const PatientNavbar = () => {
   const { getUnreadCount } = useNotification();
+  const { user, setUser, logout } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
 
   return (
     <Navbar
@@ -50,7 +58,9 @@ const PatientNavbar = () => {
             >
               <FaBell className="me-1" />
               {getUnreadCount() > 0 && (
-                <span className="nav-notification-badge">{getUnreadCount()}</span>
+                <span className="nav-notification-badge">
+                  {getUnreadCount()}
+                </span>
               )}
             </Nav.Link>
             <Dropdown align="end">
@@ -66,7 +76,7 @@ const PatientNavbar = () => {
                   View Profile
                 </Dropdown.Item>
                 <Dropdown.Divider />
-                <Dropdown.Item as={Link} to="/" className="">
+                <Dropdown.Item onClick={handleLogout}>
                   <FaSignOutAlt className="text-danger me-2" /> Logout
                 </Dropdown.Item>
               </Dropdown.Menu>
