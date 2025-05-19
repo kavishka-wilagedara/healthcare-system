@@ -1,59 +1,61 @@
-import React, { useState, useEffect } from 'react';
-import appointmentsData from '../data/appointments.json';
-import axios from 'axios';
+import React, { useContext, useState, useEffect } from "react";
+import axios from "axios";
 import { UserContext } from "../../common/UserContext";
 
 const Appointments = () => {
-  const [pendingAppointments, setPendingAppointments] = useState([]);
-  const [data,setData] = useState([]);
+  const { user } = useContext(UserContext);
+  const [data, setData] = useState([]);
 
+  const doctorId = user?.doctor?.id;
 
   //get all apppoinments times
   const fetchAppointments = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/appointments/');  
-      setData(response.data.data);
-      // setFilteredData(response.data.data);
-      
+      const response = await axios.get(
+        "http://localhost:5000/api/appointments/"
+      );
+      // filter by doctorId
+      setData((preData) =>
+        response.data.data.filter(
+          (appointment) => appointment.appointment?.doctorId === doctorId
+        )
+      );
+      console.log(data);
     } catch (error) {
       console.error("Error fetching patients:", error);
+      setData([]);
     }
   };
 
-
   useEffect(() => {
-    const filteredAppointments = appointmentsData.filter(appointment => appointment.status === 'pending');
-    setPendingAppointments(filteredAppointments);
-
-    
     fetchAppointments();
   }, []);
 
-
-  const updateStatus = async(appointmentId, newStatus) => {
-    try{
-      if(newStatus=='confirmed'){
-        
+  const updateStatus = async (appointmentId, newStatus) => {
+    try {
+      if (newStatus === "confirmed") {
         const response = await axios.put(
           `http://localhost:5000/api/appointments/${appointmentId}`,
-          { booked: 'confirmed' }
-        )
-      }else{
-      const response = await axios.put(
-        `http://localhost:5000/api/appointments/${appointmentId}`,
-        { booked: 'cancelled' }
-      );
-    };
-  }catch (error) {
-    console.error("Error confirming appointment:", error);
-  }
+          { booked: "confirmed" }
+        );
+      } else {
+        const response = await axios.put(
+          `http://localhost:5000/api/appointments/${appointmentId}`,
+          { booked: "cancelled" }
+        );
+      }
+    } catch (error) {
+      console.error("Error confirming appointment:", error);
+    }
 
-  fetchAppointments();
-};
+    fetchAppointments();
+  };
 
   return (
     <div className="container py-5">
-      <h3 className="display-6 fw-bold text-primary mb-4">Pending Appointments</h3>
+      <h3 className="display-6 fw-bold text-primary mb-4">
+        Pending Appointments
+      </h3>
       <div className="card shadow-sm">
         <div className="card-body">
           <div className="table-responsive">
@@ -77,28 +79,31 @@ const Appointments = () => {
                     <td>{appointment.patient.mobileNumber}</td>
                     <td>{appointment.patient.email}</td>
                     <td>
-                      {appointment.booked === 'confirmed' ? (
+                      {appointment.booked === "confirmed" ? (
                         <span className="text-success fw-bold">Confirmed</span>
-                      ) : appointment.booked === 'cancelled' ? (
+                      ) : appointment.booked === "cancelled" ? (
                         <span className="text-danger fw-bold">Cancelled</span>
                       ) : (
                         <>
-                          <button 
-                            className="btn btn-success btn-sm me-2 healthcare-btn-success" 
-                            onClick={() => updateStatus(appointment._id, 'confirmed')}
+                          <button
+                            className="btn btn-success btn-sm me-2 healthcare-btn-success"
+                            onClick={() =>
+                              updateStatus(appointment._id, "confirmed")
+                            }
                           >
                             Accept
                           </button>
-                          <button 
+                          <button
                             className="btn btn-danger btn-sm healthcare-btn-danger"
-                            onClick={() => updateStatus(appointment._id, 'cancelled')}
+                            onClick={() =>
+                              updateStatus(appointment._id, "cancelled")
+                            }
                           >
                             Reject
                           </button>
                         </>
                       )}
                     </td>
-
                   </tr>
                 ))}
               </tbody>
