@@ -1,9 +1,9 @@
-import React, { use, useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import { UserContext } from "../../common/UserContext";
 import axios from "axios";
 
 const AddTimeForm = () => {
-  const { user} = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [formData, setFormData] = useState({
     inTime: "",
     outTime: "",
@@ -19,12 +19,12 @@ const AddTimeForm = () => {
   };
 
   const handleSubmit = async (e) => {
-          e.preventDefault();
+    e.preventDefault();
     try {
       const requestBody = {
         id: user.doctor.id,
-        intime: formData.inTime,
-        outtime: formData.outTime,
+        inTime: formData.inTime,
+        outTime: formData.outTime,
         day: formData.day,
       };
       const response = await axios.post(
@@ -32,8 +32,16 @@ const AddTimeForm = () => {
         requestBody
       );
       console.log(response.data);
+      // Clear form after successful submission
+      setFormData({
+        inTime: "",
+        outTime: "",
+        day: "",
+      });
+      alert("Time slot added successfully!");
     } catch (error) {
       console.log(error);
+      alert("Error adding time slot. Please try again.");
     }
   };
 
@@ -47,30 +55,30 @@ const AddTimeForm = () => {
           <div className="card-body p-4">
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
-                <label htmlFor="intime" className="form-label fw-medium">
+                <label htmlFor="inTime" className="form-label fw-medium">
                   In Time
                 </label>
                 <input
                   type="time"
-                  id="intime"
-                  name="intime"
+                  id="inTime"
+                  name="inTime"
                   className="form-control"
-                  value={formData.intime}
+                  value={formData.inTime}
                   onChange={handleChange}
                   required
                 />
               </div>
 
               <div className="mb-3">
-                <label htmlFor="outtime" className="form-label fw-medium">
+                <label htmlFor="outTime" className="form-label fw-medium">
                   Out Time
                 </label>
                 <input
                   type="time"
-                  id="outtime"
-                  name="outtime"
+                  id="outTime"
+                  name="outTime"
                   className="form-control"
-                  value={formData.outtime}
+                  value={formData.outTime}
                   onChange={handleChange}
                   required
                 />
