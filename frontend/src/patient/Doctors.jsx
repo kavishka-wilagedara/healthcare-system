@@ -95,7 +95,7 @@ const Doctors = () => {
     try {
       const requestBody = {
         "appointment": doctor._id, 
-        "booked": true,
+        "booked": false,
         "completed": false,
         "medicine": "",
         "advice": ""
