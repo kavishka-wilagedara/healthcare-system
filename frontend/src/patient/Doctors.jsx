@@ -19,7 +19,6 @@ const Doctors = () => {
       const response = await axios.get('http://localhost:5000/api/doctor/time/all');  
       setData(response.data);
       // setFilteredData(response.data.data);
-      console.log(response.data,"doctor")
     } catch (error) {
       console.error("Error fetching patients:", error);
     }
@@ -29,6 +28,8 @@ const Doctors = () => {
       fetchDocAvailableTimes();
     }, []);
   
+
+    console.log(data,"date")
   const handleBooking = (doctor) => {
     Swal.fire({
       icon: "question",
@@ -111,7 +112,7 @@ const Doctors = () => {
                 </div>
 
                 <div className="doctor-availability">
-                  <span className="available-date">{doctor.day}</span>
+                  <span className="available-date">{doctor.date}</span>
                   <span className="available-time">{doctor.inTime} - {doctor.outTime} </span>
                 </div>
 
