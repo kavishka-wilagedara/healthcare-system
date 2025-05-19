@@ -7,7 +7,7 @@ const AddTimeForm = () => {
   const [formData, setFormData] = useState({
     inTime: "",
     outTime: "",
-    day: "",
+    date: "",
   });
 
   const handleChange = (e) => {
@@ -25,7 +25,7 @@ const AddTimeForm = () => {
         id: user.doctor.id,
         inTime: formData.inTime,
         outTime: formData.outTime,
-        day: formData.day,
+        date: formData.date,
       };
       const response = await axios.post(
         `http://localhost:5000/api/doctor/time`,
@@ -36,7 +36,7 @@ const AddTimeForm = () => {
       setFormData({
         inTime: "",
         outTime: "",
-        day: "",
+        date: "",
       });
       alert("Time slot added successfully!");
     } catch (error) {
@@ -85,28 +85,18 @@ const AddTimeForm = () => {
               </div>
 
               <div className="mb-3">
-                <label htmlFor="day" className="form-label fw-medium">
-                  Day
-                </label>
-                <select
-                  id="day"
-                  name="day"
-                  className="form-select"
-                  value={formData.day}
-                  onChange={handleChange}
-                  required
-                >
-                  <option value="">Select a day</option>
-                  <option value="Monday">Monday</option>
-                  <option value="Tuesday">Tuesday</option>
-                  <option value="Wednesday">Wednesday</option>
-                  <option value="Thursday">Thursday</option>
-                  <option value="Friday">Friday</option>
-                  <option value="Saturday">Saturday</option>
-                  <option value="Sunday">Sunday</option>
-                </select>
+                <div className="form-group">
+                  <label htmlFor="date">Date</label>
+                  <input
+                    type="date"
+                    id="date"
+                    name="date"
+                    value={formData.date}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
               </div>
-
               <button
                 type="submit"
                 className="btn btn-primary healthcare-btn w-100"

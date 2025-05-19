@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect ,useContext} from "react";
 import {
   FaBell,
   FaCalendarCheck,
@@ -12,6 +12,9 @@ import {
 } from "react-icons/fa";
 import "./Notification.css";
 import { useNotification } from "./context/NotificationContext";
+import axios from 'axios';
+import { UserContext } from "../common/UserContext";
+
 
 function Notification() {
   // const [notifications, setNotifications] = useState([]);
@@ -20,6 +23,9 @@ function Notification() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterType, setFilterType] = useState("all");
   const [filterRead, setFilterRead] = useState("all");
+  const {user} = useContext(UserContext);
+  const [data, setData] = useState([]);
+  const [notifyData, setNotifyData] = useState([]);
 
   const {
     notifications,
@@ -30,10 +36,39 @@ function Notification() {
     setFilteredNotifications,
   } = useNotification();
 
+    //get all doctor available times
+  const fetchAppointments = async () => {
+    //user id
+    const userId = user?.patient.patientId
+
+    try {
+      const response = await axios.get('http://localhost:5000/api/appointments/');  
+
+      const filterData = response.data.data.filter(item => item.patient._id === userId && item.completed === true);
+      console.log(filterData,"check")
+      setData(filterData);
+      
+    } catch (error) {
+      console.error("Error fetching patients:", error);
+    }
+  };
+  
+  const notifyUser = () =>{
+    const today = new Date().toISOString().split('T')[0];
+    const filterDate = data?.filter(item => item.appointment.date === today);
+    setNotifyData(filterDate);
+  }
+
   // Apply filters by search term or filter options change
+    useEffect(() => {
+    fetchAppointments();
+    notifyUser();
+  }, []);
+
   useEffect(() => {
     applyFilters();
   }, [searchTerm, filterType, filterRead, notifications]);
+
 
   // Filter notifications based on search term and filter options
   const applyFilters = () => {
