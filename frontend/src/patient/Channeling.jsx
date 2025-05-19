@@ -45,36 +45,6 @@ function Channeling() {
     },
   ];
 
-  const bookedAppointments = [
-    {
-      id: 1,
-      name: "Ashan Vimod",
-      doctor: "Dr. Kavindya Perera",
-      specialty: "Neurologist",
-      date: "2025-05-14",
-      time: "2:30 PM",
-      location: "Clinical Room-001",
-      status: "Pending",
-      phone: "+94 77 123 4567",
-      reason: "",
-      diagnosis: "",
-      recommendations: "",
-    },
-    {
-      id: 2,
-      name: "Ashan Vimod",
-      doctor: "Dr. Isuru Perera",
-      specialty: "Dental",
-      date: "2025-05-14",
-      time: "2:30 PM",
-      location: "Clinical Room-001",
-      status: "Confirmed",
-      phone: "+94 77 123 4567",
-      reason: "",
-      diagnosis: "",
-      recommendations: "",
-    },
-  ];
 
    //get all doctor available times
   const fetchAppointments = async () => {
@@ -107,7 +77,7 @@ function Channeling() {
   //     fetchAppointments();
   //   }, []);
 
-    console.log(data.map((e)=> e),"appointments")
+    console.log(data?.map((e)=> e),"appointments")
   const handleBookClick = () => {
     navigate("/patient/dashboard/view-all-doctors");
   };
@@ -154,7 +124,7 @@ function Channeling() {
           </p>
 
           <Row className="channeling-features-section">
-            {featureCards.map((card, index) => (
+            {featureCards?.map((card, index) => (
               <Col md={3} sm={6} className="mb-4" key={index}>
                 <Card className="channeling-feature-card">
                   <Card.Body className="text-center">
@@ -199,7 +169,7 @@ function Channeling() {
                   <div className="appointment-header">
                     <div className="appointment-doctor-info">
                       <h4>
-                        <FaUserMd className="icon-md" /> {appt.appointment.doctorName}
+                        <FaUserMd className="icon-md" /> {appt?.appointment.doctorName}
                       </h4>
                       <p className="specialty">{appt.appointment.specialization}</p>
                     </div>
