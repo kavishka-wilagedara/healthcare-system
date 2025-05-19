@@ -88,6 +88,20 @@ function Channeling() {
     }
   };
 
+  //delete a appointment
+  const deleteAppointment = async (appointmentId) => {
+  try {
+    await axios.delete(`http://localhost:5000/api/appointments/${appointmentId}`);
+    // Update local state to remove deleted appointment
+    setData(prevData => prevData.filter(item => item._id !== appointmentId));
+    // If you're using filteredData, uncomment this:
+    // setFilteredData(prevData => prevData.filter(item => item._id !== appointmentId));
+  } catch (error) {
+    console.error("Error deleting appointment:", error);
+  }
+};
+
+
   // //use Effect
   //  useEffect(() => {
   //     fetchAppointments();
@@ -223,18 +237,18 @@ function Channeling() {
                       <span className="value">{appt.appointment.inTime} - {appt.appointment.outTime}</span>
                     </div>
 
-                    <div className="detail-item full-width">
+                    {/* <div className="detail-item full-width">
                       <FaMapMarkerAlt className="detail-icon" />
                       <span>Location:</span>
                       <span className="value">{appt.location}</span>
-                    </div>
+                    </div> */}
                   </div>
 
                   <div className="appointment-actions">
-                    <button className="action-btn reschedule">
+                    {/* <button className="action-btn reschedule">
                       Reschedule
-                    </button>
-                    <button className="action-btn cancel">Cancel</button>
+                    </button> */}
+                    <button className="action-btn cancel" onClick={() => deleteAppointment(appt._id)}>Cancel</button>
                     <button className="action-btn details">View Details</button>
                   </div>
                 </div>
