@@ -5,12 +5,15 @@ import axios from 'axios';
 export default function DoctorProfile() {
     const { user } = useContext(UserContext);
     const [doctor, setDoctor] = useState(null);
+    const [appointments, setAppointments] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [appointmentsLoading, setAppointmentsLoading] = useState(true);
 
     const doctorId = user?.doctor.id;
 
     useEffect(() => {
         getDoctorById();
+        getDoctorAppointments();
     }, []);
 
     const getDoctorById = async () => {
@@ -21,6 +24,20 @@ export default function DoctorProfile() {
         } catch (error) {
             console.log('Error while fetching doctor data:', error);
             setLoading(false);
+        }
+    }
+
+    const getDoctorAppointments = async () => {
+        try {
+            const response = await axios.get('http://localhost:5000/api/appointments/');
+            const doctorAppointments = response.data.data.filter(
+                appointment => appointment.appointment.doctorId === doctorId
+            );
+            setAppointments(doctorAppointments);
+            setAppointmentsLoading(false);
+        } catch (error) {
+            console.log('Error while fetching appointments:', error);
+            setAppointmentsLoading(false);
         }
     }
 
@@ -106,41 +123,67 @@ export default function DoctorProfile() {
                         </div>
                     </div>
 
-                    <div className="row mt-4">
-                        <div className="col-md-6 mb-4">
-                            <div className="card h-100 shadow-sm">
-                                <div className="card-body">
-                                    <h5 className="card-title">Recent Activity</h5>
-                                    <ul className="list-group list-group-flush">
-                                        <li className="list-group-item d-flex justify-content-between align-items-center">
-                                            Today's Appointments
-                                            <span className="badge bg-primary rounded-pill">5</span>
-                                        </li>
-                                        <li className="list-group-item d-flex justify-content-between align-items-center">
-                                            Pending Approvals
-                                            <span className="badge bg-warning rounded-pill">2</span>
-                                        </li>
-                                        <li className="list-group-item d-flex justify-content-between align-items-center">
-                                            Total Patients
-                                            <span className="badge bg-success rounded-pill">24</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+                    <div className="card mt-4 shadow-sm">
+                        <div className="card-header bg-primary text-white">
+                            <h5 className="mb-0">Doctor's Appointments</h5>
                         </div>
-                        <div className="col-md-6 mb-4">
-                            <div className="card h-100 shadow-sm">
-                                <div className="card-body">
-                                    <h5 className="card-title">Quick Actions</h5>
-                                    <div className="d-grid gap-2">
-                                        <button className="btn btn-outline-primary">View Schedule</button>
-                                        <button className="btn btn-outline-secondary">View Patients</button>
-                                        <button className="btn btn-outline-info">View Reports</button>
+                        <div className="card-body">
+                            {appointmentsLoading ? (
+                                <div className="d-flex justify-content-center">
+                                    <div className="spinner-border text-primary" role="status">
+                                        <span className="visually-hidden">Loading...</span>
                                     </div>
                                 </div>
-                            </div>
+                            ) : appointments.length === 0 ? (
+                                <p className="text-muted">No appointments found</p>
+                            ) : (
+                                <div className="table-responsive">
+                                    <table className="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Patient</th>
+                                                <th>Date</th>
+                                                <th>Time</th>
+                                                <th>Status</th>
+                                                <th>Completed</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {appointments.map((appointment) => (
+                                                <tr key={appointment._id}>
+                                                    <td>
+                                                        {appointment.patient.fullName}
+                                                        <br />
+                                                        <small className="text-muted">{appointment.patient.nic}</small>
+                                                    </td>
+                                                    <td>{appointment.appointment.date}</td>
+                                                    <td>
+                                                        {appointment.appointment.inTime} - {appointment.appointment.outTime}
+                                                    </td>
+                                                    <td>
+                                                        <span className={`badge ${
+                                                            appointment.booked === 'confirmed' ? 'bg-success' : 'bg-warning'
+                                                        }`}>
+                                                            {appointment.booked}
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        {appointment.completed ? (
+                                                            <span className="badge bg-success">Yes</span>
+                                                        ) : (
+                                                            <span className="badge bg-secondary">No</span>
+                                                        )}
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            )}
                         </div>
                     </div>
+
+                    
                 </div>
             </div>
         </div>
