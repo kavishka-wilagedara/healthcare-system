@@ -62,7 +62,7 @@ const Appointments = () => {
                 <tr>
                   <th>Appointment ID</th>
                   <th>Patient Name</th>
-                  <th>Day</th>
+                  <th>Date</th>
                   <th>Phone</th>
                   <th>Email</th>
                   <th>Actions</th>
@@ -73,7 +73,7 @@ const Appointments = () => {
                   <tr key={appointment._id}>
                     <td>{appointment._id}</td>
                     <td>{appointment.patient.fullName}</td>
-                    <td>{appointment.appointment.day}</td>
+                    <td>{appointment.appointment.date}</td>
                     <td>{appointment.patient.mobileNumber}</td>
                     <td>{appointment.patient.email}</td>
                     <td>
