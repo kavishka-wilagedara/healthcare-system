@@ -1,33 +1,66 @@
-import React, { useEffect, useState ,useContext } from "react";
-import { Link } from 'react-router-dom';
-import appointmentsData from '../data/appointments.json';
-
+import React, { useEffect, useState, useContext } from "react";
+import { Link } from "react-router-dom";
+import appointmentsData from "../data/appointments.json";
+import axios from "axios";
+import { UserContext } from "../../common/UserContext";
 
 const ScheduledAppointments = () => {
-  const [pendingAppointments, setPendingAppointments] = useState([]);
+  const { user } = useContext(UserContext);
+  const [allAppointments, setAllAppointments] = useState([]);
+  const [pendingDoctorAppointments, setPendingDoctorAppointments] = useState(
+    []
+  );
 
+  const doctorId = user?.doctor?.id;
+
+  const filterdAppoinmentByDoctorId = (allData, doctorId) => {
+    const results = allData.filter((filterdAppoinment) => {
+      return (
+        filterdAppoinment.appointment?.doctorId === doctorId &&
+        filterdAppoinment.booked === "confirmed"
+      );
+    });
+    setPendingDoctorAppointments(results);
+    return results;
+  };
+
+  const getAllAppointments = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:5000/api/appointments/"
+      );
+      setAllAppointments(response.data.data);
+      filterdAppoinmentByDoctorId(response.data.data, doctorId);
+      console.log("----------------------");
+      console.log("----------------------");
+    } catch (error) {
+      console.log("Error fetching appointments", error);
+      setPendingDoctorAppointments([]);
+    }
+  };
 
   useEffect(() => {
     const filteredAppointments = appointmentsData.filter(
-      appointment => appointment.status === 'accept'
+      (appointment) => appointment.status === "accept"
     );
-    setPendingAppointments(filteredAppointments);
-
+    setPendingDoctorAppointments(filteredAppointments);
+    getAllAppointments();
   }, []);
 
-
   const updateStatus = (appointment_ID, newStatus) => {
-    const updatedAppointments = pendingAppointments.map(appointment =>
+    const updatedAppointments = pendingDoctorAppointments.map((appointment) =>
       appointment.appointment_ID === appointment_ID
         ? { ...appointment, status: newStatus }
         : appointment
     );
-    setPendingAppointments(updatedAppointments);
+    setPendingDoctorAppointments(updatedAppointments);
   };
 
   return (
     <div className="container py-5">
-      <h3 className="display-6 fw-bold text-primary mb-4">Scheduled Appointments</h3>
+      <h3 className="display-6 fw-bold text-primary mb-4">
+        Scheduled Appointments
+      </h3>
       <div className="card shadow-sm">
         <div className="card-body">
           <div className="table-responsive">
@@ -44,23 +77,29 @@ const ScheduledAppointments = () => {
                 </tr>
               </thead>
               <tbody>
-                {pendingAppointments.map((appointment) => (
-                  <tr key={appointment.appointment_ID}>
-                    <td>{appointment.appointment_ID}</td>
-                    <td>{appointment.name}</td>
-                    <td>{appointment.day}</td>
-                    <td>{appointment.phone}</td>
-                    <td>{appointment.email}</td>
-                    <td>{appointment.nic}</td>
+                {pendingDoctorAppointments.map((appointment) => (
+                  <tr key={appointment._id}>
+                    <td>{appointment._id}</td>
+                    <td>{appointment.patient?.fullName}</td>
+                    <td>{appointment.appointment?.day}</td>
+                    <td>{appointment.patient?.mobileNumber}</td>
+                    <td>{appointment.patient?.email}</td>
+                    <td>{appointment.patient?.nic}</td>
                     <td>
                       <button
                         className="btn btn-success btn-sm me-2 healthcare-btn-success"
-                        onClick={() => updateStatus(appointment.appointment_ID, 'complete')}
+                        onClick={() =>
+                          updateStatus(appointment.appointment_ID, "complete")
+                        }
                       >
                         Complete
                       </button>
-                      <Link to={`/doc-appointment-details/${appointment.appointment_ID}`}>
-                        <button className="btn btn-info btn-sm healthcare-btn-info">View</button>
+                      <Link
+                        to={`/doc-appointment-details/${appointment.appointment_ID}`}
+                      >
+                        <button className="btn btn-info btn-sm healthcare-btn-info">
+                          View
+                        </button>
                       </Link>
                     </td>
                   </tr>
