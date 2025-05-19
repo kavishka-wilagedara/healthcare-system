@@ -1,16 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState ,useContext } from "react";
 import { Link } from 'react-router-dom';
 import appointmentsData from '../data/appointments.json';
 
+
 const ScheduledAppointments = () => {
   const [pendingAppointments, setPendingAppointments] = useState([]);
+
 
   useEffect(() => {
     const filteredAppointments = appointmentsData.filter(
       appointment => appointment.status === 'accept'
     );
     setPendingAppointments(filteredAppointments);
+
   }, []);
+
 
   const updateStatus = (appointment_ID, newStatus) => {
     const updatedAppointments = pendingAppointments.map(appointment =>

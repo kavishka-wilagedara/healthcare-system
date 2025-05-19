@@ -1,22 +1,55 @@
 import React, { useState, useEffect } from 'react';
 import appointmentsData from '../data/appointments.json';
+import axios from 'axios';
+import { UserContext } from "../../common/UserContext";
 
 const Appointments = () => {
   const [pendingAppointments, setPendingAppointments] = useState([]);
+  const [data,setData] = useState([]);
+
+
+  //get all apppoinments times
+  const fetchAppointments = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/api/appointments/');  
+      setData(response.data.data);
+      // setFilteredData(response.data.data);
+      
+    } catch (error) {
+      console.error("Error fetching patients:", error);
+    }
+  };
+
 
   useEffect(() => {
     const filteredAppointments = appointmentsData.filter(appointment => appointment.status === 'pending');
     setPendingAppointments(filteredAppointments);
+
+    
+    fetchAppointments();
   }, []);
 
-  const updateStatus = (appointment_ID, newStatus) => {
-    const updatedAppointments = pendingAppointments.map(appointment => 
-      appointment.appointment_ID === appointment_ID 
-      ? { ...appointment, status: newStatus } 
-      : appointment
-    );
-    setPendingAppointments(updatedAppointments);
-  };
+
+  const updateStatus = async(appointmentId, newStatus) => {
+    try{
+      if(newStatus=='confirmed'){
+        
+        const response = await axios.put(
+          `http://localhost:5000/api/appointments/${appointmentId}`,
+          { booked: 'confirmed' }
+        )
+      }else{
+      const response = await axios.put(
+        `http://localhost:5000/api/appointments/${appointmentId}`,
+        { booked: 'cancelled' }
+      );
+    };
+  }catch (error) {
+    console.error("Error confirming appointment:", error);
+  }
+
+  fetchAppointments();
+};
 
   return (
     <div className="container py-5">
@@ -36,27 +69,36 @@ const Appointments = () => {
                 </tr>
               </thead>
               <tbody>
-                {pendingAppointments.map((appointment) => (
-                  <tr key={appointment.appointment_ID}>
-                    <td>{appointment.appointment_ID}</td>
-                    <td>{appointment.name}</td>
-                    <td>{appointment.day}</td>
-                    <td>{appointment.phone}</td>
-                    <td>{appointment.email}</td>
+                {data?.map((appointment) => (
+                  <tr key={appointment._id}>
+                    <td>{appointment._id}</td>
+                    <td>{appointment.patient.fullName}</td>
+                    <td>{appointment.appointment.day}</td>
+                    <td>{appointment.patient.mobileNumber}</td>
+                    <td>{appointment.patient.email}</td>
                     <td>
-                      <button 
-                        className="btn btn-success btn-sm me-2 healthcare-btn-success" 
-                        onClick={() => updateStatus(appointment.appointment_ID, 'accept')}
-                      >
-                        Accept
-                      </button>
-                      <button 
-                        className="btn btn-danger btn-sm healthcare-btn-danger"
-                        onClick={() => updateStatus(appointment.appointment_ID, 'reject')}
-                      >
-                        Reject
-                      </button>
+                      {appointment.booked === 'confirmed' ? (
+                        <span className="text-success fw-bold">Confirmed</span>
+                      ) : appointment.booked === 'cancelled' ? (
+                        <span className="text-danger fw-bold">Cancelled</span>
+                      ) : (
+                        <>
+                          <button 
+                            className="btn btn-success btn-sm me-2 healthcare-btn-success" 
+                            onClick={() => updateStatus(appointment._id, 'confirmed')}
+                          >
+                            Accept
+                          </button>
+                          <button 
+                            className="btn btn-danger btn-sm healthcare-btn-danger"
+                            onClick={() => updateStatus(appointment._id, 'cancelled')}
+                          >
+                            Reject
+                          </button>
+                        </>
+                      )}
                     </td>
+
                   </tr>
                 ))}
               </tbody>
