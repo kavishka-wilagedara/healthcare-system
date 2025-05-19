@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState ,useContext } from "react";
 import { Row, Col, Card } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useAsyncError, useNavigate } from "react-router-dom";
 import "./Channeling.css";
 import {
   FaCheckCircle,
@@ -14,11 +14,17 @@ import {
   FaRegCalendarCheck,
 } from "react-icons/fa";
 import { IoArrowBackCircleSharp } from "react-icons/io5";
+import axios from 'axios';
+import { UserContext } from "../common/UserContext";
+
+
 
 function Channeling() {
   const navigate = useNavigate();
+  const {user , setUser} = useContext(UserContext);
   const [showAppointments, setShowAppointments] = useState(false);
   const [showHeader, setShowHeader] = useState(true);
+  const [data,setData] = useState([]);
 
   const featureCards = [
     {
@@ -70,11 +76,30 @@ function Channeling() {
     },
   ];
 
+   //get all doctor available times
+  const fetchAppointments = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/api/appointments/');  
+      setData(response.data.data);
+      // setFilteredData(response.data.data);
+      
+    } catch (error) {
+      console.error("Error fetching patients:", error);
+    }
+  };
+
+  // //use Effect
+  //  useEffect(() => {
+  //     fetchAppointments();
+  //   }, []);
+
+    console.log(data.map((e)=> e),"appointments")
   const handleBookClick = () => {
     navigate("/patient/dashboard/view-all-doctors");
   };
 
   const handleViewAppointmentsClick = () => {
+    fetchAppointments();
     setShowAppointments(true);
     setShowHeader(false);
     window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
@@ -86,15 +111,13 @@ function Channeling() {
   };
 
   const getStatusClass = (status) => {
-    switch (status.toLowerCase()) {
-      case "confirmed":
+    switch (status) {
+      case true:
         return "status-confirmed";
-      case "pending":
+      case false:
         return "status-pending";
-      case "cancelled":
-        return "status-cancelled";
       default:
-        return "";
+        return false;
     }
   };
 
@@ -153,23 +176,23 @@ function Channeling() {
           />
 
           <h3>My Channeling Appointments</h3>
-          {bookedAppointments.length > 0 ? (
+          {data?.length > 0 ? (
             <div className="appointments-container">
-              {bookedAppointments.map((appt) => (
-                <div className="appointment-card" key={appt.id}>
+              {data?.map((appt) => (
+                <div className="appointment-card" key={appt._id}>
                   <div className="appointment-header">
                     <div className="appointment-doctor-info">
                       <h4>
-                        <FaUserMd className="icon-md" /> {appt.doctor}
+                        <FaUserMd className="icon-md" /> {appt.appointment.doctorName}
                       </h4>
-                      <p className="specialty">{appt.specialty}</p>
+                      <p className="specialty">{appt.appointment.specialization}</p>
                     </div>
                     <div
                       className={`appointment-status ${getStatusClass(
-                        appt.status
+                        appt.booked
                       )}`}
                     >
-                      {appt.status}
+                      {appt.booked}
                     </div>
                   </div>
 
@@ -177,25 +200,25 @@ function Channeling() {
                     <div className="detail-item">
                       <FaUserCircle className="detail-icon" />
                       <span>Patient:</span>
-                      <span className="value">{appt.name}</span>
+                      <span className="value">{appt.patient.fullName}</span>
                     </div>
 
                     <div className="detail-item">
                       <FaPhoneAlt className="detail-icon" />
                       <span>Contact:</span>
-                      <span className="value">{appt.phone}</span>
+                      <span className="value">{appt.appointment.contactNumber}</span>
                     </div>
 
                     <div className="detail-item">
                       <FaRegCalendarCheck className="detail-icon" />
                       <span>Date:</span>
-                      <span className="value">{formatDate(appt.date)}</span>
+                      <span className="value">{formatDate(appt.createdAt)}</span>
                     </div>
 
                     <div className="detail-item">
                       <FaClock className="detail-icon" />
                       <span>Time:</span>
-                      <span className="value">{appt.time}</span>
+                      <span className="value">{appt.appointment.inTime} - {appt.appointment.outTime}</span>
                     </div>
 
                     <div className="detail-item full-width">
