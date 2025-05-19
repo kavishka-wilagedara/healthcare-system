@@ -1,11 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Doctors.css";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import doctorImg from "../assets/images/doctor-image.jpg";
+import axios from 'axios';
 
 const Doctors = () => {
   const navigate = useNavigate();
+  const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+
+
+  //get all doctor available times
+  const fetchDocAvailableTimes = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/api/doctor/time/all');  
+      setData(response.data);
+      // setFilteredData(response.data.data);
+      console.log(response.data,"doctor")
+    } catch (error) {
+      console.error("Error fetching patients:", error);
+    }
+  };
+  
+  useEffect(() => {
+      fetchDocAvailableTimes();
+    }, []);
+  
   const doctors = [
     {
       id: "1",
@@ -91,8 +112,8 @@ const Doctors = () => {
         <h3 className="section-title text-center mb-5">Our Specialists</h3>
         {doctors.length > 0 ? (
           <div className="doctors-container">
-            {doctors.map((doctor) => (
-              <div className="doctor-card" key={doctor.id}>
+            {data.map((doctor) => (
+              <div className="doctor-card" key={doctor._id}>
                 <div className="doctor-header">
                   {doctor.imgUrl ? (
                     <img
@@ -110,13 +131,13 @@ const Doctors = () => {
                 </div>
 
                 <div className="doctor-details">
-                  <h4>{doctor.name}</h4>
-                  <p className="doctor-specialty">{doctor.speciality}</p>
+                  <h4>{doctor.doctorName}</h4>
+                  <p className="doctor-specialty">{doctor.specialization}</p>
                 </div>
 
                 <div className="doctor-availability">
-                  <span className="available-date">{doctor.availableDate}</span>
-                  <span className="available-time">{doctor.availableTime}</span>
+                  <span className="available-date">{doctor.day}</span>
+                  <span className="available-time">{doctor.inTime} - {doctor.outTime} </span>
                 </div>
 
                 <div className="booking-buttons">
