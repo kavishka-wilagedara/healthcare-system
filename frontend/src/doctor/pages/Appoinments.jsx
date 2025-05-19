@@ -1,23 +1,12 @@
 import React, { useContext, useState, useEffect } from "react";
-import appointmentsData from "../data/appointments.json";
 import axios from "axios";
 import { UserContext } from "../../common/UserContext";
 
 const Appointments = () => {
   const { user } = useContext(UserContext);
-  const [pendingAppointments, setPendingAppointments] = useState([]);
-  const [allData, setAllData] = useState([]);
   const [data, setData] = useState([]);
 
   const doctorId = user?.doctor?.id;
-
-  const filterdAppoinmentByDoctorId = (allAppointments, doctorId) => {
-    const results = allAppointments.filter((filterdAppoinment) =>
-      doctorId.includes(filterdAppoinment.appointment.doctorId)
-    );
-    setData(results);
-    return results;
-  };
 
   //get all apppoinments times
   const fetchAppointments = async () => {
@@ -25,13 +14,13 @@ const Appointments = () => {
       const response = await axios.get(
         "http://localhost:5000/api/appointments/"
       );
-      setAllData(response.data.data);
-      console.log(response.data.data);
-      filterdAppoinmentByDoctorId(response.data.data, doctorId);
-      console.log("---------------------------");
-      // console.log({ data });
-      // setData(response.data.data);
-      // setFilteredData(response.data.data);
+      // filter by doctorId
+      setData((preData) =>
+        response.data.data.filter(
+          (appointment) => appointment.appointment?.doctorId === doctorId
+        )
+      );
+      console.log(data);
     } catch (error) {
       console.error("Error fetching patients:", error);
       setData([]);
@@ -39,17 +28,12 @@ const Appointments = () => {
   };
 
   useEffect(() => {
-    const filteredAppointments = appointmentsData.filter(
-      (appointment) => appointment.status === "pending"
-    );
-    setPendingAppointments(filteredAppointments);
-
     fetchAppointments();
   }, []);
 
   const updateStatus = async (appointmentId, newStatus) => {
     try {
-      if (newStatus == "confirmed") {
+      if (newStatus === "confirmed") {
         const response = await axios.put(
           `http://localhost:5000/api/appointments/${appointmentId}`,
           { booked: "confirmed" }
@@ -91,7 +75,7 @@ const Appointments = () => {
                   <tr key={appointment._id}>
                     <td>{appointment._id}</td>
                     <td>{appointment.patient.fullName}</td>
-                    <td>{appointment.appointment.day}</td>
+                    <td>{appointment.appointment.date}</td>
                     <td>{appointment.patient.mobileNumber}</td>
                     <td>{appointment.patient.email}</td>
                     <td>
