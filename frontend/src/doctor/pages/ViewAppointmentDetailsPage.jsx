@@ -1,27 +1,89 @@
-import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import appointmentsData from '../data/appointments.json';
+import React, { useState, useContext, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { UserContext } from "../../common/UserContext";
+import Swal from "sweetalert2";
 
 const ViewAppointmentDetailsPage = () => {
   const { id } = useParams();
-  const appointment = appointmentsData.find(a => a.appointment_ID === id);
+  const { user } = useContext(UserContext);
+  const [allAppointments, setAllAppointments] = useState([]);
+  const [medicine, setMedicine] = useState("");
+  const [description, setDescription] = useState("");
 
-  const [medicine, setMedicine] = useState('');
-  const [description, setDescription] = useState('');
+  const doctorId = user?.doctor?.id;
+
+  const fetchAppointments = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:5000/api/appointments/"
+      );
+      // filter by doctorId
+      setAllAppointments((preData) =>
+        response.data.data.filter(
+          (appointment) => appointment.appointment?.doctorId === doctorId
+        )
+      );
+      console.log(allAppointments);
+    } catch (error) {
+      console.error("Error fetching patients:", error);
+      setAllAppointments([]);
+    }
+  };
+  useEffect(() => {
+    if (doctorId) {
+      fetchAppointments();
+    }
+  }, [doctorId]);
+
+  const appointment = allAppointments.find((a) => a._id === id);
 
   if (!appointment) {
     return <div className="p-4 text-danger">Appointment not found.</div>;
   }
 
-  const handleSubmit = () => {
-    console.log("Medicine:", medicine);
-    console.log("Description:", description);
-    alert("Submitted successfully!");
+  const handleSubmit = async () => {
+    if (!medicine.trim() || !description.trim()) {
+      Swal.fire({
+        icon: "warning",
+        title: "Missing Information",
+        text: "Please fill in both medicine and description fields",
+      });
+      return;
+    }
+    try {
+      await axios.put(`http://localhost:5000/api/appointments/${id}`, {
+        medicine: medicine.trim(),
+        advice: description.trim(),
+        completed: true,
+      });
+
+      Swal.fire({
+        icon: "success",
+        title: "Success!",
+        text: "Prescription submitted successfully",
+        timer: 2000,
+        showConfirmButton: false,
+      });
+
+      // clear medicine and description
+      setMedicine("");
+      setDescription("");
+    } catch (error) {
+      console.error("Error submitting prescription:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Failed to submit prescription. Please try again.",
+      });
+    }
   };
 
   return (
     <div className="container py-5">
-      <h3 className="display-5 fw-bold text-teal mb-5 text-center">Appointment Details</h3>
+      <h3 className="display-5 fw-bold text-teal mb-5 text-center">
+        Appointment Details
+      </h3>
       <div className="row g-4">
         <div className="col-md-6">
           <div className="card shadow-sm healthcare-card">
@@ -31,21 +93,26 @@ const ViewAppointmentDetailsPage = () => {
             <div className="card-body">
               <dl className="row mb-0">
                 <dt className="col-sm-4 fw-semibold">Appointment ID</dt>
-                <dd className="col-sm-8">{appointment.appointment_ID}</dd>
+                <dd className="col-sm-8">{appointment._id}</dd>
                 <dt className="col-sm-4 fw-semibold">Name</dt>
-                <dd className="col-sm-8">{appointment.name}</dd>
-                <dt className="col-sm-4 fw-semibold">Age</dt>
-                <dd className="col-sm-8">{appointment.age}</dd>
+                <dd className="col-sm-8">{appointment.patient?.fullName}</dd>
+                {/* <dt className="col-sm-4 fw-semibold">Age</dt>
+                <dd className="col-sm-8">{appointment.age}</dd> */}
                 <dt className="col-sm-4 fw-semibold">NIC</dt>
-                <dd className="col-sm-8">{appointment.nic}</dd>
+                <dd className="col-sm-8">{appointment.patient?.nic}</dd>
                 <dt className="col-sm-4 fw-semibold">Phone</dt>
-                <dd className="col-sm-8">{appointment.phone}</dd>
+                <dd className="col-sm-8">
+                  {appointment.patient?.mobileNumber}
+                </dd>
                 <dt className="col-sm-4 fw-semibold">Email</dt>
-                <dd className="col-sm-8">{appointment.email}</dd>
+                <dd className="col-sm-8">{appointment.patient?.email}</dd>
                 <dt className="col-sm-4 fw-semibold">Day</dt>
-                <dd className="col-sm-8">{appointment.day}</dd>
+                <dd className="col-sm-8">{appointment.appointment?.date}</dd>
                 <dt className="col-sm-4 fw-semibold">Time</dt>
-                <dd className="col-sm-8">{appointment.intime} - {appointment.outtime}</dd>
+                <dd className="col-sm-8">
+                  {appointment.appointment?.inTime} -{" "}
+                  {appointment.appointment?.outTime}
+                </dd>
               </dl>
             </div>
           </div>
@@ -75,7 +142,7 @@ const ViewAppointmentDetailsPage = () => {
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   placeholder="Enter diagnosis or advice"
-                  style={{ height: '120px' }}
+                  style={{ height: "120px" }}
                 ></textarea>
                 <label htmlFor="description">Diagnosis or Advice</label>
               </div>
@@ -83,7 +150,7 @@ const ViewAppointmentDetailsPage = () => {
                 className="btn btn-teal healthcare-btn w-100"
                 onClick={handleSubmit}
               >
-                Submit Prescription
+                Mark as completed appointment
               </button>
             </div>
           </div>
