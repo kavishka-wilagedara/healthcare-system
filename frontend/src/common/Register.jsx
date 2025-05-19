@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Register = () => {
-const navigate = useNavigate();
+  const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [formData, setFormData] = useState({
     fullName: '',
@@ -45,57 +46,59 @@ const navigate = useNavigate();
     terms: false,
   });
   const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
 
   const validatePage = (currentPage) => {
     const newErrors = {};
     if (currentPage === 1) {
-      // if (!formData.fullName) newErrors.fullName = 'Full name is required';
-      // if (!formData.nic || !/^\d{9}[vV]|\d{12}$/.test(formData.nic))
-      //   newErrors.nic = 'Valid NIC number is required';
-      // if (!formData.dob) newErrors.dob = 'Date of birth is required';
-      // if (!formData.gender) newErrors.gender = 'Gender is required';
+      if (!formData.fullName) newErrors.fullName = 'Full name is required';
+      if (!formData.nic || !/^\d{9}[vV]|\d{12}$/.test(formData.nic))
+        newErrors.nic = 'Valid NIC number is required';
+      if (!formData.dob) newErrors.dob = 'Date of birth is required';
+      if (!formData.gender) newErrors.gender = 'Gender is required';
     } else if (currentPage === 2) {
-      // if (!formData.mobileNumber || !/^\+94\d{9}$/.test(formData.mobileNumber))
-      //   newErrors.mobileNumber = 'Valid mobile number is required';
-      // if (!formData.email || !/\S+@\S+\.\S+/.test(formData.email))
-      //   newErrors.email = 'Valid email is required';
-      // if (!formData.preferredContact)
-      //   newErrors.preferredContact = 'Preferred contact method is required';
-      // if (!formData.residentialStreet)
-      //   newErrors.residentialStreet = 'Street address is required';
-      // if (!formData.residentialCity)
-      //   newErrors.residentialCity = 'City is required';
+      if (!formData.mobileNumber || !/^\+94\d{9}$/.test(formData.mobileNumber))
+        newErrors.mobileNumber = 'Valid mobile number is required';
+      if (!formData.email || !/\S+@\S+\.\S+/.test(formData.email))
+        newErrors.email = 'Valid email is required';
+      if (!formData.preferredContact)
+        newErrors.preferredContact = 'Preferred contact method is required';
+      if (!formData.residentialStreet)
+        newErrors.residentialStreet = 'Street address is required';
+      if (!formData.residentialCity)
+        newErrors.residentialCity = 'City is required';
     } else if (currentPage === 3) {
-      // if (!formData.emergencyName)
-      //   newErrors.emergencyName = 'Emergency contact name is required';
-      // if (!formData.emergencyMobile || !/^\+94\d{9}$/.test(formData.emergencyMobile))
-      //   newErrors.emergencyMobile = 'Valid mobile number is required';
+      if (!formData.emergencyName)
+        newErrors.emergencyName = 'Emergency contact name is required';
+      if (!formData.emergencyMobile || !/^\+94\d{9}$/.test(formData.emergencyMobile))
+        newErrors.emergencyMobile = 'Valid mobile number is required';
     } else if (currentPage === 4) {
-      // if (formData.allergies === 'yes' && !formData.allergyList)
-      //   newErrors.allergyList = 'Please list allergies';
-      // if (formData.chronicConditions === 'yes' && !formData.chronicList)
-      //   newErrors.chronicList = 'Please list chronic conditions';
+      if (formData.allergies === 'yes' && !formData.allergyList)
+        newErrors.allergyList = 'Please list allergies';
+      if (formData.chronicConditions === 'yes' && !formData.chronicList)
+        newErrors.chronicList = 'Please list chronic conditions';
     } else if (currentPage === 5) {
-      // if (formData.insurance === 'yes' && !formData.insuranceProvider)
-      //   newErrors.insuranceProvider = 'Insurance provider is required';
-      // if (formData.insurance === 'yes' && !formData.policyNumber)
-      //   newErrors.policyNumber = 'Policy number is required';
+      if (formData.insurance === 'yes' && !formData.insuranceProvider)
+        newErrors.insuranceProvider = 'Insurance provider is required';
+      if (formData.insurance === 'yes' && !formData.policyNumber)
+        newErrors.policyNumber = 'Policy number is required';
     } else if (currentPage === 6) {
-      // if (!formData.username) newErrors.username = 'Username is required';
-      // if (
-      //   !formData.password ||
-      //   !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
-      //     formData.password
-      //   )
-      // )
-      //   newErrors.password =
-      //     'Password must be at least 8 characters with uppercase, lowercase, number, and special character';
-      // if (!formData.securityQuestion)
-      //   newErrors.securityQuestion = 'Security question is required';
-      // if (!formData.securityAnswer)
-      //   newErrors.securityAnswer = 'Security answer is required';
-      // if (!formData.consent) newErrors.consent = 'Consent is required';
-      // if (!formData.terms) newErrors.terms = 'Terms agreement is required';
+      if (!formData.username) newErrors.username = 'Username is required';
+      if (
+        !formData.password ||
+        !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
+          formData.password
+        )
+      )
+        newErrors.password =
+          'Password must be at least 8 characters with uppercase, lowercase, number, and special character';
+      if (!formData.securityQuestion)
+        newErrors.securityQuestion = 'Security question is required';
+      if (!formData.securityAnswer)
+        newErrors.securityAnswer = 'Security answer is required';
+      if (!formData.consent) newErrors.consent = 'Consent is required';
+      if (!formData.terms) newErrors.terms = 'Terms agreement is required';
     }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -120,14 +123,42 @@ const navigate = useNavigate();
     setPage((prev) => prev - 1);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (validatePage(page)) {
-      console.log('Form Data:', formData);
-      alert('Registration submitted successfully!');
-      navigate('/'); 
+      setIsSubmitting(true);
+      setSubmitError('');
+      
+      try {
+        const submissionData = {
+          ...formData,
+          sameMailingAddress: formData.sameMailingAddress === 'yes' ? 'Yes' : 'No',
+          allergies: formData.allergies === 'yes' ? 'Yes' : 'No',
+          chronicConditions: formData.chronicConditions === 'yes' ? 'Yes' : 'No',
+          insurance: formData.insurance === 'yes' ? 'Yes' : 'No',
+          dob: new Date(formData.dob).toISOString().split('T')[0] 
+        };
+
+        const response = await axios.post('http://localhost:5000/api/patients/add', submissionData);
+        
+        if (response.data.status) {
+          alert('Registration submitted successfully!');
+          console.log(response.data);
+          navigate('/');
+        } else {
+          setSubmitError(response.data.message || 'Registration failed. Please try again.');
+        }
+      } catch (error) {
+        console.error('Registration error:', error);
+        setSubmitError(
+          error.response?.data?.message || 
+          error.message || 
+          'An error occurred during registration. Please try again.'
+        );
+      } finally {
+        setIsSubmitting(false);
+      }
     }
   };
-  
 
   const renderPage = () => {
     switch (page) {
@@ -794,20 +825,42 @@ const navigate = useNavigate();
       <div className="row g-4">
         <div className="col-12">{renderPage()}</div>
       </div>
+      {submitError && (
+        <div className="alert alert-danger mt-3">
+          {submitError}
+        </div>
+      )}
       <div className="d-flex justify-content-between mt-4">
         {page > 1 && (
-          <button className="btn btn-teal healthcare-btn" onClick={handlePrevious}>
+          <button 
+            className="btn btn-teal healthcare-btn" 
+            onClick={handlePrevious}
+            disabled={isSubmitting}
+          >
             Previous
           </button>
         )}
         <div className="ms-auto">
           {page < 6 ? (
-            <button className="btn btn-teal healthcare-btn" onClick={handleNext}>
+            <button 
+              className="btn btn-teal healthcare-btn" 
+              onClick={handleNext}
+              disabled={isSubmitting}
+            >
               Next
             </button>
           ) : (
-            <button className="btn btn-teal healthcare-btn" onClick={handleSubmit}>
-              Submit
+            <button 
+              className="btn btn-teal healthcare-btn" 
+              onClick={handleSubmit}
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? (
+                <>
+                  <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                  Submitting...
+                </>
+              ) : 'Submit'}
             </button>
           )}
         </div>
