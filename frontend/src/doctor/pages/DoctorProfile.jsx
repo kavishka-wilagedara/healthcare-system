@@ -27,6 +27,17 @@ export default function DoctorProfile() {
         }
     }
 
+    const handleAppointmentDelete = async (appointmentId) =>{
+        try {
+            const response = await axios.delete(`http://localhost:5000/api/appointments/${appointmentId}`);
+            console.log(response.data);
+            alert('Appointment deleted successfully');
+            window.location.reload();
+        } catch (error) {
+            console.log('Error while deleting appointment:', error);
+        }
+    }
+
     const getDoctorAppointments = async () => {
         try {
             const response = await axios.get('http://localhost:5000/api/appointments/');
@@ -146,6 +157,7 @@ export default function DoctorProfile() {
                                                 <th>Time</th>
                                                 <th>Status</th>
                                                 <th>Completed</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -173,6 +185,12 @@ export default function DoctorProfile() {
                                                         ) : (
                                                             <span className="badge bg-secondary">No</span>
                                                         )}
+                                                    </td>
+
+                                                    <td>
+                                                        <button className='btn btn-danger' onClick={() =>handleAppointmentDelete(appointment._id)}>
+                                                            Delete
+                                                        </button>
                                                     </td>
                                                 </tr>
                                             ))}
