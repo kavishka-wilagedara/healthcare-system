@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../common/UserContext'
 import axios from 'axios';
 import { Modal, Button, Form } from 'react-bootstrap';
+import Swal from 'sweetalert2';
 import '../css/DoctorProfile.css';
 
 export default function DoctorProfile() {
@@ -60,17 +61,37 @@ export default function DoctorProfile() {
         } catch (error) {
             console.log('Error while fetching doctor data:', error);
             setLoading(false);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Failed to load doctor profile',
+                timer: 3000,
+                showConfirmButton: false
+            });
         }
     }
 
     const handleAppointmentDelete = async (appointmentId) => {
         try {
-            const response = await axios.delete(`http://localhost:5000/api/appointments/${appointmentId}`);
-            console.log(response.data);
-            alert('Appointment deleted successfully');
-            window.location.reload();
+            await axios.delete(`http://localhost:5000/api/appointments/${appointmentId}`);
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: 'Appointment deleted successfully',
+                timer: 2000,
+                showConfirmButton: false
+            }).then(() => {
+                window.location.reload();
+            });
         } catch (error) {
             console.log('Error while deleting appointment:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Failed to delete appointment',
+                timer: 3000,
+                showConfirmButton: false
+            });
         }
     }
 
@@ -85,6 +106,13 @@ export default function DoctorProfile() {
         } catch (error) {
             console.log('Error while fetching appointments:', error);
             setAppointmentsLoading(false);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Failed to load appointments',
+                timer: 3000,
+                showConfirmButton: false
+            });
         }
     }
 
@@ -114,18 +142,29 @@ export default function DoctorProfile() {
                 password: doctor.password
             };
 
-            const response = await axios.put(
+            await axios.put(
                 `http://localhost:5000/api/doctor/${doctor._id}`,
                 updatedDoctor
             );
             
-            setDoctor(response.data);
-            setShowEditModal(false);
-            alert('Profile updated successfully');
-            window.location.reload();
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: 'Profile updated successfully',
+                timer: 2000,
+                showConfirmButton: false
+            }).then(() => {
+                window.location.reload();
+            });
         } catch (error) {
             console.log('Error while updating doctor profile:', error);
-            alert('Failed to update profile');
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Failed to update profile',
+                timer: 3000,
+                showConfirmButton: false
+            });
         }
     }
 
