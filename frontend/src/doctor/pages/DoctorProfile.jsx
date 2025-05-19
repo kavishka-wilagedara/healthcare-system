@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../common/UserContext'
 import axios from 'axios';
+import { Modal, Button, Form } from 'react-bootstrap';
 
 export default function DoctorProfile() {
     const { user } = useContext(UserContext);
@@ -8,6 +9,13 @@ export default function DoctorProfile() {
     const [appointments, setAppointments] = useState([]);
     const [loading, setLoading] = useState(true);
     const [appointmentsLoading, setAppointmentsLoading] = useState(true);
+    const [showEditModal, setShowEditModal] = useState(false);
+    const [formData, setFormData] = useState({
+        fullName: '',
+        email: '',
+        contactNumber: '',
+        specialization: ''
+    });
 
     const doctorId = user?.doctor.id;
 
@@ -20,6 +28,12 @@ export default function DoctorProfile() {
         try {
             const response = await axios.get(`http://localhost:5000/api/doctor/${doctorId}`);
             setDoctor(response.data);
+            setFormData({
+                fullName: response.data.fullName,
+                email: response.data.email,
+                contactNumber: response.data.contactNumber,
+                specialization: response.data.specialization
+            });
             setLoading(false);
         } catch (error) {
             console.log('Error while fetching doctor data:', error);
@@ -27,7 +41,7 @@ export default function DoctorProfile() {
         }
     }
 
-    const handleAppointmentDelete = async (appointmentId) =>{
+    const handleAppointmentDelete = async (appointmentId) => {
         try {
             const response = await axios.delete(`http://localhost:5000/api/appointments/${appointmentId}`);
             console.log(response.data);
@@ -49,6 +63,47 @@ export default function DoctorProfile() {
         } catch (error) {
             console.log('Error while fetching appointments:', error);
             setAppointmentsLoading(false);
+        }
+    }
+
+    const handleEditProfile = () => {
+        setShowEditModal(true);
+    }
+
+    const handleCloseEditModal = () => {
+        setShowEditModal(false);
+    }
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value
+        });
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const updatedDoctor = {
+                ...formData,
+                _id: doctor._id,
+                doctorId: doctor.doctorId,
+                password: doctor.password
+            };
+
+            const response = await axios.put(
+                `http://localhost:5000/api/doctor/${doctor._id}`,
+                updatedDoctor
+            );
+            
+            setDoctor(response.data);
+            setShowEditModal(false);
+            alert('Profile updated successfully');
+            window.location.reload();
+        } catch (error) {
+            console.log('Error while updating doctor profile:', error);
+            alert('Failed to update profile');
         }
     }
 
@@ -78,8 +133,13 @@ export default function DoctorProfile() {
                             <p className="text-muted mb-1">{doctor?.specialization || 'Specialization'}</p>
                             <p className="text-muted mb-4">ID: {doctor?.doctorId || 'N/A'}</p>
                             <div className="d-flex justify-content-center mb-2">
-                                <button type="button" className="btn btn-primary me-2">Edit Profile</button>
-                                <button type="button" className="btn btn-outline-secondary">Change Photo</button>
+                                <button 
+                                    type="button" 
+                                    className="btn btn-primary me-2"
+                                    onClick={handleEditProfile}
+                                >
+                                    Edit Profile
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -188,7 +248,7 @@ export default function DoctorProfile() {
                                                     </td>
 
                                                     <td>
-                                                        <button className='btn btn-danger' onClick={() =>handleAppointmentDelete(appointment._id)}>
+                                                        <button className='btn btn-danger' onClick={() => handleAppointmentDelete(appointment._id)}>
                                                             Delete
                                                         </button>
                                                     </td>
@@ -200,10 +260,70 @@ export default function DoctorProfile() {
                             )}
                         </div>
                     </div>
-
-                    
                 </div>
             </div>
+
+            <Modal show={showEditModal} onHide={handleCloseEditModal}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Edit Profile</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form onSubmit={handleSubmit}>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Full Name</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="fullName"
+                                value={formData.fullName}
+                                onChange={handleInputChange}
+                                required
+                            />
+                        </Form.Group>
+
+                        <Form.Group className="mb-3">
+                            <Form.Label>Email</Form.Label>
+                            <Form.Control
+                                type="email"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleInputChange}
+                                required
+                            />
+                        </Form.Group>
+
+                        <Form.Group className="mb-3">
+                            <Form.Label>Contact Number</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="contactNumber"
+                                value={formData.contactNumber}
+                                onChange={handleInputChange}
+                                required
+                            />
+                        </Form.Group>
+
+                        <Form.Group className="mb-3">
+                            <Form.Label>Specialization</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="specialization"
+                                value={formData.specialization}
+                                onChange={handleInputChange}
+                                required
+                            />
+                        </Form.Group>
+
+                        <div className="d-flex justify-content-end">
+                            <Button variant="secondary" onClick={handleCloseEditModal} className="me-2">
+                                Cancel
+                            </Button>
+                            <Button variant="primary" type="submit">
+                                Save Changes
+                            </Button>
+                        </div>
+                    </Form>
+                </Modal.Body>
+            </Modal>
         </div>
     );
 }
