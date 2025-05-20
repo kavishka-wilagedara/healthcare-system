@@ -1,13 +1,23 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 import patientsData from "../doctor/data/patients.json";
 import PatientChannelHistory from "../doctor/components/PatientChannelHistory";
+import { UserContext } from "../common/UserContext";
+import axios from "axios";
 
 function Profile() {
   const { id } = useParams();
-  const patient = patientsData.find(
-    (p) => String(p.patient_ID) === String(id)
-  );
+
+  const [patient, setPatient] = useState(null);
+  const {user} = useContext(UserContext);
+
+  const getUserById = async () =>{
+    try {
+      const response = await axios.get(`http://localhost:5000/api/patients/${user.patient.id}`);
+    } catch (error) {
+      
+    }
+  }
 
   if (!patient) {
     return <div className="p-4 text-danger">Patient not found.</div>;

@@ -30,6 +30,7 @@ import DoctorRegister from "./common/DoctorRegister";
 import { NotificationProvider } from "./patient/context/NotificationContext";
 import Doctors from "./patient/Doctors";
 import { UserProvider } from "./common/UserContext";
+import DoctorProfile from "./doctor/pages/DoctorProfile";
 
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -57,6 +58,7 @@ function App() {
           <Route path="/doc-patient-profile/:id" element={<Profile />} />
           <Route path="/doc-add-time" element={<AddTimeForm />} />
           <Route path="/doc-appointments" element={<Appointments />} />
+          <Route path="/doc-profile" element={<DoctorProfile />} />
           <Route
             path="/doc-scheduledAppointments"
             element={<ScheduledAppointments />}
