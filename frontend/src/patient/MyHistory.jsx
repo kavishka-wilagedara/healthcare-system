@@ -10,8 +10,10 @@ import {
   FaHeartbeat,
   FaSearch,
   FaFilter,
+  FaDownload,
 } from "react-icons/fa";
 import { MdOutlineFormatListNumbered } from "react-icons/md";
+import { PDFDocument, rgb, StandardFonts } from "pdf-lib";
 
 function MyHistory() {
   const [activeTab, setActiveTab] = useState("visits");
@@ -89,33 +91,27 @@ function MyHistory() {
       time: "9.00 AM",
       roomNum: "ABC-001",
       result: "abnormal",
-      notes: "kdcnalkcnlkmc k klwcv  dlsnckldnv",
+      notes: "kdcnalkcnlkmc k klwcv dlsnckldnv",
     },
   ];
 
   // Get unique years for filtering
   const getAllYears = () => {
     const years = new Set();
-
-    // use medicalHistory and serviceHistory
     [medicalHistory, serviceHistory].forEach((items) => {
       items.forEach((item) => {
         const year = new Date(item.date).getFullYear();
         if (!isNaN(year)) years.add(year);
       });
     });
-
-    return Array.from(years).sort((a, b) => b - a); // Sort descending
+    return Array.from(years).sort((a, b) => b - a);
   };
 
   // Filter visits data based on search term and year
   const getFilteredVisits = () => {
     return medicalHistory.filter((visit) => {
-      // Apply year filter
       const visitYear = new Date(visit.date).getFullYear().toString();
       const yearMatch = filterYear === "all" || visitYear === filterYear;
-
-      // Apply search filter with case insensitive
       const searchLower = searchTerm.toLowerCase();
       const searchMatch =
         searchTerm === "" ||
@@ -124,7 +120,6 @@ function MyHistory() {
         visit.reason.toLowerCase().includes(searchLower) ||
         visit.diagnosis.toLowerCase().includes(searchLower) ||
         visit.recommendations.toLowerCase().includes(searchLower);
-
       return yearMatch && searchMatch;
     });
   };
@@ -132,20 +127,113 @@ function MyHistory() {
   // Filter tests data based on search term and year
   const getFilteredTests = () => {
     return serviceHistory.filter((test) => {
-      // Apply year filter
       const testYear = new Date(test.date).getFullYear().toString();
       const yearMatch = filterYear === "all" || testYear === filterYear;
-
-      // Apply search filter case insensitive
       const searchLower = searchTerm.toLowerCase();
       const searchMatch =
         searchTerm === "" ||
         test.name.toLowerCase().includes(searchLower) ||
         test.result.toLowerCase().includes(searchLower) ||
         test.notes.toLowerCase().includes(searchLower);
-
       return yearMatch && searchMatch;
     });
+  };
+
+  // Function to generate and download PDF
+  const downloadPDF = async () => {
+    const pdfDoc = await PDFDocument.create();
+    let page = pdfDoc.addPage([595, 842]); // A4 size in points
+    const { width, height } = page.getSize();
+    const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+    const boldFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
+    const fontSize = 12;
+    let yPosition = height - 50;
+
+    // Helper function to add a new page if needed
+    const addNewPageIfNeeded = () => {
+      if (yPosition < 50) {
+        page = pdfDoc.addPage([595, 842]);
+        yPosition = height - 50;
+      }
+    };
+
+    // Add title
+    page.drawText("My Medical History", {
+      x: 50,
+      y: yPosition,
+      size: 20,
+      font: boldFont,
+      color: rgb(0, 0, 0),
+    });
+    yPosition -= 40;
+
+    // Add Doctor Visits section
+    page.drawText("Doctor Visits", {
+      x: 50,
+      y: yPosition,
+      size: 16,
+      font: boldFont,
+      color: rgb(0, 0, 0),
+    });
+    yPosition -= 20;
+
+    getFilteredVisits().forEach((visit) => {
+      addNewPageIfNeeded();
+      const text = `Appointment No: ${visit.id}\nDoctor: ${visit.doctor} (${visit.specialty})\nReason: ${visit.reason}\nDiagnosis: ${visit.diagnosis}\nRecommendations: ${visit.recommendations}\nDate: ${visit.date}`;
+      const lines = text.split("\n");
+      lines.forEach((line) => {
+        addNewPageIfNeeded();
+        page.drawText(line, {
+          x: 50,
+          y: yPosition,
+          size: fontSize,
+          font: font,
+          color: rgb(0, 0, 0),
+        });
+        yPosition -= 20;
+      });
+      yPosition -= 10; // Space between entries
+    });
+
+    yPosition -= 20;
+    addNewPageIfNeeded();
+
+    // Add Medical Tests section
+    page.drawText("Medical Tests", {
+      x: 50,
+      y: yPosition,
+      size: 16,
+      font: boldFont,
+      color: rgb(0, 0, 0),
+    });
+    yPosition -= 20;
+
+    getFilteredTests().forEach((test) => {
+      addNewPageIfNeeded();
+      const text = `Appointment No: ${test.id}\nTest: ${test.name}\nResult: ${test.result}\nNotes: ${test.notes}\nDate: ${test.date}`;
+      const lines = text.split("\n");
+      lines.forEach((line) => {
+        addNewPageIfNeeded();
+        page.drawText(line, {
+          x: 50,
+          y: yPosition,
+          size: fontSize,
+          font: font,
+          color: rgb(0, 0, 0),
+        });
+        yPosition -= 20;
+      });
+      yPosition -= 10; // Space between entries
+    });
+
+    // Save and download the PDF
+    const pdfBytes = await pdfDoc.save();
+    const blob = new Blob([pdfBytes], { type: "application/pdf" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "medical_history.pdf";
+    link.click();
+    URL.revokeObjectURL(link.href);
   };
 
   // Render different content based on active tab
@@ -163,11 +251,9 @@ function MyHistory() {
   // Render doctor visits
   const renderVisits = () => {
     const filteredVisits = getFilteredVisits();
-
     if (filteredVisits.length === 0) {
       return renderEmptyState("No doctor visits found matching your criteria");
     }
-
     return (
       <div className="history-items-container">
         {filteredVisits.map((visit) => (
@@ -187,23 +273,19 @@ function MyHistory() {
                 <span> {visit.id}</span>
               </div>
             </div>
-
             <div className="history-card-content">
               <div className="history-detail-item">
                 <span className="detail-label">Reason for Visit:</span>
                 <span className="detail-value">{visit.reason}</span>
               </div>
-
               <div className="history-detail-item">
                 <span className="detail-label">Diagnosis:</span>
                 <span className="detail-value">{visit.diagnosis}</span>
               </div>
-
               <div className="history-detail-item">
                 <span className="detail-label">Recommendations:</span>
                 <span className="detail-value">{visit.recommendations}</span>
               </div>
-
               <div className="history-detail-item">
                 <span className="detail-label">Date:</span>
                 <span className="detail-value">{visit.date}</span>
@@ -218,11 +300,9 @@ function MyHistory() {
   // Render medical tests
   const renderTests = () => {
     const filteredTests = getFilteredTests();
-
     if (filteredTests.length === 0) {
       return renderEmptyState("No medical tests found matching your criteria");
     }
-
     return (
       <div className="history-items-container">
         {filteredTests.map((test) => (
@@ -242,7 +322,6 @@ function MyHistory() {
                 <span>{test.id}</span>
               </div>
             </div>
-
             <div className="history-card-content">
               <div className="history-detail-item">
                 <span className="detail-label">Result:</span>
@@ -252,12 +331,10 @@ function MyHistory() {
                   {test.result}
                 </span>
               </div>
-
               <div className="history-detail-item">
                 <span className="detail-label">Notes:</span>
                 <span className="detail-value">{test.notes}</span>
               </div>
-
               <div className="history-detail-item">
                 <span className="detail-label">Date:</span>
                 <span className="detail-value">{test.date}</span>
@@ -320,6 +397,12 @@ function MyHistory() {
               ))}
             </select>
           </div>
+
+          {/* Download button */}
+          <button className="download-button" onClick={downloadPDF}>
+            <FaDownload className="download-icon" />
+            <span>Download PDF</span>
+          </button>
         </div>
 
         {/* Navigation tabs */}
@@ -331,7 +414,6 @@ function MyHistory() {
             <FaUserMd className="tab-icon" />
             <span>Doctor Visits</span>
           </button>
-
           <button
             className={`history-tab ${activeTab === "tests" ? "active" : ""}`}
             onClick={() => setActiveTab("tests")}
