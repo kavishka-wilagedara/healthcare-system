@@ -16,7 +16,7 @@ import axios from 'axios';
 import { UserContext } from "../common/UserContext";
 
 
-function Notification() {
+function Notification(props) {
   // const [notifications, setNotifications] = useState([]);
   // const [filteredNotifications, setFilteredNotifications] = useState([]);
   // const [loading, setLoading] = useState(true);
@@ -44,8 +44,8 @@ function Notification() {
     try {
       const response = await axios.get('http://localhost:5000/api/appointments/');  
 
-      const filterData = response.data.data.filter(item => item.patient._id === userId && item.completed === true);
-      console.log(filterData,"check")
+      const filterData = response?.data?.data?.filter(item => item.patient._id === userId && item.booked === "pending");
+      
       setData(filterData);
       
     } catch (error) {
@@ -57,13 +57,31 @@ function Notification() {
     const today = new Date().toISOString().split('T')[0];
     const filterDate = data?.filter(item => item.appointment.date === today);
     setNotifyData(filterDate);
+
+    const newNotifs = filterDate?.map(item => ({
+    id: `appt-${item._id}`,                       // unique id
+    appointmentNum: item.appointment.appointmentNum,
+    type: 'reminder',                            // or whatever
+    title: 'Appointment Today',
+    message: `You have an appointment with Dr. ${item.appointment.doctorName} at ${item.appointment.date}.`,
+    date: item.appointment.date,
+    time: item.appointment.inTime,
+    read: false,
+    sender: 'Appointment System'
+  }));
+
+  setNotifications(newNotifs)
   }
 
   // Apply filters by search term or filter options change
-    useEffect(() => {
+  useEffect(() => {
     fetchAppointments();
     notifyUser();
   }, []);
+
+  useEffect(() => {
+    notifyUser();
+  }, [data]);
 
   useEffect(() => {
     applyFilters();
@@ -92,7 +110,7 @@ function Notification() {
     // Filter by search term
     if (searchTerm.trim() !== "") {
       const term = searchTerm.toLowerCase();
-      filtered = filtered.filter(
+      filtered = filtered?.filter(
         (notification) =>
           notification.appointmentNum.toLowerCase().includes(term) ||
           notification.title.toLowerCase().includes(term) ||
@@ -111,7 +129,14 @@ function Notification() {
   const markAsRead = (id) => {};
 
   // Delete notification
-  const handleDeleteNotification = (id) => {};
+  const handleDeleteNotification = (id) => {
+      setNotifications(prev =>
+      prev.filter(notification => notification.id !== id)
+    );
+    setFilteredNotifications(prev =>
+      prev.filter(notification => notification.id !== id)
+    );
+  };
 
   // Mark all notifications as read
   const markAllAsRead = () => {};
@@ -141,7 +166,7 @@ function Notification() {
     const now = new Date();
 
     // Today
-    if (date.toDateString() === now.toDateString()) {
+    if (date?.toDateString() === now.toDateString()) {
       return `Today at ${date.toLocaleTimeString([], {
         hour: "2-digit",
         minute: "2-digit",
@@ -182,6 +207,8 @@ function Notification() {
     return date.toLocaleDateString([], options);
   };
 
+  console.log(notifyData,"fill")
+  console.log(notifications,"filled")
   return (
     <div className="notifications-container">
       <div className="notifications-header">
@@ -263,8 +290,8 @@ function Notification() {
             <div className="loading-spinner"></div>
             <p>Loading notifications...</p>
           </div>
-        ) : filteredNotifications.length > 0 ? (
-          filteredNotifications.map((notification) => (
+        ) : filteredNotifications?.length > 0 ? (
+          filteredNotifications?.map((notification) => (
             <div
               key={notification.id}
               className={`notification-item ${
@@ -280,7 +307,7 @@ function Notification() {
                 <div className="notification-header">
                   <h4 className="notification-title">{notification.title}</h4>
                   <span className="notification-time">
-                    {formatDate(notification.date)}
+                    {notification.date}
                   </span>
                 </div>
 
@@ -312,7 +339,7 @@ function Notification() {
             </div>
             <h4>No notifications found</h4>
             <p>
-              {notifications.length > 0
+              {notifications?.length > 0
                 ? "Try changing your search or filter settings"
                 : "You don't have any notifications at the moment"}
             </p>
