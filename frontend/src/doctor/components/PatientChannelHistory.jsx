@@ -1,14 +1,55 @@
-import React from 'react';
-import appointments from '../data/appointments.json';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const PatientChannelHistory = ({ patientId }) => {
-  const completedAppointments = appointments.filter(
-    (appointment) =>
-      appointment.status === 'completed' &&
-      String(appointment.patient_ID) === String(patientId)
-  );
+  const [appointments, setAppointments] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  if (completedAppointments.length === 0) {
+  useEffect(() => {
+    const getAllAppointments = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/appointments/');
+        // Filter appointments by patient ID and completed status
+        const filteredAppointments = response.data.data.filter(
+          (appointment) => 
+            appointment.patient?._id === patientId && 
+            appointment.completed === true
+        );
+        setAppointments(filteredAppointments);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching appointments:', error);
+        setError('Failed to fetch appointments');
+        setLoading(false);
+      }
+    };
+
+    getAllAppointments();
+  }, [patientId]);
+
+  if (loading) {
+    return (
+      <div className="container py-5 text-center">
+        <div className="spinner-border text-teal" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+        <p>Loading appointment history...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="container py-5">
+        <div className="alert alert-danger" role="alert">
+          {error}
+        </div>
+      </div>
+    );
+  }
+
+  if (appointments.length === 0) {
     return (
       <div className="container py-5">
         <h5 className="text-muted">No completed appointments found for this patient.</h5>
@@ -20,27 +61,38 @@ const PatientChannelHistory = ({ patientId }) => {
     <div className="container py-5">
       <h3 className="display-5 fw-bold text-teal mb-5 text-center">Channel History</h3>
       <div className="row g-4">
-        {completedAppointments.map((appointment) => (
-          <div key={appointment.appointment_ID} className="col-12">
+        {appointments.map((appointment) => (
+          <div key={appointment._id} className="col-12">
             <div className="card shadow-sm healthcare-card">
               <div className="card-header healthcare-card-header">
-                <h4 className="mb-0 text-white">Appointment {appointment.appointment_ID}</h4>
+                <h4 className="mb-0 text-white">Appointment Details</h4>
               </div>
               <div className="card-body">
                 <dl className="row mb-0">
                   <dt className="col-sm-4 fw-semibold">Appointment ID</dt>
-                  <dd className="col-sm-8">{appointment.appointment_ID}</dd>
-                  <dt className="col-sm-4 fw-semibold">Medical History</dt>
-                  <dd className="col-sm-8">
-                    {appointment.medical_history?.length > 0
-                      ? appointment.medical_history.join(', ')
-                      : 'None'}
-                  </dd>
+                  <dd className="col-sm-8">{appointment._id}</dd>
+                  
+                  <dt className="col-sm-4 fw-semibold">Doctor</dt>
+                  <dd className="col-sm-8">{appointment.appointment?.doctorName}</dd>
+                  
+                  <dt className="col-sm-4 fw-semibold">Specialization</dt>
+                  <dd className="col-sm-8">{appointment.appointment?.specialization}</dd>
+                  
+                  <dt className="col-sm-4 fw-semibold">Date</dt>
+                  <dd className="col-sm-8">{new Date(appointment.appointment?.date).toLocaleDateString()}</dd>
+                  
+                  <dt className="col-sm-4 fw-semibold">Time</dt>
+                  <dd className="col-sm-8">{appointment.appointment?.inTime} - {appointment.appointment?.outTime}</dd>
+                  
                   <dt className="col-sm-4 fw-semibold">Medicine</dt>
                   <dd className="col-sm-8">{appointment.medicine || 'N/A'}</dd>
-                  <dt className="col-sm-4 fw-semibold">Description</dt>
-                  <dd className="col-sm-8">{appointment.description || 'N/A'}</dd>
+                  
+                  <dt className="col-sm-4 fw-semibold">Medical Advice</dt>
+                  <dd className="col-sm-8">{appointment.advice || 'N/A'}</dd>
                 </dl>
+              </div>
+              <div className="card-footer text-muted">
+                Last updated: {new Date(appointment.updatedAt).toLocaleString()}
               </div>
             </div>
           </div>
@@ -66,6 +118,10 @@ const PatientChannelHistory = ({ patientId }) => {
           padding: 1.5rem;
         }
         .card-body {
+          background-color: #f8f9fa;
+          border-radius: 0;
+        }
+        .card-footer {
           background-color: #e9ecef;
           border-radius: 0 0 12px 12px;
         }
