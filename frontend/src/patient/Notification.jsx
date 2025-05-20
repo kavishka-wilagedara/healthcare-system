@@ -44,7 +44,7 @@ function Notification(props) {
     try {
       const response = await axios.get('http://localhost:5000/api/appointments/');  
 
-      const filterData = response?.data?.data?.filter(item => item.patient._id === userId && item.booked === "pending");
+      const filterData = response?.data?.data?.filter(item => item.patient._id === userId && item.booked === "confirmed");
       
       setData(filterData);
       
