@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/kavishka-wilagedara/HealthCare#readme",
   "dependencies": {
+    "@fortawesome/free-brands-svg-icons": "^6.7.2",
+    "@fortawesome/free-regular-svg-icons": "^6.7.2",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
