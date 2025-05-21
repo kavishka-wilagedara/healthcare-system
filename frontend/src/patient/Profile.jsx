@@ -93,6 +93,8 @@ function Profile() {
     }
   };
 
+  console.log(patient,"check pppppppp")
+
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
     setPatient({
@@ -396,8 +398,7 @@ function Profile() {
                     <select
                       className="form-select"
                       name="sameMailingAddress"
-                      value={patient?.sameMailingAddress}
-                      onChange={handleInputChange}
+                      value={patient?.residentialStreet}
                     >
                       <option value="Yes">Yes</option>
                       <option value="No">No</option>
@@ -409,7 +410,7 @@ function Profile() {
                       <textarea
                         className="form-control"
                         name="mailingAddress"
-                        value={patient?.mailingAddress}
+                        value={patient?.residentialStreet}
                         onChange={handleInputChange}
                         rows="3"
                       />
@@ -748,7 +749,7 @@ function Profile() {
                   <dd className="col-sm-8">{patient?.sameMailingAddress || "N/A"}</dd>
                   
                   <dt className="col-sm-4 fw-semibold">Address</dt>
-                  <dd className="col-sm-8">{patient?.mailingAddress || "N/A"}</dd>
+                  <dd className="col-sm-8">{patient?.residentialStreet || "N/A"}</dd>
                 </dl>
               </div>
             </div>
