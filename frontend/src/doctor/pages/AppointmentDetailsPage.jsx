@@ -1,11 +1,39 @@
 import { useParams } from 'react-router-dom';
 import appointmentsData from '../data/appointments.json';
+import { useState ,useEffect} from 'react';
+import axios from 'axios';
 
 const AppointmentDetailsPage = () => {
   const { id } = useParams();
+  const [data,setData] = useState([]);
+
   const appointment = appointmentsData?.find(a => a.appointment_ID === id);
 
-  if (!appointment) {
+    const getAllAppointments = async () => {
+
+
+    try {
+      const response = await axios.get(
+        "http://localhost:5000/api/appointments/"
+      );
+
+      setData((preData) =>
+        response.data.data.find((appointment) =>appointment?._id===id)
+      );
+      
+    } catch (error) {
+      console.log("Error fetching appointments", error);
+      setData([]);
+    }
+  };
+
+  useEffect(() => {
+    getAllAppointments();
+  }, []);
+
+  console.log(data,"data")
+
+  if (!data) {
     return <div className="p-4 text-danger">Appointment not found.</div>;
   }
 
@@ -21,40 +49,40 @@ const AppointmentDetailsPage = () => {
             <div className="card-body">
               <dl className="row mb-0">
                 <dt className="col-sm-4 fw-semibold">Appointment ID</dt>
-                <dd className="col-sm-8">{appointment?.appointment_ID}</dd>
+                <dd className="col-sm-8">{data?._id}</dd>
 
                 <dt className="col-sm-4 fw-semibold">Patient ID</dt>
-                <dd className="col-sm-8">{appointment?.patient_ID}</dd>
+                <dd className="col-sm-8">{data?.patient?._id}</dd>
 
                 <dt className="col-sm-4 fw-semibold">Name</dt>
-                <dd className="col-sm-8">{appointment?.name}</dd>
+                <dd className="col-sm-8">{data?.patient?.fullName}</dd>
 
                 <dt className="col-sm-4 fw-semibold">NIC</dt>
-                <dd className="col-sm-8">{appointment?.nic}</dd>
+                <dd className="col-sm-8">{data?.patient?.nic}</dd>
 
-                <dt className="col-sm-4 fw-semibold">Age</dt>
-                <dd className="col-sm-8">{appointment?.age}</dd>
+                {/* <dt className="col-sm-4 fw-semibold">Age</dt>
+                <dd className="col-sm-8">{data?.age}</dd>
 
                 <dt className="col-sm-4 fw-semibold">Gender</dt>
-                <dd className="col-sm-8">{appointment?.gender}</dd>
+                <dd className="col-sm-8">{data?.gender}</dd> */}
 
                 <dt className="col-sm-4 fw-semibold">Phone</dt>
-                <dd className="col-sm-8">{appointment?.phone}</dd>
+                <dd className="col-sm-8">{data?.patient?.mobileNumber}</dd>
 
                 <dt className="col-sm-4 fw-semibold">Email</dt>
-                <dd className="col-sm-8">{appointment?.email}</dd>
-
+                <dd className="col-sm-8">{data?.patient?.email}</dd>
+{/* 
                 <dt className="col-sm-4 fw-semibold">Address</dt>
-                <dd className="col-sm-8">{appointment?.address}</dd>
+                <dd className="col-sm-8">{data?.address}</dd> */}
 
                 <dt className="col-sm-4 fw-semibold">Medicine</dt>
-                <dd className="col-sm-8">{appointment?.medicine}</dd>
+                <dd className="col-sm-8">{data?.medicine}</dd>
 
                 <dt className="col-sm-4 fw-semibold">Description</dt>
-                <dd className="col-sm-8">{appointment?.description}</dd>
+                <dd className="col-sm-8">{data?.advice}</dd>
 
-                <dt className="col-sm-4 fw-semibold">Day</dt>
-                <dd className="col-sm-8">{appointment?.day}</dd>
+                <dt className="col-sm-4 fw-semibold">Date</dt>
+                <dd className="col-sm-8">{data?.appointment?.date}</dd>
               </dl>
             </div>
           </div>

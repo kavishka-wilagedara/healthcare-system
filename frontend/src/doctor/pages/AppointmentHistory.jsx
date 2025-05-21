@@ -1,19 +1,53 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import appointmentsData from '../data/appointments.json';
+import axios from 'axios';
+import { UserContext } from "../../common/UserContext";
 
 const AppointmentHistory = () => {
+  const {user} = useContext(UserContext);
+  const [data,setData] = useState([]);
   const [pendingAppointments, setPendingAppointments] = useState([]);
 
+  
+
+  const getAllAppointments = async () => {
+
+    const doctor = user?.doctor?.id
+
+    try {
+      const response = await axios.get(
+        "http://localhost:5000/api/appointments/"
+      );
+
+      setPendingAppointments((preData) =>
+        response.data.data.filter(
+          (appointment) =>
+            appointment?.appointment?.doctorId == doctor && appointment?.completed === true
+        )
+      );
+      
+    } catch (error) {
+      console.log("Error fetching appointments", error);
+      setPendingAppointments([]);
+    }
+  };
+
   useEffect(() => {
-    const filteredAppointments = appointmentsData.filter(
-      appointment => appointment.status === 'completed'
-    );
-    setPendingAppointments(filteredAppointments);
+    getAllAppointments();
   }, []);
 
+  console.log(pendingAppointments,"ppppppppppp");
+
+  // useEffect(() => {
+  //   const filteredAppointments = appointmentsData.filter(
+  //     appointment => appointment.status === 'completed'
+  //   );
+  //   setPendingAppointments(filteredAppointments);
+  // }, []);
+
   const updateStatus = (appointment_ID, newStatus) => {
-    const updatedAppointments = pendingAppointments.map(appointment =>
+    const updatedAppointments = pendingAppointments?.map(appointment =>
       appointment.appointment_ID === appointment_ID
         ? { ...appointment, status: newStatus }
         : appointment
@@ -32,7 +66,7 @@ const AppointmentHistory = () => {
                 <tr>
                   <th>Appointment ID</th>
                   <th>Patient Name</th>
-                  <th>Day</th>
+                  <th>Date</th>
                   <th>Phone</th>
                   <th>Email</th>
                   <th>NIC</th>
@@ -41,15 +75,15 @@ const AppointmentHistory = () => {
               </thead>
               <tbody>
                 {pendingAppointments.map((appointment) => (
-                  <tr key={appointment.appointment_ID}>
-                    <td>{appointment.appointment_ID}</td>
-                    <td>{appointment.name}</td>
-                    <td>{appointment.day}</td>
-                    <td>{appointment.phone}</td>
-                    <td>{appointment.email}</td>
-                    <td>{appointment.nic}</td>
+                  <tr key={appointment?._id}>
+                    <td>{appointment?._id}</td>
+                    <td>{appointment?.patient?.fullName}</td>
+                    <td>{appointment?.appointment?.date}</td>
+                    <td>{appointment?.patient?.mobileNumber}</td>
+                    <td>{appointment?.patient?.email}</td>
+                    <td>{appointment?.patient?.nic}</td>
                     <td>
-                      <Link to={`/doc-appointment/${appointment.appointment_ID}`}>
+                      <Link to={`/doc-appointment/${appointment?._id}`}>
                         <button className="btn btn-info btn-sm healthcare-btn-info">View</button>
                       </Link>
                     </td>
