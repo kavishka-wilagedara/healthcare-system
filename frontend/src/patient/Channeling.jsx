@@ -165,20 +165,20 @@ function Channeling() {
           {data?.length > 0 ? (
             <div className="appointments-container">
               {data?.map((appt) => (
-                <div className="appointment-card" key={appt._id}>
+                <div className="appointment-card" key={appt?._id}>
                   <div className="appointment-header">
                     <div className="appointment-doctor-info">
                       <h4>
-                        <FaUserMd className="icon-md" /> {appt?.appointment.doctorName}
+                        <FaUserMd className="icon-md" /> {appt?.appointment?.doctorName}
                       </h4>
-                      <p className="specialty">{appt.appointment.specialization}</p>
+                      <p className="specialty">{appt?.appointment?.specialization}</p>
                     </div>
                     <div
                       className={`appointment-status ${getStatusClass(
-                        appt.booked
+                        appt?.booked
                       )}`}
                     >
-                      {appt.booked}
+                      {appt?.booked}
                     </div>
                   </div>
 
@@ -186,25 +186,25 @@ function Channeling() {
                     <div className="detail-item">
                       <FaUserCircle className="detail-icon" />
                       <span>Patient:</span>
-                      <span className="value">{appt.patient.fullName}</span>
+                      <span className="value">{appt?.patient?.fullName}</span>
                     </div>
 
                     <div className="detail-item">
                       <FaPhoneAlt className="detail-icon" />
                       <span>Contact:</span>
-                      <span className="value">{appt.appointment.contactNumber}</span>
+                      <span className="value">{appt?.appointment?.contactNumber}</span>
                     </div>
 
                     <div className="detail-item">
                       <FaRegCalendarCheck className="detail-icon" />
                       <span>Date:</span>
-                      <span className="value">{formatDate(appt.createdAt)}</span>
+                      <span className="value">{formatDate(appt?.createdAt)}</span>
                     </div>
 
                     <div className="detail-item">
                       <FaClock className="detail-icon" />
                       <span>Time:</span>
-                      <span className="value">{appt.appointment.inTime} - {appt.appointment.outTime}</span>
+                      <span className="value">{appt?.appointment?.inTime} - {appt?.appointment?.outTime}</span>
                     </div>
 
                     {/* <div className="detail-item full-width">

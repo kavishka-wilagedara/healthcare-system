@@ -100,7 +100,7 @@ function Homepage() {
             <Card className="shadow-sm upcoming-card">
               <Card.Body>
                 <h3 className="card-title">Your Upcoming Appointment</h3>
-                {data.pendingDoctorAppoinments.length > 0 ? (
+                {data?.pendingDoctorAppoinments.length > 0 ? (
                   <>
                     <div className="appointment-details">
                       <div className="appointment-calendar">

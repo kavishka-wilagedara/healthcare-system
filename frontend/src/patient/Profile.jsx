@@ -1,12 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import patientsData from "../doctor/data/patients.json";
 import PatientChannelHistory from "../doctor/components/PatientChannelHistory";
 import { UserContext } from "../common/UserContext";
 import axios from "axios";
 import Swal from "sweetalert2";
 
 function Profile() {
+  const { id } = useParams();
+  
   const [patient, setPatient] = useState({
     fullName: "",
     nic: "",
@@ -62,7 +63,7 @@ function Profile() {
       Swal.fire({
         icon: 'error',
         title: 'Error',
-        text: 'Failed to delete patient',
+        text: 'Failed to delete patient?',
         confirmButtonColor: '#17a2b8'
       });
     }
@@ -70,15 +71,22 @@ function Profile() {
 
   const getUserById = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/patients/${user.patient.patientId}`);
-      setPatient(response.data);
-      setLoading(false);
+      if(user?.patient?.patientId==undefined){
+        const response = await axios.get(`http://localhost:5000/api/patients/${id}`);
+        setPatient(response.data);
+        setLoading(false);
+      }else{
+        const response = await axios.get(`http://localhost:5000/api/patients/${user?.patient?.patientId}`);
+        setPatient(response.data);
+        setLoading(false);
+      }
+      
     } catch (error) {
       console.log('error', error);
       Swal.fire({
         icon: 'error',
         title: 'Error',
-        text: 'Failed to load patient data',
+        text: 'Failed to load patient? data',
         confirmButtonColor: '#17a2b8'
       });
       setLoading(false);
@@ -97,7 +105,7 @@ function Profile() {
     e.preventDefault();
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/patients/update/${user.patient.patientId}`,
+        `http://localhost:5000/api/patients/update/${user?.patient?.patientId}`,
         patient
       );
       Swal.fire({
@@ -109,7 +117,7 @@ function Profile() {
       setEditing(false);
       getUserById(); 
     } catch (error) {
-      console.error('Error updating patient:', error);
+      console.error('Error updating patient?:', error);
       Swal.fire({
         icon: 'error',
         title: 'Error',
@@ -154,7 +162,7 @@ function Profile() {
   };
 
   if (loading) {
-    return <div className="p-4 text-center">Loading patient data...</div>;
+    return <div className="p-4 text-center">Loading patient? data...</div>;
   }
 
   if (!patient) {
@@ -171,7 +179,7 @@ function Profile() {
         >
           {editing ? "Cancel Editing" : "Edit Profile"}
         </button>
-        <button className="btn btn-danger" onClick={() => deletPatient(user.patient.patientId)}>
+        <button className="btn btn-danger" onClick={() => deletPatient(user.patient?.patientId)}>
           Delete
         </button>
       </div>
@@ -192,7 +200,7 @@ function Profile() {
                         type="text"
                         className="form-control"
                         name="fullName"
-                        value={patient.fullName}
+                        value={patient?.fullName}
                         onChange={handleInputChange}
                         required
                       />
@@ -203,7 +211,7 @@ function Profile() {
                         type="text"
                         className="form-control"
                         name="nic"
-                        value={patient.nic}
+                        value={patient?.nic}
                         onChange={handleInputChange}
                         required
                       />
@@ -216,7 +224,7 @@ function Profile() {
                         type="date"
                         className="form-control"
                         name="dob"
-                        value={patient.dob ? patient.dob.split('T')[0] : ''}
+                        value={patient?.dob ? patient?.dob.split('T')[0] : ''}
                         onChange={handleInputChange}
                         required
                       />
@@ -226,7 +234,7 @@ function Profile() {
                       <select
                         className="form-select"
                         name="gender"
-                        value={patient.gender}
+                        value={patient?.gender}
                         onChange={handleInputChange}
                         required
                       >
@@ -241,7 +249,7 @@ function Profile() {
                       <select
                         className="form-select"
                         name="bloodType"
-                        value={patient.bloodType}
+                        value={patient?.bloodType}
                         onChange={handleInputChange}
                       >
                         <option value="">Select Blood Type</option>
@@ -262,7 +270,7 @@ function Profile() {
                       <select
                         className="form-select"
                         name="maritalStatus"
-                        value={patient.maritalStatus}
+                        value={patient?.maritalStatus}
                         onChange={handleInputChange}
                       >
                         <option value="">Select Status</option>
@@ -278,7 +286,7 @@ function Profile() {
                         type="tel"
                         className="form-control"
                         name="mobileNumber"
-                        value={patient.mobileNumber}
+                        value={patient?.mobileNumber}
                         onChange={handleInputChange}
                         required
                       />
@@ -289,7 +297,7 @@ function Profile() {
                         type="tel"
                         className="form-control"
                         name="alternativePhone"
-                        value={patient.alternativePhone}
+                        value={patient?.alternativePhone}
                         onChange={handleInputChange}
                       />
                     </div>
@@ -301,7 +309,7 @@ function Profile() {
                         type="email"
                         className="form-control"
                         name="email"
-                        value={patient.email}
+                        value={patient?.email}
                         onChange={handleInputChange}
                         required
                       />
@@ -311,7 +319,7 @@ function Profile() {
                       <select
                         className="form-select"
                         name="preferredContact"
-                        value={patient.preferredContact}
+                        value={patient?.preferredContact}
                         onChange={handleInputChange}
                       >
                         <option value="">Select Preferred Contact</option>
@@ -337,7 +345,7 @@ function Profile() {
                       type="text"
                       className="form-control"
                       name="residentialStreet"
-                      value={patient.residentialStreet}
+                      value={patient?.residentialStreet}
                       onChange={handleInputChange}
                     />
                   </div>
@@ -347,7 +355,7 @@ function Profile() {
                       type="text"
                       className="form-control"
                       name="residentialCity"
-                      value={patient.residentialCity}
+                      value={patient?.residentialCity}
                       onChange={handleInputChange}
                     />
                   </div>
@@ -358,7 +366,7 @@ function Profile() {
                         type="text"
                         className="form-control"
                         name="residentialProvince"
-                        value={patient.residentialProvince}
+                        value={patient?.residentialProvince}
                         onChange={handleInputChange}
                       />
                     </div>
@@ -368,7 +376,7 @@ function Profile() {
                         type="text"
                         className="form-control"
                         name="residentialPostal"
-                        value={patient.residentialPostal}
+                        value={patient?.residentialPostal}
                         onChange={handleInputChange}
                       />
                     </div>
@@ -388,20 +396,20 @@ function Profile() {
                     <select
                       className="form-select"
                       name="sameMailingAddress"
-                      value={patient.sameMailingAddress}
+                      value={patient?.sameMailingAddress}
                       onChange={handleInputChange}
                     >
                       <option value="Yes">Yes</option>
                       <option value="No">No</option>
                     </select>
                   </div>
-                  {patient.sameMailingAddress === "No" && (
+                  {patient?.sameMailingAddress === "No" && (
                     <div className="mb-3">
                       <label className="form-label">Mailing Address</label>
                       <textarea
                         className="form-control"
                         name="mailingAddress"
-                        value={patient.mailingAddress}
+                        value={patient?.mailingAddress}
                         onChange={handleInputChange}
                         rows="3"
                       />
@@ -423,7 +431,7 @@ function Profile() {
                       type="text"
                       className="form-control"
                       name="emergencyName"
-                      value={patient.emergencyName}
+                      value={patient?.emergencyName}
                       onChange={handleInputChange}
                     />
                   </div>
@@ -433,7 +441,7 @@ function Profile() {
                       type="text"
                       className="form-control"
                       name="emergencyRelationship"
-                      value={patient.emergencyRelationship}
+                      value={patient?.emergencyRelationship}
                       onChange={handleInputChange}
                     />
                   </div>
@@ -443,7 +451,7 @@ function Profile() {
                       type="tel"
                       className="form-control"
                       name="emergencyMobile"
-                      value={patient.emergencyMobile}
+                      value={patient?.emergencyMobile}
                       onChange={handleInputChange}
                     />
                   </div>
@@ -453,7 +461,7 @@ function Profile() {
                       type="tel"
                       className="form-control"
                       name="emergencyAlternative"
-                      value={patient.emergencyAlternative}
+                      value={patient?.emergencyAlternative}
                       onChange={handleInputChange}
                     />
                   </div>
@@ -472,18 +480,18 @@ function Profile() {
                     <select
                       className="form-select mb-2"
                       name="allergies"
-                      value={patient.allergies}
+                      value={patient?.allergies}
                       onChange={handleInputChange}
                     >
                       <option value="No">No</option>
                       <option value="Yes">Yes</option>
                     </select>
-                    {patient.allergies === "Yes" && (
+                    {patient?.allergies === "Yes" && (
                       <input
                         type="text"
                         className="form-control"
                         name="allergyList"
-                        value={patient.allergyList}
+                        value={patient?.allergyList}
                         onChange={handleInputChange}
                         placeholder="List allergies separated by commas"
                       />
@@ -494,18 +502,18 @@ function Profile() {
                     <select
                       className="form-select mb-2"
                       name="chronicConditions"
-                      value={patient.chronicConditions}
+                      value={patient?.chronicConditions}
                       onChange={handleInputChange}
                     >
                       <option value="No">No</option>
                       <option value="Yes">Yes</option>
                     </select>
-                    {patient.chronicConditions === "Yes" && (
+                    {patient?.chronicConditions === "Yes" && (
                       <input
                         type="text"
                         className="form-control"
                         name="chronicList"
-                        value={patient.chronicList}
+                        value={patient?.chronicList}
                         onChange={handleInputChange}
                         placeholder="List chronic conditions separated by commas"
                       />
@@ -516,7 +524,7 @@ function Profile() {
                     <textarea
                       className="form-control"
                       name="currentMedications"
-                      value={patient.currentMedications}
+                      value={patient?.currentMedications}
                       onChange={handleInputChange}
                       rows="2"
                       placeholder="List current medications"
@@ -527,7 +535,7 @@ function Profile() {
                     <textarea
                       className="form-control"
                       name="previousSurgeries"
-                      value={patient.previousSurgeries}
+                      value={patient?.previousSurgeries}
                       onChange={handleInputChange}
                       rows="2"
                       placeholder="List previous surgeries"
@@ -538,7 +546,7 @@ function Profile() {
                     <textarea
                       className="form-control"
                       name="familyMedicalHistory"
-                      value={patient.familyMedicalHistory}
+                      value={patient?.familyMedicalHistory}
                       onChange={handleInputChange}
                       rows="2"
                       placeholder="List family medical history"
@@ -559,14 +567,14 @@ function Profile() {
                     <select
                       className="form-select mb-2"
                       name="insurance"
-                      value={patient.insurance}
+                      value={patient?.insurance}
                       onChange={handleInputChange}
                     >
                       <option value="No">No</option>
                       <option value="Yes">Yes</option>
                     </select>
                   </div>
-                  {patient.insurance === "Yes" && (
+                  {patient?.insurance === "Yes" && (
                     <>
                       <div className="row mb-3">
                         <div className="col-md-6">
@@ -575,7 +583,7 @@ function Profile() {
                             type="text"
                             className="form-control"
                             name="insuranceProvider"
-                            value={patient.insuranceProvider}
+                            value={patient?.insuranceProvider}
                             onChange={handleInputChange}
                           />
                         </div>
@@ -585,7 +593,7 @@ function Profile() {
                             type="text"
                             className="form-control"
                             name="policyNumber"
-                            value={patient.policyNumber}
+                            value={patient?.policyNumber}
                             onChange={handleInputChange}
                           />
                         </div>
@@ -596,7 +604,7 @@ function Profile() {
                           type="text"
                           className="form-control"
                           name="policyholderName"
-                          value={patient.policyholderName}
+                          value={patient?.policyholderName}
                           onChange={handleInputChange}
                         />
                       </div>
@@ -619,7 +627,7 @@ function Profile() {
                         type="text"
                         className="form-control"
                         name="username"
-                        value={patient.username}
+                        value={patient?.username}
                         onChange={handleInputChange}
                         disabled
                       />
@@ -630,7 +638,7 @@ function Profile() {
                         type="text"
                         className="form-control"
                         name="securityQuestion"
-                        value={patient.securityQuestion}
+                        value={patient?.securityQuestion}
                         onChange={handleInputChange}
                         disabled
                       />
@@ -641,7 +649,7 @@ function Profile() {
                       type="checkbox"
                       className="form-check-input"
                       name="notifications"
-                      checked={patient.notifications}
+                      checked={patient?.notifications}
                       onChange={handleInputChange}
                       id="notificationsCheck"
                     />
@@ -670,37 +678,37 @@ function Profile() {
               <div className="card-body">
                 <dl className="row mb-0">
                   <dt className="col-sm-4 fw-semibold">Full Name</dt>
-                  <dd className="col-sm-8">{patient.fullName || "N/A"}</dd>
+                  <dd className="col-sm-8">{patient?.fullName || "N/A"}</dd>
                   
                   <dt className="col-sm-4 fw-semibold">NIC</dt>
-                  <dd className="col-sm-8">{patient.nic || "N/A"}</dd>
+                  <dd className="col-sm-8">{patient?.nic || "N/A"}</dd>
                   
                   <dt className="col-sm-4 fw-semibold">Date of Birth</dt>
-                  <dd className="col-sm-8">{patient.dob ? new Date(patient.dob).toLocaleDateString() : "N/A"}</dd>
+                  <dd className="col-sm-8">{patient?.dob ? new Date(patient?.dob).toLocaleDateString() : "N/A"}</dd>
                   
                   <dt className="col-sm-4 fw-semibold">Age</dt>
-                  <dd className="col-sm-8">{patient.dob ? calculateAge(patient.dob) : "N/A"}</dd>
+                  <dd className="col-sm-8">{patient?.dob ? calculateAge(patient?.dob) : "N/A"}</dd>
                   
                   <dt className="col-sm-4 fw-semibold">Gender</dt>
-                  <dd className="col-sm-8">{patient.gender || "N/A"}</dd>
+                  <dd className="col-sm-8">{patient?.gender || "N/A"}</dd>
                   
                   <dt className="col-sm-4 fw-semibold">Blood Type</dt>
-                  <dd className="col-sm-8">{patient.bloodType || "N/A"}</dd>
+                  <dd className="col-sm-8">{patient?.bloodType || "N/A"}</dd>
                   
                   <dt className="col-sm-4 fw-semibold">Marital Status</dt>
-                  <dd className="col-sm-8">{patient.maritalStatus || "N/A"}</dd>
+                  <dd className="col-sm-8">{patient?.maritalStatus || "N/A"}</dd>
                   
                   <dt className="col-sm-4 fw-semibold">Mobile Number</dt>
-                  <dd className="col-sm-8">{patient.mobileNumber || "N/A"}</dd>
+                  <dd className="col-sm-8">{patient?.mobileNumber || "N/A"}</dd>
                   
                   <dt className="col-sm-4 fw-semibold">Alternative Phone</dt>
-                  <dd className="col-sm-8">{patient.alternativePhone || "N/A"}</dd>
+                  <dd className="col-sm-8">{patient?.alternativePhone || "N/A"}</dd>
                   
                   <dt className="col-sm-4 fw-semibold">Email</dt>
-                  <dd className="col-sm-8">{patient.email || "N/A"}</dd>
+                  <dd className="col-sm-8">{patient?.email || "N/A"}</dd>
                   
                   <dt className="col-sm-4 fw-semibold">Preferred Contact</dt>
-                  <dd className="col-sm-8">{patient.preferredContact || "N/A"}</dd>
+                  <dd className="col-sm-8">{patient?.preferredContact || "N/A"}</dd>
                 </dl>
               </div>
             </div>
@@ -714,16 +722,16 @@ function Profile() {
               <div className="card-body">
                 <dl className="row mb-0">
                   <dt className="col-sm-4 fw-semibold">Street</dt>
-                  <dd className="col-sm-8">{patient.residentialStreet || "N/A"}</dd>
+                  <dd className="col-sm-8">{patient?.residentialStreet || "N/A"}</dd>
                   
                   <dt className="col-sm-4 fw-semibold">City</dt>
-                  <dd className="col-sm-8">{patient.residentialCity || "N/A"}</dd>
+                  <dd className="col-sm-8">{patient?.residentialCity || "N/A"}</dd>
                   
                   <dt className="col-sm-4 fw-semibold">Province</dt>
-                  <dd className="col-sm-8">{patient.residentialProvince || "N/A"}</dd>
+                  <dd className="col-sm-8">{patient?.residentialProvince || "N/A"}</dd>
                   
                   <dt className="col-sm-4 fw-semibold">Postal Code</dt>
-                  <dd className="col-sm-8">{patient.residentialPostal || "N/A"}</dd>
+                  <dd className="col-sm-8">{patient?.residentialPostal || "N/A"}</dd>
                 </dl>
               </div>
             </div>
@@ -737,10 +745,10 @@ function Profile() {
               <div className="card-body">
                 <dl className="row mb-0">
                   <dt className="col-sm-4 fw-semibold">Same as Residential</dt>
-                  <dd className="col-sm-8">{patient.sameMailingAddress || "N/A"}</dd>
+                  <dd className="col-sm-8">{patient?.sameMailingAddress || "N/A"}</dd>
                   
                   <dt className="col-sm-4 fw-semibold">Address</dt>
-                  <dd className="col-sm-8">{patient.mailingAddress || "N/A"}</dd>
+                  <dd className="col-sm-8">{patient?.mailingAddress || "N/A"}</dd>
                 </dl>
               </div>
             </div>
@@ -754,16 +762,16 @@ function Profile() {
               <div className="card-body">
                 <dl className="row mb-0">
                   <dt className="col-sm-4 fw-semibold">Name</dt>
-                  <dd className="col-sm-8">{patient.emergencyName || "N/A"}</dd>
+                  <dd className="col-sm-8">{patient?.emergencyName || "N/A"}</dd>
                   
                   <dt className="col-sm-4 fw-semibold">Relationship</dt>
-                  <dd className="col-sm-8">{patient.emergencyRelationship || "N/A"}</dd>
+                  <dd className="col-sm-8">{patient?.emergencyRelationship || "N/A"}</dd>
                   
                   <dt className="col-sm-4 fw-semibold">Mobile</dt>
-                  <dd className="col-sm-8">{patient.emergencyMobile || "N/A"}</dd>
+                  <dd className="col-sm-8">{patient?.emergencyMobile || "N/A"}</dd>
                   
                   <dt className="col-sm-4 fw-semibold">Alternative Phone</dt>
-                  <dd className="col-sm-8">{patient.emergencyAlternative || "N/A"}</dd>
+                  <dd className="col-sm-8">{patient?.emergencyAlternative || "N/A"}</dd>
                 </dl>
               </div>
             </div>
@@ -777,19 +785,19 @@ function Profile() {
               <div className="card-body">
                 <dl className="row mb-0">
                   <dt className="col-sm-4 fw-semibold">Allergies</dt>
-                  <dd className="col-sm-8">{patient.allergies === "Yes" ? patient.allergyList : "None"}</dd>
+                  <dd className="col-sm-8">{patient?.allergies === "Yes" ? patient?.allergyList : "None"}</dd>
                   
                   <dt className="col-sm-4 fw-semibold">Chronic Conditions</dt>
-                  <dd className="col-sm-8">{patient.chronicConditions === "Yes" ? patient.chronicList : "None"}</dd>
+                  <dd className="col-sm-8">{patient?.chronicConditions === "Yes" ? patient?.chronicList : "None"}</dd>
                   
                   <dt className="col-sm-4 fw-semibold">Current Medications</dt>
-                  <dd className="col-sm-8">{patient.currentMedications || "None"}</dd>
+                  <dd className="col-sm-8">{patient?.currentMedications || "None"}</dd>
                   
                   <dt className="col-sm-4 fw-semibold">Previous Surgeries</dt>
-                  <dd className="col-sm-8">{patient.previousSurgeries || "None"}</dd>
+                  <dd className="col-sm-8">{patient?.previousSurgeries || "None"}</dd>
                   
                   <dt className="col-sm-4 fw-semibold">Family Medical History</dt>
-                  <dd className="col-sm-8">{patient.familyMedicalHistory || "None"}</dd>
+                  <dd className="col-sm-8">{patient?.familyMedicalHistory || "None"}</dd>
                 </dl>
               </div>
             </div>
@@ -803,18 +811,18 @@ function Profile() {
               <div className="card-body">
                 <dl className="row mb-0">
                   <dt className="col-sm-4 fw-semibold">Has Insurance</dt>
-                  <dd className="col-sm-8">{patient.insurance || "N/A"}</dd>
+                  <dd className="col-sm-8">{patient?.insurance || "N/A"}</dd>
                   
-                  {patient.insurance === "Yes" && (
+                  {patient?.insurance === "Yes" && (
                     <>
                       <dt className="col-sm-4 fw-semibold">Insurance Provider</dt>
-                      <dd className="col-sm-8">{patient.insuranceProvider || "N/A"}</dd>
+                      <dd className="col-sm-8">{patient?.insuranceProvider || "N/A"}</dd>
                       
                       <dt className="col-sm-4 fw-semibold">Policy Number</dt>
-                      <dd className="col-sm-8">{patient.policyNumber || "N/A"}</dd>
+                      <dd className="col-sm-8">{patient?.policyNumber || "N/A"}</dd>
                       
                       <dt className="col-sm-4 fw-semibold">Policyholder Name</dt>
-                      <dd className="col-sm-8">{patient.policyholderName || "N/A"}</dd>
+                      <dd className="col-sm-8">{patient?.policyholderName || "N/A"}</dd>
                     </>
                   )}
                 </dl>
@@ -830,16 +838,16 @@ function Profile() {
               <div className="card-body">
                 <dl className="row mb-0">
                   <dt className="col-sm-4 fw-semibold">Username</dt>
-                  <dd className="col-sm-8">{patient.username || "N/A"}</dd>
+                  <dd className="col-sm-8">{patient?.username || "N/A"}</dd>
                   
                   <dt className="col-sm-4 fw-semibold">Security Question</dt>
-                  <dd className="col-sm-8">{patient.securityQuestion || "N/A"}</dd>
+                  <dd className="col-sm-8">{patient?.securityQuestion || "N/A"}</dd>
                   
                   <dt className="col-sm-4 fw-semibold">Notifications</dt>
-                  <dd className="col-sm-8">{patient.notifications ? "Enabled" : "Disabled"}</dd>
+                  <dd className="col-sm-8">{patient?.notifications ? "Enabled" : "Disabled"}</dd>
                   
                   <dt className="col-sm-4 fw-semibold">Account Created</dt>
-                  <dd className="col-sm-8">{patient.createdAt ? new Date(patient.createdAt).toLocaleString() : "N/A"}</dd>
+                  <dd className="col-sm-8">{patient?.createdAt ? new Date(patient?.createdAt).toLocaleString() : "N/A"}</dd>
                 </dl>
               </div>
             </div>
@@ -847,7 +855,7 @@ function Profile() {
         </div>
       )}
 
-      {patient._id && <PatientChannelHistory patientId={patient._id} />}
+      {patient?._id && <PatientChannelHistory patientId={patient?._id} />}
 
       <style>{`
         .text-teal {

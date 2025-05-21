@@ -34,6 +34,7 @@ const Patients = () => {
   };
 
   const handleView = (id) => {
+    console.log(id,"check id");
     navigate(`/doc-patient-profile/${id}`);
   };
 
@@ -72,23 +73,23 @@ const Patients = () => {
                 </tr>
               </thead>
               <tbody>
-                {filteredData.map((patient) => (
-                  <tr key={patient._id}>
-                    <td>{patient._id}</td>
-                    <td>{patient.fullName}</td>
-                    <td>{patient.nic}</td>
-                    <td>{patient.dob.split('T')[0]}</td>
-                    <td>{patient.gender}</td>
-                    <td>{patient.mobileNumber}</td>
-                    <td>{patient.email}</td>
-                    <td>{patient.residentialStreet},{patient.residentialProvince},{patient.residentialCity}</td>
+                {filteredData?.map((patient) => (
+                  <tr key={patient?._id}>
+                    <td>{patient?._id}</td>
+                    <td>{patient?.fullName}</td>
+                    <td>{patient?.nic}</td>
+                    <td>{patient?.dob.split('T')[0]}</td>
+                    <td>{patient?.gender}</td>
+                    <td>{patient?.mobileNumber}</td>
+                    <td>{patient?.email}</td>
+                    <td>{patient?.residentialStreet},{patient?.residentialProvince},{patient?.residentialCity}</td>
                     <td>
                       {patient?.familyMedicalHistory}
                     </td>
                     <td>
                       <button
                         className="btn btn-sm btn-primary"
-                        onClick={() => handleView(patient.patient_ID)}
+                        onClick={() => handleView(patient?._id)}
                       >
                         View
                       </button>
