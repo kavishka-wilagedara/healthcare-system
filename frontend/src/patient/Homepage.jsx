@@ -1,4 +1,4 @@
-import React from "react";
+import React, { use, useContext } from "react";
 import "./Homepage.css";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { FaCalendarCheck, FaFileMedical } from "react-icons/fa";
@@ -7,10 +7,14 @@ import { RiFileHistoryFill } from "react-icons/ri";
 import doctorPatientImg from "../assets/images/doctor-patient.png";
 import medicalBackgroundImg from "../assets/images/medical-background.jpg";
 import healthTipImg from "../assets/images/health-tip.jpg";
+import axios from 'axios';
+import { UserContext } from "../common/UserContext";
 
 function Homepage() {
+  const {user} = useContext(UserContext);
+console.log(user,"user")
   const data = {
-    name: "Ashan Vimod",
+    name: user?.patient?.fullName,
     pendingClinicalService: [
       {
         appointmentId: "ClI-0001",
@@ -74,7 +78,7 @@ function Homepage() {
           <Row>
             <Col md={6} className="hero-text">
               <h1>
-                Welcome, <span className="patient-name">{data.name}</span>
+                Welcome, <span className="patient-name">{data?.name}</span>
               </h1>
               <p className="hero-subtitle">
                 You're one step closer to feeling your best , Let's make today
@@ -217,7 +221,7 @@ function Homepage() {
 
         <h2 className="section-title">Quick Access</h2>
         <Row className="features-section">
-          {quickAccessCards.map((card, index) => (
+          {quickAccessCards?.map((card, index) => (
             <Col md={3} sm={6} className="mb-4" key={index}>
               <Card className="feature-card shadow-sm h-100">
                 <Card.Body className="text-center">

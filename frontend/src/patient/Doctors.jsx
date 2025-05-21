@@ -67,7 +67,7 @@ const Doctors = () => {
         Swal.fire({
           icon: "success",
           title: "Booking Successful!",
-          text: `You have successfully booked an appointment with ${doctor.doctorName} on ${doctor.day} at ${doctor.inTime}`,
+          text: `You have successfully booked an appointment with ${doctor?.doctorName} on ${doctor?.date} at ${doctor?.inTime}`,
           customClass: {
             popup: "booking-swal-popup",
           },
@@ -108,12 +108,12 @@ const Doctors = () => {
 
                 <div className="doctor-details">
                   <h4>{doctor.doctorName}</h4>
-                  <p className="doctor-specialty">{doctor.specialization}</p>
+                  <p className="doctor-specialty">{doctor?.specialization}</p>
                 </div>
 
                 <div className="doctor-availability">
-                  <span className="available-date">{doctor.date}</span>
-                  <span className="available-time">{doctor.inTime} - {doctor.outTime} </span>
+                  <span className="available-date">{doctor?.date}</span>
+                  <span className="available-time">{doctor?.inTime} - {doctor?.outTime} </span>
                 </div>
 
                 <div className="booking-buttons">
