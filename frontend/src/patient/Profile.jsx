@@ -859,7 +859,7 @@ function Profile() {
 
       <style>{`
         .text-teal {
-          color: #17a2b8;
+          color: #3385d6;
         }
         .healthcare-card {
           border: none;
@@ -872,7 +872,7 @@ function Profile() {
           transform: translateY(-5px);
         }
         .healthcare-card-header {
-          background: linear-gradient(135deg, #17a2b8, #138496);
+          background: linear-gradient(135deg, #3385d6, #138496);
           border-radius: 12px 12px 0 0;
           padding: 1.5rem;
         }
