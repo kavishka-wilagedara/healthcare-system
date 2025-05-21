@@ -298,7 +298,7 @@ export default function DoctorProfile() {
                             <p className="subtitle">Manage your profile and appointments</p>
                         </div>
                         <div className="col-md-6 text-md-end">
-                            <button className="btn btn-outline-light me-2" onClick={handleEditProfile}>
+                            <button className="btn btn-outline-dark me-2" onClick={handleEditProfile}>
                                 <i className="fas fa-edit me-2"></i> Edit Profile
                             </button>
                             <button className="btn btn-outline-info me-2" onClick={handleShowTimesModal}>

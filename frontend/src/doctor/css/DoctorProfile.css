@@ -49,11 +49,11 @@ body {
 
 /* Profile Header */
 .profile-header {
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    color: white;
+    /* background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); */
+    color: rgb(5, 5, 5);
     padding: 3rem 0;
     margin-bottom: 2rem;
-    box-shadow: var(--shadow-md);
+    /* box-shadow: var(--shadow-md); */
 }
 
 .welcome-text {
