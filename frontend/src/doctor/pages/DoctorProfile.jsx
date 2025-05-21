@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../common/UserContext'
 import axios from 'axios';
-import { Modal, Button, Form } from 'react-bootstrap';
+import { Modal, Button, Form, Table } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import '../css/DoctorProfile.css';
@@ -14,6 +14,7 @@ export default function DoctorProfile() {
     const [appointmentsLoading, setAppointmentsLoading] = useState(true);
     const [showEditModal, setShowEditModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [showTimesModal, setShowTimesModal] = useState(false);
     const [formData, setFormData] = useState({
         fullName: '',
         email: '',
@@ -30,9 +31,67 @@ export default function DoctorProfile() {
     const navigate = useNavigate();
     const doctorId = user?.doctor.id;
 
+    const [doctorTimes, setDoctorTimes] = useState([]);
+    const [timesLoading, setTimesLoading] = useState(true);
+
+    const getAllDoctorTimes = async () => {
+        try {
+            setTimesLoading(true);
+            const response = await axios.get(`http://localhost:5000/api/doctor/time/${doctorId}`);
+            setDoctorTimes(response.data);
+            setTimesLoading(false);
+        } catch (error) {
+            console.log('Error while fetching doctor times:', error);
+            setTimesLoading(false);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Failed to load doctor times',
+                timer: 3000,
+                showConfirmButton: false
+            });
+        }
+    }
+
+    const handleDeleteTime = async (timeId) => {
+        try {
+            const result = await Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            });
+
+            if (result.isConfirmed) {
+                await axios.delete(`http://localhost:5000/api/doctor/delete/time/${timeId}`);
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Deleted!',
+                    text: 'The time slot has been deleted.',
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+                getAllDoctorTimes();
+            }
+        } catch (error) {
+            console.log('Error while deleting time:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Failed to delete time slot',
+                timer: 3000,
+                showConfirmButton: false
+            });
+        }
+    }
+
     useEffect(() => {
         getDoctorById();
         getDoctorAppointments();
+        getAllDoctorTimes();
     }, []);
 
     useEffect(() => {
@@ -135,6 +194,14 @@ export default function DoctorProfile() {
         setShowDeleteModal(false);
     }
 
+    const handleShowTimesModal = () => {
+        setShowTimesModal(true);
+    }
+
+    const handleCloseTimesModal = () => {
+        setShowTimesModal(false);
+    }
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData({
@@ -226,13 +293,16 @@ export default function DoctorProfile() {
             <div className="profile-header">
                 <div className="container">
                     <div className="row align-items-center">
-                        <div className="col-md-8">
+                        <div className="col-md-6">
                             <h1 className="welcome-text">Welcome back, Dr. {doctor?.fullName.split(' ')[0]}</h1>
                             <p className="subtitle">Manage your profile and appointments</p>
                         </div>
-                        <div className="col-md-4 text-md-end">
+                        <div className="col-md-6 text-md-end">
                             <button className="btn btn-outline-light me-2" onClick={handleEditProfile}>
                                 <i className="fas fa-edit me-2"></i> Edit Profile
+                            </button>
+                            <button className="btn btn-outline-info me-2" onClick={handleShowTimesModal}>
+                                <i className="fas fa-clock me-2"></i> View Times
                             </button>
                             <button className="btn btn-outline-danger" onClick={handleShowDeleteModal}>
                                 <i className="fas fa-trash-alt me-2"></i> Delete Account
@@ -421,6 +491,7 @@ export default function DoctorProfile() {
                 </div>
             </div>
 
+            {/* Edit Profile Modal */}
             <Modal show={showEditModal} onHide={handleCloseEditModal} className="profile-edit-modal">
                 <Modal.Header closeButton>
                     <Modal.Title><i className="fas fa-user-edit me-2"></i>Edit Your Profile</Modal.Title>
@@ -495,6 +566,7 @@ export default function DoctorProfile() {
                 </Modal.Body>
             </Modal>
 
+            {/* Delete Account Modal */}
             <Modal show={showDeleteModal} onHide={handleCloseDeleteModal} centered>
                 <Modal.Header closeButton>
                     <Modal.Title><i className="fas fa-exclamation-triangle text-danger me-2"></i>Delete Account</Modal.Title>
@@ -516,6 +588,65 @@ export default function DoctorProfile() {
                     </Button>
                     <Button variant="danger" onClick={handleDeleteAccount}>
                         <i className="fas fa-trash-alt me-1"></i> Delete Account
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
+            {/* View Times Modal */}
+            <Modal show={showTimesModal} onHide={handleCloseTimesModal} size="lg">
+                <Modal.Header closeButton>
+                    <Modal.Title><i className="fas fa-clock me-2"></i>Your Available Times</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    {timesLoading ? (
+                        <div className="text-center py-4">
+                            <div className="spinner-border text-primary" role="status">
+                                <span className="visually-hidden">Loading...</span>
+                            </div>
+                            <p className="mt-2">Loading available times...</p>
+                        </div>
+                    ) : doctorTimes.length === 0 ? (
+                        <div className="text-center py-4">
+                            <i className="fas fa-clock fa-3x text-muted mb-3"></i>
+                            <h4>No Available Times</h4>
+                            <p>You haven't added any available time slots yet.</p>
+                        </div>
+                    ) : (
+                        <div className="table-responsive">
+                            <Table striped bordered hover className="times-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Start Time</th>
+                                        <th>End Time</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {doctorTimes.map((time) => (
+                                        <tr key={time._id}>
+                                            <td>{formatDate(time.date)}</td>
+                                            <td>{time.inTime}</td>
+                                            <td>{time.outTime}</td>
+                                            <td>
+                                                <Button 
+                                                    variant="outline-danger" 
+                                                    size="sm" 
+                                                    onClick={() => handleDeleteTime(time._id)}
+                                                >
+                                                    <i className="fas fa-trash-alt me-1"></i> Delete
+                                                </Button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </Table>
+                        </div>
+                    )}
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseTimesModal}>
+                        <i className="fas fa-times me-1"></i> Close
                     </Button>
                 </Modal.Footer>
             </Modal>
