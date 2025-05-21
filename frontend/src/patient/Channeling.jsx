@@ -219,7 +219,7 @@ function Channeling() {
                       Reschedule
                     </button> */}
                     <button className="action-btn cancel" onClick={() => deleteAppointment(appt._id)}>Cancel</button>
-                    <button className="action-btn details">View Details</button>
+                    {/* <button className="action-btn details">View Details</button> */}
                   </div>
                 </div>
               ))}
