@@ -99,6 +99,18 @@
   font-size: 16px;
 }
 
+.download-button {
+  width: 180px;
+  position: relative;
+  background-color: white;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+}
+
+.download-button:hover {
+  color: red;
+}
+
 /* Navigation Tabs */
 .history-tabs {
   display: flex;
@@ -107,7 +119,6 @@
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
 }
-
 
 .history-tab {
   display: flex;
