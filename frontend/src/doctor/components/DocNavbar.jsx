@@ -37,7 +37,7 @@ const DocNavbar = () => {
         </button>
 
         <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav me-auto">
+          <ul className="navbar-nav me-auto" style={{marginLeft: "700px"}}>
             <li className="nav-item">
               <Link
                 className={`nav-link ${
