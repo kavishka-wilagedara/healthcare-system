@@ -161,7 +161,7 @@ export default function DoctorProfile() {
         try {
             const response = await axios.get('http://localhost:5000/api/appointments/');
             const doctorAppointments = response.data.data.filter(
-                appointment => appointment.appointment.doctorId === doctorId
+                appointment => appointment?.appointment?.id === doctorId
             );
             setAppointments(doctorAppointments);
             setAppointmentsLoading(false);
@@ -215,9 +215,9 @@ export default function DoctorProfile() {
         try {
             const updatedDoctor = {
                 ...formData,
-                _id: doctor._id,
-                doctorId: doctor.doctorId,
-                password: doctor.password
+                _id: doctor?._id,
+                doctorId: doctor?.doctorId,
+                password: doctor?.password
             };
 
             await axios.put(
@@ -248,7 +248,7 @@ export default function DoctorProfile() {
 
     const handleDeleteAccount = async () => {
         try {
-            await axios.delete(`http://localhost:5000/api/doctor/delete/${doctor._id}`);
+            await axios.delete(`http://localhost:5000/api/doctor/delete/${doctor?._id}`);
             
             Swal.fire({
                 icon: 'success',

@@ -109,11 +109,11 @@ const DocNavbar = () => {
                     <i className="fas fa-user-circle me-2"></i>Profile
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link className="dropdown-item" to="/doc-settings">
                     <i className="fas fa-cog me-2"></i>Settings
                   </Link>
-                </li>
+                </li> */}
                 <li>
                   <hr className="dropdown-divider" />
                 </li>
