@@ -1,10 +1,9 @@
-import React from 'react';
 import { useParams } from 'react-router-dom';
 import appointmentsData from '../data/appointments.json';
 
 const AppointmentDetailsPage = () => {
   const { id } = useParams();
-  const appointment = appointmentsData.find(a => a.appointment_ID === id);
+  const appointment = appointmentsData?.find(a => a.appointment_ID === id);
 
   if (!appointment) {
     return <div className="p-4 text-danger">Appointment not found.</div>;
@@ -22,40 +21,40 @@ const AppointmentDetailsPage = () => {
             <div className="card-body">
               <dl className="row mb-0">
                 <dt className="col-sm-4 fw-semibold">Appointment ID</dt>
-                <dd className="col-sm-8">{appointment.appointment_ID}</dd>
+                <dd className="col-sm-8">{appointment?.appointment_ID}</dd>
 
                 <dt className="col-sm-4 fw-semibold">Patient ID</dt>
-                <dd className="col-sm-8">{appointment.patient_ID}</dd>
+                <dd className="col-sm-8">{appointment?.patient_ID}</dd>
 
                 <dt className="col-sm-4 fw-semibold">Name</dt>
-                <dd className="col-sm-8">{appointment.name}</dd>
+                <dd className="col-sm-8">{appointment?.name}</dd>
 
                 <dt className="col-sm-4 fw-semibold">NIC</dt>
-                <dd className="col-sm-8">{appointment.nic}</dd>
+                <dd className="col-sm-8">{appointment?.nic}</dd>
 
                 <dt className="col-sm-4 fw-semibold">Age</dt>
-                <dd className="col-sm-8">{appointment.age}</dd>
+                <dd className="col-sm-8">{appointment?.age}</dd>
 
                 <dt className="col-sm-4 fw-semibold">Gender</dt>
-                <dd className="col-sm-8">{appointment.gender}</dd>
+                <dd className="col-sm-8">{appointment?.gender}</dd>
 
                 <dt className="col-sm-4 fw-semibold">Phone</dt>
-                <dd className="col-sm-8">{appointment.phone}</dd>
+                <dd className="col-sm-8">{appointment?.phone}</dd>
 
                 <dt className="col-sm-4 fw-semibold">Email</dt>
-                <dd className="col-sm-8">{appointment.email}</dd>
+                <dd className="col-sm-8">{appointment?.email}</dd>
 
                 <dt className="col-sm-4 fw-semibold">Address</dt>
-                <dd className="col-sm-8">{appointment.address}</dd>
+                <dd className="col-sm-8">{appointment?.address}</dd>
 
                 <dt className="col-sm-4 fw-semibold">Medicine</dt>
-                <dd className="col-sm-8">{appointment.medicine}</dd>
+                <dd className="col-sm-8">{appointment?.medicine}</dd>
 
                 <dt className="col-sm-4 fw-semibold">Description</dt>
-                <dd className="col-sm-8">{appointment.description}</dd>
+                <dd className="col-sm-8">{appointment?.description}</dd>
 
                 <dt className="col-sm-4 fw-semibold">Day</dt>
-                <dd className="col-sm-8">{appointment.day}</dd>
+                <dd className="col-sm-8">{appointment?.day}</dd>
               </dl>
             </div>
           </div>

@@ -20,8 +20,8 @@ const ScheduledAppointments = () => {
       setPendingDoctorAppointments((preData) =>
         response.data.data.filter(
           (appointment) =>
-            appointment.appointment?.doctorId === doctorId &&
-            appointment.booked === "confirmed"
+            appointment?.appointment?.doctorId === doctorId &&
+            appointment?.booked === "confirmed"
         )
       );
       console.log(pendingDoctorAppointments);

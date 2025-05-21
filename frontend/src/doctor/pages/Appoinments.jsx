@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import { UserContext } from "../../common/UserContext";
 
@@ -17,7 +17,7 @@ const Appointments = () => {
       // filter by doctorId
       setData((preData) =>
         response.data.data.filter(
-          (appointment) => appointment.appointment?.doctorId === doctorId
+          (appointment) => appointment?.appointment?.doctorId === doctorId
         )
       );
       console.log(data);
@@ -72,23 +72,23 @@ const Appointments = () => {
               </thead>
               <tbody>
                 {data?.map((appointment) => (
-                  <tr key={appointment._id}>
-                    <td>{appointment._id}</td>
-                    <td>{appointment.patient.fullName}</td>
-                    <td>{appointment.appointment.date}</td>
-                    <td>{appointment.patient.mobileNumber}</td>
-                    <td>{appointment.patient.email}</td>
+                  <tr key={appointment?._id}>
+                    <td>{appointment?._id}</td>
+                    <td>{appointment?.patient?.fullName}</td>
+                    <td>{appointment?.appointment?.date}</td>
+                    <td>{appointment?.patient?.mobileNumber}</td>
+                    <td>{appointment?.patient?.email}</td>
                     <td>
-                      {appointment.booked === "confirmed" ? (
+                      {appointment?.booked === "confirmed" ? (
                         <span className="text-success fw-bold">Confirmed</span>
-                      ) : appointment.booked === "cancelled" ? (
+                      ) : appointment?.booked === "cancelled" ? (
                         <span className="text-danger fw-bold">Cancelled</span>
                       ) : (
                         <>
                           <button
                             className="btn btn-success btn-sm me-2 healthcare-btn-success"
                             onClick={() =>
-                              updateStatus(appointment._id, "confirmed")
+                              updateStatus(appointment?._id, "confirmed")
                             }
                           >
                             Accept
@@ -96,7 +96,7 @@ const Appointments = () => {
                           <button
                             className="btn btn-danger btn-sm healthcare-btn-danger"
                             onClick={() =>
-                              updateStatus(appointment._id, "cancelled")
+                              updateStatus(appointment?._id, "cancelled")
                             }
                           >
                             Reject
