@@ -18,6 +18,7 @@ import { FaCalendarAlt } from "react-icons/fa";
 import { UserContext } from "../common/UserContext";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { fetchServicesByUserId } from "./hooks/useService";
 
 const Services = () => {
   const { user } = useContext(UserContext);
@@ -69,26 +70,20 @@ const Services = () => {
   const patientFullName = user?.patient?.fullName;
 
   const getAllServiceByPatientId = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:5000/api/services/patient/${patientId}`
-      );
-      console.log(response.data);
+    if (!patientId) return;
 
-      const filterData = response?.data?.data.filter((data)=>data?.patient?._id === patientId)
-      
-      setServices(filterData);
+    try {
+      const filteredServices = await fetchServicesByUserId(patientId);
+      setServices(filteredServices);
       setShowServices(true);
       window.scrollTo({
         top: document.body.scrollHeight,
         behavior: "smooth",
       });
     } catch (error) {
-      console.log("Error while getting all services", error);
-      setServices([]);
+      console.error("Error in fetchServices:", error);
     }
   };
-  useEffect(() => {}, []);
 
   const handleViewServices = () => {
     setShowHeader(false);

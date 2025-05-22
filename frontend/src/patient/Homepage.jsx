@@ -1,4 +1,4 @@
-import React, { use, useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./Homepage.css";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { FaCalendarCheck, FaFileMedical } from "react-icons/fa";
@@ -7,37 +7,35 @@ import { RiFileHistoryFill } from "react-icons/ri";
 import doctorPatientImg from "../assets/images/doctor-patient.png";
 import medicalBackgroundImg from "../assets/images/medical-background.jpg";
 import healthTipImg from "../assets/images/health-tip.jpg";
-import axios from "axios";
 import { UserContext } from "../common/UserContext";
+import { fetchAppointmentsByUserId } from "./hooks/useAppointment";
+import { fetchServicesByUserId } from "./hooks/useService";
 
 function Homepage() {
   const { user } = useContext(UserContext);
   console.log(user, "user");
   const data = {
     name: user?.patient?.fullName,
-
-    pendingClinicalService: [
-      {
-        appointmentId: "ClI-0001",
-        name: "Blood Test",
-        appointmentDate: "2025-09-10",
-        appointmentTime: "9.00 AM",
-        clinicRomm: "4th Floor, Room-0029",
-      },
-    ],
-    pendingDoctorAppoinments: [
-      {
-        appointmentId: "APT-0001",
-        doctorName: "Dr. Kavindya Perera",
-        specialization: "Cardiologist",
-        appointmentDate: "2025-09-20",
-        appointmentTime: "10:30 AM",
-        consultationRoom: "4th Floor, Room-0029",
-      },
-    ],
   };
-  // const [pendingClinicalService, setPendingClinicalService] = useState([]);
-  // const [pendingDoctorAppoinments, setPendingDoctorAppoinments] = useState([]);
+  const [services, setServices] = useState([]);
+  const [appoinments, setAppoinments] = useState([]);
+
+  useEffect(() => {
+    const loadAppointments = async () => {
+      if (user?.patient?.patientId) {
+        const data = await fetchAppointmentsByUserId(user.patient.patientId);
+        setAppoinments(data);
+      }
+    };
+    const loadServices = async () => {
+      if (user?.patient?.patientId) {
+        const data = await fetchServicesByUserId(user.patient.patientId);
+        setServices(data);
+      }
+    };
+    loadAppointments();
+    loadServices();
+  }, [user]);
 
   const quickAccessCards = [
     {
@@ -107,16 +105,16 @@ function Homepage() {
             <Card className="shadow-sm upcoming-card">
               <Card.Body>
                 <h3 className="card-title">Your Last Appointment</h3>
-                {data?.pendingDoctorAppoinments.length > 0 ? (
+                {appoinments.length > 0 ? (
                   <>
                     <div className="appointment-details">
                       <div className="appointment-calendar">
                         <div className="calendar-date">
                           <span className="date-number">
                             {new Date(
-                              data.pendingDoctorAppoinments[
-                                data.pendingDoctorAppoinments.length - 1
-                              ].appointmentDate
+                              appoinments[
+                                appoinments.length - 1
+                              ]?.appointment?.date
                             )
                               .getDate()
                               .toString()
@@ -124,9 +122,9 @@ function Homepage() {
                           </span>
                           <span className="date-month">
                             {new Date(
-                              data.pendingDoctorAppoinments[
-                                data.pendingDoctorAppoinments.length - 1
-                              ].appointmentDate
+                              appoinments[
+                                appoinments.length - 1
+                              ]?.appointment?.date
                             ).toLocaleString("default", {
                               month: "short",
                             })}
@@ -138,24 +136,21 @@ function Homepage() {
                         <div className="appointment-infor-with-btn">
                           <p className="appointment-time">
                             {
-                              data.pendingDoctorAppoinments[
-                                data.pendingDoctorAppoinments.length - 1
-                              ].appointmentDate
+                              appoinments[appoinments.length - 1]?.appointment
+                                ?.date
                             }{" "}
                             at{" "}
                             {
-                              data.pendingDoctorAppoinments[
-                                data.pendingDoctorAppoinments.length - 1
-                              ].appointmentTime
+                              appoinments[appoinments.length - 1]?.appointment
+                                ?.inTime
                             }
                           </p>
                           <p>
                             <strong className="appointment-doctor">
                               With{" "}
                               {
-                                data.pendingDoctorAppoinments[
-                                  data.pendingDoctorAppoinments.length - 1
-                                ].doctorName
+                                appoinments[appoinments.length - 1]?.appointment
+                                  ?.doctorName
                               }
                             </strong>
                           </p>
@@ -190,19 +185,17 @@ function Homepage() {
                 <h3 className="upcoming-card-title">
                   Your All Services and Appointments
                 </h3>
-                {data.pendingClinicalService.length +
-                  data.pendingDoctorAppoinments.length >
-                0 ? (
+                {services.length + appoinments.length > 0 ? (
                   <>
                     <div className="notification-item">
                       <div className="notification-count pending-results">
-                        {data.pendingClinicalService.length}
+                        {services.length}
                       </div>
                       <p>Clinical Service Appoinments</p>
                     </div>
                     <div className="notification-item">
                       <div className="notification-count active-prescriptions">
-                        {data.pendingDoctorAppoinments.length}
+                        {appoinments.length}
                       </div>
                       <p>Doctor Channeling</p>
                     </div>
