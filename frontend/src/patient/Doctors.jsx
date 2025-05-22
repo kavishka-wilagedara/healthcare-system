@@ -89,12 +89,12 @@ const Doctors = () => {
         {data?.length > 0 ? (
           <div className="doctors-container">
             {data?.map((doctor) => (
-              <div className="doctor-card" key={doctor._id}>
+              <div className="doctor-card" key={doctor?._id}>
                 <div className="doctor-header">
-                  {doctor.imgUrl ? (
+                  {doctor?.imgUrl ? (
                     <img
                       className="doctor-image"
-                      src={doctor.imgUrl}
+                      src={doctor?.imgUrl}
                       alt="doctor-name"
                     />
                   ) : (
@@ -107,7 +107,7 @@ const Doctors = () => {
                 </div>
 
                 <div className="doctor-details">
-                  <h4>{doctor.doctorName}</h4>
+                  <h4>Dr. {doctor?.doctorName}</h4>
                   <p className="doctor-specialty">{doctor?.specialization}</p>
                 </div>
 
