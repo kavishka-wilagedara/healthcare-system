@@ -83,13 +83,13 @@ const DocNavbar = () => {
               >
                 <div className="me-2 d-flex flex-column align-items-end">
                   <span className="fw-bold">
-                    {user?.doctor.fullName || "Doctor"}
+                    {user?.doctor?.fullName || "Doctor"}
                   </span>
                   <small
                     className="text-white-50"
                     style={{ fontSize: "0.75rem" }}
                   >
-                    {user?.doctor.specialization || "Doctor"}
+                    {user?.doctor?.specialization || "Doctor"}
                   </small>
                 </div>
                 <div
