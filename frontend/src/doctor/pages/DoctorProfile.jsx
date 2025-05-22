@@ -161,10 +161,11 @@ export default function DoctorProfile() {
         try {
             const response = await axios.get('http://localhost:5000/api/appointments/');
             const doctorAppointments = response.data.data.filter(
-                appointment => appointment?.appointment?.id === doctorId
+                appointment => appointment?.appointment?.doctorId === doctorId
             );
             setAppointments(doctorAppointments);
             setAppointmentsLoading(false);
+            console.log('doc appointments', doctorAppointments);
         } catch (error) {
             console.log('Error while fetching appointments:', error);
             setAppointmentsLoading(false);

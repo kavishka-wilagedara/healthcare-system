@@ -30,6 +30,7 @@ const Login = () => {
       });
 
       navigate("/doc-dashboard");
+      window.location.reload();
     } catch (error) {
       console.log("error while login : ", error);
       Swal.fire({
@@ -64,6 +65,7 @@ const Login = () => {
       });
 
       navigate("/patient/dashboard");
+      window.location.reload();
     } catch (error) {
       console.log("error while login : ", error);
       Swal.fire({
