@@ -1,99 +1,146 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./MyHistory.css";
 import {
-  FaCalendarAlt,
   FaUserMd,
   FaFileMedical,
-  FaClipboardList,
   FaFlask,
-  FaPills,
-  FaHeartbeat,
   FaSearch,
   FaFilter,
   FaDownload,
 } from "react-icons/fa";
 import { MdOutlineFormatListNumbered } from "react-icons/md";
 import { PDFDocument, rgb, StandardFonts } from "pdf-lib";
+import axios from "axios";
+import { UserContext } from "../common/UserContext";
 
 function MyHistory() {
   const [activeTab, setActiveTab] = useState("visits");
   const [searchTerm, setSearchTerm] = useState("");
   const [filterYear, setFilterYear] = useState("all");
+  const [serviceHistory, setServiceHistory] = useState([]);
+  const [medicalHistory, setmedicalHistory] = useState([]);
+  const { user, setUser } = useContext(UserContext);
+  const userId = user?.patient?.patientId;
 
-  const medicalHistory = [
-    {
-      id: 1,
-      name: "Ashan Vimod",
-      doctor: "Dr. Kavindya Perera",
-      specialty: "Neurologist",
-      date: "2025-05-14",
-      time: "2:30 PM",
-      location: "Clinical Room-001",
-      status: "Pending",
-      phone: "+94 77 123 4567",
-      reason: "cscscsdscs",
-      diagnosis: "123444",
-      recommendations: "sdfscsdcsd",
-    },
-    {
-      id: 2,
-      name: "Ashan Vimod",
-      doctor: "Dr. Isuru Perera",
-      specialty: "Dental",
-      date: "2025-05-14",
-      time: "2:30 PM",
-      location: "Clinical Room-001",
-      status: "Confirmed",
-      phone: "+94 77 123 4567",
-      reason: "nam cmasc ",
-      diagnosis: " jc nakca",
-      recommendations: "ajsjcnjasc",
-    },
-    {
-      id: 3,
-      name: "Ashan Vimod",
-      doctor: "Dr. Isuru Perera",
-      specialty: "Dental",
-      date: "2025-05-14",
-      time: "2:30 PM",
-      location: "Clinical Room-001",
-      status: "Confirmed",
-      phone: "+94 77 123 4567",
-      reason: "ffffffffffffffff",
-      diagnosis: "hhhh",
-      recommendations: "ajcb habcasj",
-    },
-  ];
+  // const medicalHistory = [
+  //   {
+  //     id: 1,
+  //     name: "Ashan Vimod",
+  //     doctor: "Dr. Kavindya Perera",
+  //     specialty: "Neurologist",
+  //     date: "2025-05-14",
+  //     time: "2:30 PM",
+  //     location: "Clinical Room-001",
+  //     status: "Pending",
+  //     phone: "+94 77 123 4567",
+  //     reason: "cscscsdscs",
+  //     diagnosis: "123444",
+  //     recommendations: "sdfscsdcsd",
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Ashan Vimod",
+  //     doctor: "Dr. Isuru Perera",
+  //     specialty: "Dental",
+  //     date: "2025-05-14",
+  //     time: "2:30 PM",
+  //     location: "Clinical Room-001",
+  //     status: "Confirmed",
+  //     phone: "+94 77 123 4567",
+  //     reason: "nam cmasc ",
+  //     diagnosis: " jc nakca",
+  //     recommendations: "ajsjcnjasc",
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Ashan Vimod",
+  //     doctor: "Dr. Isuru Perera",
+  //     specialty: "Dental",
+  //     date: "2025-05-14",
+  //     time: "2:30 PM",
+  //     location: "Clinical Room-001",
+  //     status: "Confirmed",
+  //     phone: "+94 77 123 4567",
+  //     reason: "ffffffffffffffff",
+  //     diagnosis: "hhhh",
+  //     recommendations: "ajcb habcasj",
+  //   },
+  // ];
 
-  const serviceHistory = [
-    {
-      id: 1,
-      name: "Blood Test",
-      date: "2025-05-14",
-      time: "9.00 AM",
-      roomNum: "ABC-001",
-      result: "normal",
-      notes: "ewjfuirhuh hbioj oejrgore ok",
-    },
-    {
-      id: 2,
-      name: "Blood Test",
-      date: "2025-05-14",
-      time: "9.00 AM",
-      roomNum: "ABC-001",
-      result: "normal",
-      notes: "d cd kdmcksdm lkmv;slv,s",
-    },
-    {
-      id: 3,
-      name: "Blood Test",
-      date: "2025-05-14",
-      time: "9.00 AM",
-      roomNum: "ABC-001",
-      result: "abnormal",
-      notes: "kdcnalkcnlkmc k klwcv dlsnckldnv",
-    },
-  ];
+  // const serviceHistory = [
+  //   {
+  //     id: 1,
+  //     name: "Blood Test",
+  //     date: "2025-05-14",
+  //     time: "9.00 AM",
+  //     roomNum: "ABC-001",
+  //     result: "normal",
+  //     notes: "ewjfuirhuh hbioj oejrgore ok",
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Blood Test",
+  //     date: "2025-05-14",
+  //     time: "9.00 AM",
+  //     roomNum: "ABC-001",
+  //     result: "normal",
+  //     notes: "d cd kdmcksdm lkmv;slv,s",
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Blood Test",
+  //     date: "2025-05-14",
+  //     time: "9.00 AM",
+  //     roomNum: "ABC-001",
+  //     result: "abnormal",
+  //     notes: "kdcnalkcnlkmc k klwcv dlsnckldnv",
+  //   },
+  // ];
+
+  useEffect(() => {
+    if (userId) {
+      fetchServiceHistoryByPatientsId();
+      fetchMedicalHistoryByPatientId();
+    }
+  }, [userId]);
+
+  const fetchMedicalHistoryByPatientId = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:5000/api/appointments/"
+      );
+      setmedicalHistory(
+        response.data.data.filter(
+          (item) => item?.patient?._id === userId && item?.completed === false
+        )
+      );
+      console.log(response.data.data);
+    } catch (error) {
+      console.log("Error fetching medical history");
+    }
+  };
+
+  const fetchServiceHistoryByPatientsId = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/api/services/patient/${userId}`
+      );
+
+      const allServices = response.data?.data || [];
+
+      const today = new Date();
+      const upcomingServices = allServices.filter((service) => {
+        const serviceDate = new Date(service.date);
+        // Keep only services that are today or in the future
+        return serviceDate >= today.setHours(0, 0, 0, 0);
+      });
+
+      setServiceHistory(upcomingServices);
+      console.log(upcomingServices);
+    } catch (error) {
+      console.log("Error fetching services", error);
+    }
+  };
 
   // Get unique years for filtering
   const getAllYears = () => {
@@ -110,16 +157,19 @@ function MyHistory() {
   // Filter visits data based on search term and year
   const getFilteredVisits = () => {
     return medicalHistory.filter((visit) => {
-      const visitYear = new Date(visit.date).getFullYear().toString();
+      const visitYear = new Date(visit?.appointment?.date)
+        .getFullYear()
+        .toString();
       const yearMatch = filterYear === "all" || visitYear === filterYear;
       const searchLower = searchTerm.toLowerCase();
       const searchMatch =
         searchTerm === "" ||
-        visit.doctor.toLowerCase().includes(searchLower) ||
-        visit.specialty.toLowerCase().includes(searchLower) ||
-        visit.reason.toLowerCase().includes(searchLower) ||
-        visit.diagnosis.toLowerCase().includes(searchLower) ||
-        visit.recommendations.toLowerCase().includes(searchLower);
+        visit?.appointment?.doctorName.toLowerCase().includes(searchLower) ||
+        visit?.appointment?.specialization
+          .toLowerCase()
+          .includes(searchLower) ||
+        visit?.medicine.toLowerCase().includes(searchLower) ||
+        visit?.advice.toLowerCase().includes(searchLower);
       return yearMatch && searchMatch;
     });
   };
@@ -132,9 +182,9 @@ function MyHistory() {
       const searchLower = searchTerm.toLowerCase();
       const searchMatch =
         searchTerm === "" ||
-        test.name.toLowerCase().includes(searchLower) ||
-        test.result.toLowerCase().includes(searchLower) ||
-        test.notes.toLowerCase().includes(searchLower);
+        test.name?.toLowerCase().includes(searchLower) ||
+        test.result?.toLowerCase().includes(searchLower) ||
+        test.notes?.toLowerCase().includes(searchLower);
       return yearMatch && searchMatch;
     });
   };
@@ -257,12 +307,14 @@ function MyHistory() {
     return (
       <div className="history-items-container">
         {filteredVisits.map((visit) => (
-          <div className="history-card" key={visit.id}>
+          <div className="history-card" key={visit._id}>
             <div className="history-card-header">
               <div className="history-card-title">
                 <div>
-                  <h4>{visit.doctor}</h4>
-                  <p className="history-subtitle">{visit.specialty}</p>
+                  <h4>{visit.appointment?.doctorName}</h4>
+                  <p className="history-subtitle">
+                    {visit.appointment?.specialization}
+                  </p>
                 </div>
               </div>
               <div className="appoinment-number">
@@ -270,25 +322,21 @@ function MyHistory() {
                   <MdOutlineFormatListNumbered className="appoinment-number-icon" />
                   <span>Appointment No:</span>
                 </span>
-                <span> {visit.id}</span>
+                <span> {visit._id}</span>
               </div>
             </div>
             <div className="history-card-content">
               <div className="history-detail-item">
-                <span className="detail-label">Reason for Visit:</span>
-                <span className="detail-value">{visit.reason}</span>
-              </div>
-              <div className="history-detail-item">
                 <span className="detail-label">Diagnosis:</span>
-                <span className="detail-value">{visit.diagnosis}</span>
+                <span className="detail-value">{visit.medicine}</span>
               </div>
               <div className="history-detail-item">
                 <span className="detail-label">Recommendations:</span>
-                <span className="detail-value">{visit.recommendations}</span>
+                <span className="detail-value">{visit.advice}</span>
               </div>
               <div className="history-detail-item">
                 <span className="detail-label">Date:</span>
-                <span className="detail-value">{visit.date}</span>
+                <span className="detail-value">{visit.appointment?.date}</span>
               </div>
             </div>
           </div>
@@ -306,7 +354,7 @@ function MyHistory() {
     return (
       <div className="history-items-container">
         {filteredTests.map((test) => (
-          <div className="history-card" key={test.id}>
+          <div className="history-card" key={test._id}>
             <div className="history-card-header">
               <div className="history-card-title">
                 <FaFlask className="history-icon" />
@@ -319,14 +367,14 @@ function MyHistory() {
                   <MdOutlineFormatListNumbered className="appoinment-number-icon" />
                   <span className="appointment-title">Appoinment No:</span>
                 </span>
-                <span>{test.id}</span>
+                <span>{test._id}</span>
               </div>
             </div>
             <div className="history-card-content">
               <div className="history-detail-item">
                 <span className="detail-label">Result:</span>
                 <span
-                  className={`detail-value result-${test.result.toLowerCase()}`}
+                  className={`detail-value result-${test.result?.toLowerCase()}`}
                 >
                   {test.result}
                 </span>
