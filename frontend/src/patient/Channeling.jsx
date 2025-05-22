@@ -48,9 +48,11 @@ function Channeling() {
 
    //get all doctor available times
   const fetchAppointments = async () => {
+
+    const userId = user?.patient?.patientId
     try {
       const response = await axios.get('http://localhost:5000/api/appointments/');  
-      setData(response.data.data);
+      setData(response.data.data.filter((app)=>app?.patient?._id === userId));
       // setFilteredData(response.data.data);
       
     } catch (error) {
