@@ -229,7 +229,7 @@ function MyHistory() {
 
     getFilteredVisits().forEach((visit) => {
       addNewPageIfNeeded();
-      const text = `Appointment No: ${visit.id}\nDoctor: ${visit.doctor} (${visit.specialty})\nReason: ${visit.reason}\nDiagnosis: ${visit.diagnosis}\nRecommendations: ${visit.recommendations}\nDate: ${visit.date}`;
+      const text = `Appointment No: ${visit?._id}\nDoctor: ${visit?.appointment?.doctorName} (${visit?.appointment?.specialization})\nDiagnosis: ${visit?.medicine}\nRecommendations: ${visit?.advice}\nDate: ${visit?.appointment?.date}`;
       const lines = text.split("\n");
       lines.forEach((line) => {
         addNewPageIfNeeded();
@@ -260,7 +260,7 @@ function MyHistory() {
 
     getFilteredTests().forEach((test) => {
       addNewPageIfNeeded();
-      const text = `Appointment No: ${test.id}\nTest: ${test.name}\nResult: ${test.result}\nNotes: ${test.notes}\nDate: ${test.date}`;
+      const text = `Appointment No: ${test._id}\nTest: ${test.name}\nResult: ${test.result}\nNotes: ${test.notes}\nDate: ${test.date}`;
       const lines = text.split("\n");
       lines.forEach((line) => {
         addNewPageIfNeeded();
