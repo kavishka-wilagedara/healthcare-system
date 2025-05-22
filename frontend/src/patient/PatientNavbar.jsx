@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Nav, Navbar, Container, Dropdown } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { FaSignOutAlt, FaUserCircle, FaBell } from "react-icons/fa";
@@ -7,14 +7,17 @@ import { useNotification } from "./context/NotificationContext";
 import { UserContext } from "../common/UserContext";
 
 const PatientNavbar = () => {
-  const { getUnreadCount } = useNotification();
-  const { user, setUser, logout } = useContext(UserContext);
+  const { getUnreadCount, notifications, loading } = useNotification();
+  const { user, logout } = useContext(UserContext);
   const navigate = useNavigate();
 
   const handleLogout = () => {
     logout();
     navigate("/");
   };
+
+  // Calculate if notifications badge should be shown
+  const showNotificationBadge = !loading && notifications && notifications.length > 0 && getUnreadCount() > 0;
 
   return (
     <Navbar
@@ -54,10 +57,10 @@ const PatientNavbar = () => {
             <Nav.Link
               as={Link}
               to="/patient/dashboard/notification"
-              className="mx-1 nav-link-custom"
+              className="mx-1 nav-link-custom position-relative"
             >
               <FaBell className="me-1" />
-              {getUnreadCount() > 0 && (
+              {showNotificationBadge && (
                 <span className="nav-notification-badge">
                   {getUnreadCount()}
                 </span>

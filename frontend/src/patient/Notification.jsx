@@ -1,4 +1,4 @@
-import React, { useState, useEffect ,useContext} from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   FaBell,
   FaCalendarCheck,
@@ -15,17 +15,11 @@ import { useNotification } from "./context/NotificationContext";
 import axios from 'axios';
 import { UserContext } from "../common/UserContext";
 
-
 function Notification(props) {
-  // const [notifications, setNotifications] = useState([]);
-  // const [filteredNotifications, setFilteredNotifications] = useState([]);
-  // const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterType, setFilterType] = useState("all");
   const [filterRead, setFilterRead] = useState("all");
-  const {user} = useContext(UserContext);
-  const [data, setData] = useState([]);
-  const [notifyData, setNotifyData] = useState([]);
+  const { user } = useContext(UserContext);
 
   const {
     notifications,
@@ -34,61 +28,20 @@ function Notification(props) {
     loading,
     filteredNotifications,
     setFilteredNotifications,
+    fetchUserNotifications
   } = useNotification();
 
-    //get all doctor available times
-  const fetchAppointments = async () => {
-    //user id
-    const userId = user?.patient.patientId
-
-    try {
-      const response = await axios.get('http://localhost:5000/api/appointments/');  
-
-      const filterData = response?.data?.data?.filter(item => item.patient._id === userId && item.booked === "confirmed");
-      
-      setData(filterData);
-      
-    } catch (error) {
-      console.error("Error fetching patients:", error);
+  // Apply filters when search term or filter options change
+  useEffect(() => {
+    if (user?.patient?.patientId) {
+      fetchUserNotifications(user.patient.patientId);
     }
-  };
-  
-  const notifyUser = () =>{
-    const today = new Date().toISOString().split('T')[0];
-    console.log(today,data ,"today")
-    const filterDate = data?.filter(item => item?.appointment?.date === today);
-    setNotifyData(filterDate);
-
-    const newNotifs = filterDate?.map(item => ({
-    id: `appt-${item?._id}`,                       // unique id
-    appointmentNum: item?.appointment?.appointmentNum,
-    type: 'reminder',                            // or whatever
-    title: 'Appointment Today',
-    message: `You have an appointment with Dr. ${item?.appointment?.doctorName} at ${item?.appointment?.date}.`,
-    date: item?.appointment?.date,
-    time: item?.appointment?.inTime,
-    read: false,
-    sender: 'Appointment System'
-  }));
-
-  setNotifications(newNotifs)
-  }
-
-  // Apply filters by search term or filter options change
-  useEffect(() => {
-    fetchAppointments();
-    notifyUser();
-  }, []);
-
-  useEffect(() => {
-    notifyUser();
-  }, [data]);
+  }, [user]);
 
   useEffect(() => {
     applyFilters();
   }, [searchTerm, filterType, filterRead, notifications]);
 
-console.log(notifyData,data,"note")
   // Filter notifications based on search term and filter options
   const applyFilters = () => {
     let filtered = [...notifications];
@@ -113,7 +66,7 @@ console.log(notifyData,data,"note")
       const term = searchTerm.toLowerCase();
       filtered = filtered?.filter(
         (notification) =>
-          notification.appointmentNum.toLowerCase().includes(term) ||
+          notification.appointmentNum?.toLowerCase().includes(term) ||
           notification.title.toLowerCase().includes(term) ||
           notification.message.toLowerCase().includes(term) ||
           notification.sender.toLowerCase().includes(term)
@@ -127,11 +80,19 @@ console.log(notifyData,data,"note")
   };
 
   // Mark notification as read
-  const markAsRead = (id) => {};
+  const markAsRead = (id) => {
+    setNotifications(
+      notifications.map(notification => 
+        notification.id === id 
+          ? { ...notification, read: true } 
+          : notification
+      )
+    );
+  };
 
   // Delete notification
   const handleDeleteNotification = (id) => {
-      setNotifications(prev =>
+    setNotifications(prev =>
       prev.filter(notification => notification.id !== id)
     );
     setFilteredNotifications(prev =>
@@ -140,11 +101,16 @@ console.log(notifyData,data,"note")
   };
 
   // Mark all notifications as read
-  const markAllAsRead = () => {};
+  const markAllAsRead = () => {
+    setNotifications(
+      notifications.map(notification => ({ ...notification, read: true }))
+    );
+  };
 
   // Clear all notifications
   const clearAllNotifications = () => {
     setNotifications([]);
+    setFilteredNotifications([]);
   };
 
   // Get icon based on notification type
@@ -208,8 +174,6 @@ console.log(notifyData,data,"note")
     return date.toLocaleDateString([], options);
   };
 
-  console.log(notifyData,"fill")
-  console.log(notifications,"filled")
   return (
     <div className="notifications-container">
       <div className="notifications-header">
