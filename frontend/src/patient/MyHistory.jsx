@@ -111,7 +111,7 @@ function MyHistory() {
       );
       setmedicalHistory(
         response.data.data.filter(
-          (item) => item?.patient?._id === userId && item?.completed === false
+          (item) => item?.patient?._id === userId && item?.completed === true
         )
       );
       console.log(response.data.data);

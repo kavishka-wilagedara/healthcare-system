@@ -76,7 +76,7 @@ const Services = () => {
       console.log(response.data);
 
       const filterData = response?.data?.data.filter((data)=>data?.patient?._id === patientId)
-      console.log(filterData,"fill")
+      
       setServices(filterData);
       setShowServices(true);
       window.scrollTo({
