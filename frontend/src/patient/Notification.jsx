@@ -55,17 +55,18 @@ function Notification(props) {
   
   const notifyUser = () =>{
     const today = new Date().toISOString().split('T')[0];
-    const filterDate = data?.filter(item => item.appointment.date === today);
+    console.log(today,data ,"today")
+    const filterDate = data?.filter(item => item?.appointment?.date === today);
     setNotifyData(filterDate);
 
     const newNotifs = filterDate?.map(item => ({
-    id: `appt-${item._id}`,                       // unique id
-    appointmentNum: item.appointment.appointmentNum,
+    id: `appt-${item?._id}`,                       // unique id
+    appointmentNum: item?.appointment?.appointmentNum,
     type: 'reminder',                            // or whatever
     title: 'Appointment Today',
-    message: `You have an appointment with Dr. ${item.appointment.doctorName} at ${item.appointment.date}.`,
-    date: item.appointment.date,
-    time: item.appointment.inTime,
+    message: `You have an appointment with Dr. ${item?.appointment?.doctorName} at ${item?.appointment?.date}.`,
+    date: item?.appointment?.date,
+    time: item?.appointment?.inTime,
     read: false,
     sender: 'Appointment System'
   }));
@@ -87,7 +88,7 @@ function Notification(props) {
     applyFilters();
   }, [searchTerm, filterType, filterRead, notifications]);
 
-
+console.log(notifyData,data,"note")
   // Filter notifications based on search term and filter options
   const applyFilters = () => {
     let filtered = [...notifications];
