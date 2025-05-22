@@ -29,7 +29,7 @@ export default function DoctorProfile() {
     });
 
     const navigate = useNavigate();
-    const doctorId = user?.doctor.id;
+    const doctorId = user?.doctor?.id;
 
     const [doctorTimes, setDoctorTimes] = useState([]);
     const [timesLoading, setTimesLoading] = useState(true);
@@ -95,16 +95,16 @@ export default function DoctorProfile() {
     }, []);
 
     useEffect(() => {
-        if (appointments.length > 0) {
+        if (appointments?.length > 0) {
             calculateStats();
         }
     }, [appointments]);
 
     const calculateStats = () => {
-        const total = appointments.length;
-        const confirmed = appointments.filter(app => app.booked === 'confirmed').length;
-        const pending = appointments.filter(app => app.booked !== 'confirmed').length;
-        const completed = appointments.filter(app => app.completed).length;
+        const total = appointments?.length;
+        const confirmed = appointments?.filter(app => app.booked === 'confirmed').length;
+        const pending = appointments?.filter(app => app.booked !== 'confirmed').length;
+        const completed = appointments?.filter(app => app.completed).length;
 
         setStats({ total, confirmed, pending, completed });
     };
@@ -245,6 +245,7 @@ export default function DoctorProfile() {
             });
         }
     }
+    console.log(doctor,"doc");
 
     const handleDeleteAccount = async () => {
         try {
@@ -367,7 +368,7 @@ export default function DoctorProfile() {
                                             <i className="fas fa-check-circle"></i>
                                         </div>
                                         <div className="stat-info">
-                                            <h4>{stats.confirmed}</h4>
+                                            <h4>{stats?.confirmed}</h4>
                                             <p>Confirmed</p>
                                         </div>
                                     </div>
@@ -389,7 +390,7 @@ export default function DoctorProfile() {
                                             <i className="fas fa-flag-checkered"></i>
                                         </div>
                                         <div className="stat-info">
-                                            <h4>{stats.completed}</h4>
+                                            <h4>{stats?.completed}</h4>
                                             <p>Completed</p>
                                         </div>
                                     </div>
@@ -425,7 +426,7 @@ export default function DoctorProfile() {
                                         </div>
                                         <p className="mt-2">Loading appointments...</p>
                                     </div>
-                                ) : appointments.length === 0 ? (
+                                ) : appointments?.length === 0 ? (
                                     <div className="empty-appointments">
                                         <div className="empty-icon">
                                             <i className="fas fa-calendar-times"></i>
@@ -435,35 +436,35 @@ export default function DoctorProfile() {
                                     </div>
                                 ) : (
                                     <div className="appointments-list">
-                                        {appointments.map((appointment) => (
-                                            <div className="appointment-item" key={appointment._id}>
+                                        {appointments?.map((appointment) => (
+                                            <div className="appointment-item" key={appointment?._id}>
                                                 <div className="appointment-date">
                                                     <div className="date-box">
-                                                        <span className="month">{formatDate(appointment.appointment.date).split(' ')[0]}</span>
-                                                        <span className="day">{formatDate(appointment.appointment.date).split(' ')[1].replace(',', '')}</span>
+                                                        <span className="month">{formatDate(appointment?.appointment?.date).split(' ')[0]}</span>
+                                                        <span className="day">{formatDate(appointment?.appointment?.date).split(' ')[1].replace(',', '')}</span>
                                                     </div>
                                                     <div className="time">
-                                                        {appointment.appointment.inTime} - {appointment.appointment.outTime}
+                                                        {appointment?.appointment?.inTime} - {appointment?.appointment?.outTime}
                                                     </div>
                                                 </div>
                                                 
                                                 <div className="appointment-content">
                                                     <div className="patient-info">
-                                                        <h4>{appointment.patient.fullName}</h4>
-                                                        <p className="patient-id">ID: {appointment.patient.nic}</p>
+                                                        <h4>{appointment?.patient?.fullName}</h4>
+                                                        <p className="patient-id">ID: {appointment?.patient?.nic}</p>
                                                     </div>
                                                     
                                                     <div className="appointment-status">
                                                         <span className={`status-badge ${
-                                                            appointment.booked === 'confirmed' ? 'confirmed' : 'pending'
+                                                            appointment?.booked === 'confirmed' ? 'confirmed' : 'pending'
                                                         }`}>
-                                                            {appointment.booked}
+                                                            {appointment?.booked}
                                                         </span>
                                                         
                                                         <span className={`completion-badge ${
-                                                            appointment.completed ? 'completed' : 'not-completed'
+                                                            appointment?.completed ? 'completed' : 'not-completed'
                                                         }`}>
-                                                            {appointment.completed ? 'Completed' : 'Not Completed'}
+                                                            {appointment?.completed ? 'Completed' : 'Not Completed'}
                                                         </span>
                                                     </div>
                                                     
@@ -474,7 +475,7 @@ export default function DoctorProfile() {
                                                         >
                                                             <i className="fas fa-trash-alt me-1"></i> Cancel
                                                         </button>
-                                                        {!appointment.completed && (
+                                                        {!appointment?.completed && (
                                                             <button className="btn btn-sm btn-outline-success">
                                                                 <i className="fas fa-check me-1"></i> Mark Complete
                                                             </button>
@@ -605,7 +606,7 @@ export default function DoctorProfile() {
                             </div>
                             <p className="mt-2">Loading available times...</p>
                         </div>
-                    ) : doctorTimes.length === 0 ? (
+                    ) : doctorTimes?.length === 0 ? (
                         <div className="text-center py-4">
                             <i className="fas fa-clock fa-3x text-muted mb-3"></i>
                             <h4>No Available Times</h4>
@@ -623,16 +624,16 @@ export default function DoctorProfile() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {doctorTimes.map((time) => (
-                                        <tr key={time._id}>
-                                            <td>{formatDate(time.date)}</td>
-                                            <td>{time.inTime}</td>
-                                            <td>{time.outTime}</td>
+                                    {doctorTimes?.map((time) => (
+                                        <tr key={time?._id}>
+                                            <td>{formatDate(time?.date)}</td>
+                                            <td>{time?.inTime}</td>
+                                            <td>{time?.outTime}</td>
                                             <td>
                                                 <Button 
                                                     variant="outline-danger" 
                                                     size="sm" 
-                                                    onClick={() => handleDeleteTime(time._id)}
+                                                    onClick={() => handleDeleteTime(time?._id)}
                                                 >
                                                     <i className="fas fa-trash-alt me-1"></i> Delete
                                                 </Button>
