@@ -1,4 +1,4 @@
-import React, { use, useContext } from "react";
+import React, { use, useContext, useState } from "react";
 import "./Homepage.css";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { FaCalendarCheck, FaFileMedical } from "react-icons/fa";
@@ -7,14 +7,15 @@ import { RiFileHistoryFill } from "react-icons/ri";
 import doctorPatientImg from "../assets/images/doctor-patient.png";
 import medicalBackgroundImg from "../assets/images/medical-background.jpg";
 import healthTipImg from "../assets/images/health-tip.jpg";
-import axios from 'axios';
+import axios from "axios";
 import { UserContext } from "../common/UserContext";
 
 function Homepage() {
-  const {user} = useContext(UserContext);
-console.log(user,"user")
+  const { user } = useContext(UserContext);
+  console.log(user, "user");
   const data = {
     name: user?.patient?.fullName,
+
     pendingClinicalService: [
       {
         appointmentId: "ClI-0001",
@@ -35,6 +36,8 @@ console.log(user,"user")
       },
     ],
   };
+  // const [pendingClinicalService, setPendingClinicalService] = useState([]);
+  // const [pendingDoctorAppoinments, setPendingDoctorAppoinments] = useState([]);
 
   const quickAccessCards = [
     {
@@ -103,7 +106,7 @@ console.log(user,"user")
           <Col md={8} className="mb-4">
             <Card className="shadow-sm upcoming-card">
               <Card.Body>
-                <h3 className="card-title">Your Upcoming Appointment</h3>
+                <h3 className="card-title">Your Last Appointment</h3>
                 {data?.pendingDoctorAppoinments.length > 0 ? (
                   <>
                     <div className="appointment-details">
@@ -184,7 +187,9 @@ console.log(user,"user")
           <Col md={4} className="mb-4">
             <Card className="shadow-sm notification-card">
               <Card.Body>
-                <h3 className="upcoming-card-title">Your Notifications</h3>
+                <h3 className="upcoming-card-title">
+                  Your All Services and Appointments
+                </h3>
                 {data.pendingClinicalService.length +
                   data.pendingDoctorAppoinments.length >
                 0 ? (
