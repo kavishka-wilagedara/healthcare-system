@@ -9,7 +9,7 @@ const DoctorRegister = () => {
     employeeId: "",
     fullName: "",
     email: "",
-    contact: "",
+    contactNumber: "", 
     specialization: "",
     password: "",
     confirmPassword: "",
@@ -20,9 +20,20 @@ const DoctorRegister = () => {
   const handleRegistration = async (e) => {
     try {
       e.preventDefault();
+      if (!validate()) return;
+
+      const registrationData = {
+        doctorId: formData.employeeId,
+        fullName: formData.fullName,
+        email: formData.email,
+        contactNumber: formData.contactNumber,
+        specialization: formData.specialization,
+        password: formData.password
+      };
+
       const response = await axios.post(
         "http://localhost:5000/api/doctor/register",
-        formData
+        registrationData
       );
       console.log(response.data);
 
@@ -59,8 +70,8 @@ const DoctorRegister = () => {
     if (!formData.fullName) newErrors.fullName = "Full name is required";
     if (!formData.email || !/\S+@\S+\.\S+/.test(formData.email))
       newErrors.email = "Valid email is required";
-    if (!formData.contact || !/^\+94\d{9}$/.test(formData.contact))
-      newErrors.contact = "Valid contact number is required";
+    if (!formData.contactNumber)
+      newErrors.contactNumber = "Contact number is required";
     if (!formData.specialization)
       newErrors.specialization = "Specialization is required";
     if (!formData.password || formData.password.length < 6)
@@ -82,14 +93,6 @@ const DoctorRegister = () => {
     setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
-  const handleSubmit = () => {
-    if (validate()) {
-      console.log("Doctor Registered:", formData);
-      alert("Doctor registered successfully!");
-      navigate("/");
-    }
-  };
-
   return (
     <div className="container py-5">
       <h3 className="display-5 fw-bold text-teal mb-5 text-center">
@@ -108,8 +111,8 @@ const DoctorRegister = () => {
                 { label: "Email", name: "email", type: "email" },
                 {
                   label: "Contact Number",
-                  name: "contact",
-                  placeholder: "+94XXXXXXXXX",
+                  name: "contactNumber",
+                  placeholder: "Contact Number",
                 },
                 { label: "Specialization", name: "specialization" },
               ].map(({ label, name, type = "text", placeholder }) => (
