@@ -1,6 +1,6 @@
-import React, { useEffect, useState ,useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Row, Col, Card } from "react-bootstrap";
-import { useAsyncError, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./Channeling.css";
 import {
   FaCheckCircle,
@@ -8,23 +8,21 @@ import {
   FaCalendarAlt,
   FaSyncAlt,
   FaClock,
-  FaMapMarkerAlt,
   FaUserCircle,
   FaPhoneAlt,
   FaRegCalendarCheck,
 } from "react-icons/fa";
 import { IoArrowBackCircleSharp } from "react-icons/io5";
-import axios from 'axios';
+import axios from "axios";
 import { UserContext } from "../common/UserContext";
-
-
+import { fetchAppointmentsByUserId } from "./hooks/useAppointment";
 
 function Channeling() {
   const navigate = useNavigate();
-  const {user , setUser} = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const [showAppointments, setShowAppointments] = useState(false);
   const [showHeader, setShowHeader] = useState(true);
-  const [data,setData] = useState([]);
+  const [data, setData] = useState([]);
 
   const featureCards = [
     {
@@ -45,41 +43,46 @@ function Channeling() {
     },
   ];
 
-
-   //get all doctor available times
+  //get all doctor available times
   const fetchAppointments = async () => {
+    const userId = user?.patient?.patientId;
+    if (!userId) return;
 
-    const userId = user?.patient?.patientId
     try {
-      const response = await axios.get('http://localhost:5000/api/appointments/');  
-      setData(response.data.data.filter((app)=>app?.patient?._id === userId));
-      // setFilteredData(response.data.data);
-      
+      const filteredAppointments = await fetchAppointmentsByUserId(userId);
+      setData(filteredAppointments);
     } catch (error) {
-      console.error("Error fetching patients:", error);
+      console.error("Error in fetchAppointments:", error);
     }
   };
 
   //delete a appointment
   const deleteAppointment = async (appointmentId) => {
-  try {
-    await axios.delete(`http://localhost:5000/api/appointments/${appointmentId}`);
-    // Update local state to remove deleted appointment
-    setData(prevData => prevData.filter(item => item._id !== appointmentId));
-    // If you're using filteredData, uncomment this:
-    // setFilteredData(prevData => prevData.filter(item => item._id !== appointmentId));
-  } catch (error) {
-    console.error("Error deleting appointment:", error);
-  }
-};
+    try {
+      await axios.delete(
+        `http://localhost:5000/api/appointments/${appointmentId}`
+      );
+      // Update local state to remove deleted appointment
+      setData((prevData) =>
+        prevData.filter((item) => item._id !== appointmentId)
+      );
+      // If you're using filteredData, uncomment this:
+      // setFilteredData(prevData => prevData.filter(item => item._id !== appointmentId));
+    } catch (error) {
+      console.error("Error deleting appointment:", error);
+    }
+  };
 
+  useEffect(() => {
+    if (user?.patient?.patientId) {
+      fetchAppointments();
+    }
+  }, [user]);
 
-  // //use Effect
-  //  useEffect(() => {
-  //     fetchAppointments();
-  //   }, []);
-
-    console.log(data?.map((e)=> e),"appointments")
+  console.log(
+    data?.map((e) => e),
+    "appointments"
+  );
   const handleBookClick = () => {
     navigate("/patient/dashboard/view-all-doctors");
   };
@@ -97,7 +100,7 @@ function Channeling() {
   };
 
   const getStatusClass = (status) => {
-   switch (status.toLowerCase()) {
+    switch (status.toLowerCase()) {
       case "confirmed":
         return "status-confirmed";
       case "pending":
@@ -171,9 +174,12 @@ function Channeling() {
                   <div className="appointment-header">
                     <div className="appointment-doctor-info">
                       <h4>
-                        <FaUserMd className="icon-md" /> {appt?.appointment?.doctorName}
+                        <FaUserMd className="icon-md" />{" "}
+                        {appt?.appointment?.doctorName}
                       </h4>
-                      <p className="specialty">{appt?.appointment?.specialization}</p>
+                      <p className="specialty">
+                        {appt?.appointment?.specialization}
+                      </p>
                     </div>
                     <div
                       className={`appointment-status ${getStatusClass(
@@ -194,19 +200,26 @@ function Channeling() {
                     <div className="detail-item">
                       <FaPhoneAlt className="detail-icon" />
                       <span>Contact:</span>
-                      <span className="value">{appt?.appointment?.contactNumber}</span>
+                      <span className="value">
+                        {appt?.appointment?.contactNumber}
+                      </span>
                     </div>
 
                     <div className="detail-item">
                       <FaRegCalendarCheck className="detail-icon" />
                       <span>Date:</span>
-                      <span className="value">{formatDate(appt?.createdAt)}</span>
+                      <span className="value">
+                        {formatDate(appt?.createdAt)}
+                      </span>
                     </div>
 
                     <div className="detail-item">
                       <FaClock className="detail-icon" />
                       <span>Time:</span>
-                      <span className="value">{appt?.appointment?.inTime} - {appt?.appointment?.outTime}</span>
+                      <span className="value">
+                        {appt?.appointment?.inTime} -{" "}
+                        {appt?.appointment?.outTime}
+                      </span>
                     </div>
 
                     {/* <div className="detail-item full-width">
@@ -220,7 +233,12 @@ function Channeling() {
                     {/* <button className="action-btn reschedule">
                       Reschedule
                     </button> */}
-                    <button className="action-btn cancel" onClick={() => deleteAppointment(appt._id)}>Cancel</button>
+                    <button
+                      className="action-btn cancel"
+                      onClick={() => deleteAppointment(appt._id)}
+                    >
+                      Cancel
+                    </button>
                     {/* <button className="action-btn details">View Details</button> */}
                   </div>
                 </div>
