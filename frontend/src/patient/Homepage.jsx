@@ -154,8 +154,12 @@ function Homepage() {
                               }
                             </strong>
                           </p>
-                          <Button variant="outline-primary" className="mt-0">
-                            View Details
+                          <Button
+                            variant="outline-primary"
+                            className="mt-0"
+                            href="/patient/dashboard/channeling"
+                          >
+                            More Details
                           </Button>
                         </div>
                       </div>
@@ -183,7 +187,7 @@ function Homepage() {
             <Card className="shadow-sm notification-card">
               <Card.Body>
                 <h3 className="upcoming-card-title">
-                  Your All Services and Appointments
+                  Total Services and Appointments
                 </h3>
                 {services.length + appoinments.length > 0 ? (
                   <>

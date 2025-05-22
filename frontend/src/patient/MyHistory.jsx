@@ -22,81 +22,6 @@ function MyHistory() {
   const { user, setUser } = useContext(UserContext);
   const userId = user?.patient?.patientId;
 
-  // const medicalHistory = [
-  //   {
-  //     id: 1,
-  //     name: "Ashan Vimod",
-  //     doctor: "Dr. Kavindya Perera",
-  //     specialty: "Neurologist",
-  //     date: "2025-05-14",
-  //     time: "2:30 PM",
-  //     location: "Clinical Room-001",
-  //     status: "Pending",
-  //     phone: "+94 77 123 4567",
-  //     reason: "cscscsdscs",
-  //     diagnosis: "123444",
-  //     recommendations: "sdfscsdcsd",
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Ashan Vimod",
-  //     doctor: "Dr. Isuru Perera",
-  //     specialty: "Dental",
-  //     date: "2025-05-14",
-  //     time: "2:30 PM",
-  //     location: "Clinical Room-001",
-  //     status: "Confirmed",
-  //     phone: "+94 77 123 4567",
-  //     reason: "nam cmasc ",
-  //     diagnosis: " jc nakca",
-  //     recommendations: "ajsjcnjasc",
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "Ashan Vimod",
-  //     doctor: "Dr. Isuru Perera",
-  //     specialty: "Dental",
-  //     date: "2025-05-14",
-  //     time: "2:30 PM",
-  //     location: "Clinical Room-001",
-  //     status: "Confirmed",
-  //     phone: "+94 77 123 4567",
-  //     reason: "ffffffffffffffff",
-  //     diagnosis: "hhhh",
-  //     recommendations: "ajcb habcasj",
-  //   },
-  // ];
-
-  // const serviceHistory = [
-  //   {
-  //     id: 1,
-  //     name: "Blood Test",
-  //     date: "2025-05-14",
-  //     time: "9.00 AM",
-  //     roomNum: "ABC-001",
-  //     result: "normal",
-  //     notes: "ewjfuirhuh hbioj oejrgore ok",
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Blood Test",
-  //     date: "2025-05-14",
-  //     time: "9.00 AM",
-  //     roomNum: "ABC-001",
-  //     result: "normal",
-  //     notes: "d cd kdmcksdm lkmv;slv,s",
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "Blood Test",
-  //     date: "2025-05-14",
-  //     time: "9.00 AM",
-  //     roomNum: "ABC-001",
-  //     result: "abnormal",
-  //     notes: "kdcnalkcnlkmc k klwcv dlsnckldnv",
-  //   },
-  // ];
-
   useEffect(() => {
     if (userId) {
       fetchServiceHistoryByPatientsId();
@@ -301,7 +226,9 @@ function MyHistory() {
   const renderVisits = () => {
     const filteredVisits = getFilteredVisits();
     if (filteredVisits.length === 0) {
-      return renderEmptyState("No doctor visits found matching your criteria");
+      return renderEmptyState(
+        "No complete doctor visits found matching your criteria"
+      );
     }
     return (
       <div className="history-items-container">
@@ -348,7 +275,9 @@ function MyHistory() {
   const renderTests = () => {
     const filteredTests = getFilteredTests();
     if (filteredTests.length === 0) {
-      return renderEmptyState("No medical tests found matching your criteria");
+      return renderEmptyState(
+        "No complete medical tests found matching your criteria"
+      );
     }
     return (
       <div className="history-items-container">

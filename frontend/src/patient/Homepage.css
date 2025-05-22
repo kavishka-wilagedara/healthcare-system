@@ -87,7 +87,7 @@
 }
 
 .card-title {
-  color: #2c3e50;
+  color: #3a2c50;
   font-size: 20px;
   font-weight: 700;
   margin-bottom: 30px;
@@ -115,9 +115,11 @@
 .calendar-date {
   display: flex;
   flex-direction: column;
+  color: white;
 }
 
 .date-number {
+  color: white;
   margin-right: 10px;
   font-size: 32px;
   font-weight: 700;
@@ -127,6 +129,7 @@
 }
 
 .date-month {
+  color: white;
   font-size: 14px;
   font-weight: 600;
 }
@@ -161,7 +164,6 @@
 }
 
 .upcoming-card-title {
-  color: #2c3e50;
   font-size: 20px;
   font-weight: 700;
 }
