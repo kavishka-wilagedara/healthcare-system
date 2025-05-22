@@ -122,17 +122,17 @@ function MyHistory() {
 
   const fetchServiceHistoryByPatientsId = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:5000/api/services/patient/${userId}`
-      );
+      const response = await axios.get("http://localhost:5000/api/services/");
 
-      const allServices = response.data?.data || [];
+      const allServices = response.data.data.filter(
+        (item) => item?.patient?._id === userId
+      );
 
       const today = new Date();
       const upcomingServices = allServices.filter((service) => {
         const serviceDate = new Date(service.date);
         // Keep only services that are today or in the future
-        return serviceDate >= today.setHours(0, 0, 0, 0);
+        return serviceDate < today.setHours(0, 0, 0, 0);
       });
 
       setServiceHistory(upcomingServices);
@@ -183,7 +183,6 @@ function MyHistory() {
       const searchMatch =
         searchTerm === "" ||
         test.name?.toLowerCase().includes(searchLower) ||
-        test.result?.toLowerCase().includes(searchLower) ||
         test.notes?.toLowerCase().includes(searchLower);
       return yearMatch && searchMatch;
     });
@@ -260,7 +259,7 @@ function MyHistory() {
 
     getFilteredTests().forEach((test) => {
       addNewPageIfNeeded();
-      const text = `Appointment No: ${test._id}\nTest: ${test.name}\nResult: ${test.result}\nNotes: ${test.notes}\nDate: ${test.date}`;
+      const text = `Appointment No: ${test._id}\nTest: ${test.name}\nNotes: ${test.notes}\nDate: ${test.date}\nTime: ${test.time}`;
       const lines = text.split("\n");
       lines.forEach((line) => {
         addNewPageIfNeeded();
@@ -371,21 +370,22 @@ function MyHistory() {
               </div>
             </div>
             <div className="history-card-content">
-              <div className="history-detail-item">
-                <span className="detail-label">Result:</span>
-                <span
-                  className={`detail-value result-${test.result?.toLowerCase()}`}
-                >
-                  {test.result}
-                </span>
-              </div>
+              <div className="history-detail-item"></div>
               <div className="history-detail-item">
                 <span className="detail-label">Notes:</span>
                 <span className="detail-value">{test.notes}</span>
               </div>
               <div className="history-detail-item">
+                <span className="detail-label">Clinical Room:</span>
+                <span className="detail-value">{test.roomNum}</span>
+              </div>
+              <div className="history-detail-item">
                 <span className="detail-label">Date:</span>
                 <span className="detail-value">{test.date}</span>
+              </div>
+              <div className="history-detail-item">
+                <span className="detail-label">Time:</span>
+                <span className="detail-value">{test.time}</span>
               </div>
             </div>
           </div>
