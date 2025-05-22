@@ -74,7 +74,10 @@ const Services = () => {
         `http://localhost:5000/api/services/patient/${patientId}`
       );
       console.log(response.data);
-      setServices(response.data?.data);
+
+      const filterData = response?.data?.data.filter((data)=>data?.patient?._id === patientId)
+      console.log(filterData,"fill")
+      setServices(filterData);
       setShowServices(true);
       window.scrollTo({
         top: document.body.scrollHeight,
@@ -348,7 +351,7 @@ const Services = () => {
             </p>
 
             <Row className="feature-section">
-              {serviceFeatureCards.map((card, index) => (
+              {serviceFeatureCards?.map((card, index) => (
                 <Col md={3} sm={6} className="mb-4" key={index}>
                   <Card className="service-feature-card">
                     <Card.Body className="text-center">
@@ -387,10 +390,10 @@ const Services = () => {
               <h3>My Appointments</h3>
               <div className="service-card-wrapper">
                 {services.map((service) => (
-                  <div className="service-card" key={service._id}>
+                  <div className="service-card" key={service?._id}>
                     {/* Card header */}
                     <div className="card-header">
-                      <h4>{service.name}</h4>
+                      <h4>{service?.name}</h4>
                     </div>
                     {/* Card body */}
                     <div className="card-body">
@@ -402,27 +405,27 @@ const Services = () => {
                       <p>
                         <IoPersonOutline className="icon" />
                         <strong>Patient Name:</strong>&nbsp;
-                        <span>{service.patient?.fullName}</span>
+                        <span>{service?.patient?.fullName}</span>
                       </p>
                       <p>
                         <MdOutlineDateRange className="icon" />
-                        <strong>Date:</strong>&nbsp;<span>{service.date}</span>
+                        <strong>Date:</strong>&nbsp;<span>{service?.date}</span>
                       </p>
                       <p>
                         <IoTimeOutline className="icon" />
-                        <strong>Time:</strong>&nbsp;<span>{service.time}</span>
+                        <strong>Time:</strong>&nbsp;<span>{service?.time}</span>
                       </p>
                       <p>
                         <IoLocationOutline className="icon" />
                         <strong>Clinical Room:</strong>&nbsp;
-                        <span>{service.roomNum}</span>
+                        <span>{service?.roomNum}</span>
                       </p>
                     </div>
                     <div className="service-actions">
                       <button
                         className="service-action-btn cancel"
                         onClick={() => {
-                          handleDelete(service._id);
+                          handleDelete(service?._id);
                         }}
                       >
                         Delete
