@@ -28,7 +28,14 @@ const PatientNavbar = () => {
     >
       <Container fluid>
         <Navbar.Brand as={Link} to="/patient/dashboard" className="fw-bold">
-          <span className="navbar-title">Health Care</span>
+            <img
+              src="/health-care.png" 
+              alt="SereneCare Logo"
+              width="35"
+              height="35"
+              className="d-inline-block align-top me-2"
+            />
+          <span className="navbar-title">SereneCare</span>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">

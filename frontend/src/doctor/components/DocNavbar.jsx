@@ -31,8 +31,14 @@ const DocNavbar = () => {
     <nav className="navbar navbar-expand-lg navbar-dark healthcare-navbar shadow-sm">
       <div className="container-fluid px-3 px-md-4">
         <Link className="navbar-brand fw-bold text-white" to="/doc-dashboard">
-          <span className="d-none d-sm-inline">Doctor Panel</span>
-          <span className="d-inline d-sm-none">Doc Panel</span>
+          <img
+                src="/health-care.png" 
+                alt="SereneCare Logo"
+                width="35"
+                height="35"
+                className="d-inline-block align-top me-2"
+              />
+          <span className="d-none d-sm-inline">SereneCare</span>
         </Link>
 
         <button
