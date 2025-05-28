@@ -320,3 +320,28 @@
 .time-input-manual:focus {
   animation: pulse 1.5s infinite;
 }
+
+.time-selection {
+  margin: 15px 0;
+}
+
+.time-select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.time-validation {
+  margin-top: 5px;
+  font-size: 14px;
+}
+
+.time-validation.valid {
+  color: green;
+}
+
+.time-validation.invalid {
+  color: red;
+}
