@@ -37,7 +37,7 @@ const AdminDashboard = () => {
                 alt="SereneCare Logo"
                 style={{ height: '40px', objectFit: 'contain' }}
               />
-              <span className="brand-name">SereneCare Admin Panel</span>
+              <span className="brand-name">Admin Panel</span>
             </div>
           ) : (
             <img
