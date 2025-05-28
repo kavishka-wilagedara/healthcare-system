@@ -8,85 +8,123 @@ const Login = () => {
   const [loginType, setLoginType] = useState("patient");
   const [patientForm, setPatientForm] = useState({ email: "", password: "" });
   const [doctorForm, setDoctorForm] = useState({ email: "", password: "" });
+  const [adminForm, setAdminForm] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { setUser } = useContext(UserContext);
 
+  // Handle doctor login
   const handleDoctorLogin = async (e) => {
+    e.preventDefault();
+    if (!validateForm(doctorForm)) return;
+    setIsLoading(true);
+    
     try {
       const response = await axios.post(
         "http://localhost:5000/api/doctor/login",
         doctorForm
       );
       setUser(response.data);
-      console.log(response.data);
+      localStorage.setItem('user', JSON.stringify(response.data));
+      
       Swal.fire({
         position: "center",
         icon: "success",
         title: "Login Successful!",
         showConfirmButton: false,
         timer: 1500,
-        background: "#f8f9fa",
       });
-
       navigate("/doc-dashboard");
-      window.location.reload();
     } catch (error) {
-      console.log("error while login : ", error);
-      Swal.fire({
-        icon: "error",
-        title: "Login Failed",
-        text:
-          error.response?.data?.message ||
-          "An error occurred during registration",
-        showConfirmButton: false,
-        timer: 4000,
-        timerProgressBar: true,
-        position: "center",
-      });
+      handleLoginError(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
+  // Handle patient login
   const handlePatientLogin = async (e) => {
+    e.preventDefault();
+    if (!validateForm(patientForm)) return;
+    setIsLoading(true);
+    
     try {
       const response = await axios.post(
         "http://localhost:5000/api/patients/login",
         patientForm
       );
       setUser(response.data);
-      console.log(response.data);
+      localStorage.setItem('user', JSON.stringify(response.data));
+      
       Swal.fire({
         position: "center",
         icon: "success",
         title: "Login Successful!",
         showConfirmButton: false,
         timer: 1500,
-        background: "#f8f9fa",
       });
-
       navigate("/patient/dashboard");
-      window.location.reload();
     } catch (error) {
-      console.log("error while login : ", error);
-      Swal.fire({
-        icon: "error",
-        title: "Login Failed",
-        text:
-          error.response?.data?.message ||
-          "An error occurred during registration",
-        showConfirmButton: false,
-        timer: 4000,
-        timerProgressBar: true,
-        position: "center",
-      });
+      handleLoginError(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
+  // Handle admin login
+  const handleAdminLogin = async (e) => {
+    e.preventDefault();
+    if (!validateForm(adminForm)) return;
+    setIsLoading(true);
+    
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/admin/login",
+        adminForm
+      );
+      
+      // Store token and admin data
+      localStorage.setItem('adminToken', response.data.token);
+      localStorage.setItem('adminData', JSON.stringify(response.data.adminData));
+      setUser({ ...response.data.adminData, role: 'admin' });
+      
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Admin Login Successful!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      navigate("/admin/dashboard");
+    } catch (error) {
+      handleLoginError(error, "Admin");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Handle login errors
+  const handleLoginError = (error, userType = "") => {
+    console.error(`Error while ${userType.toLowerCase()} login:`, error);
+    Swal.fire({
+      icon: "error",
+      title: `${userType || "Login"} Failed`,
+      text: error.response?.data?.message || "An error occurred during login",
+      showConfirmButton: false,
+      timer: 4000,
+      timerProgressBar: true,
+      position: "center",
+    });
+  };
+
+  // Handle type change
   const handleTypeChange = (type) => {
     setLoginType(type);
     setErrors({});
   };
 
+  // Form change handlers
   const handlePatientChange = (e) => {
     const { name, value } = e.target;
     setPatientForm((prev) => ({ ...prev, [name]: value }));
@@ -99,43 +137,42 @@ const Login = () => {
     setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
+  const handleAdminChange = (e) => {
+    const { name, value } = e.target;
+    setAdminForm((prev) => ({ ...prev, [name]: value }));
+    setErrors((prev) => ({ ...prev, [name]: "" }));
+  };
+
+  // Form validation
   const validateForm = (form) => {
     const newErrors = {};
     if (!form.email) newErrors.email = "Email is required";
     if (!form.password) newErrors.password = "Password is required";
+    
+    // Basic email validation
+    if (form.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+      newErrors.email = "Please enter a valid email address";
+    }
+    
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
-  };
-
-  const handlePatientSubmit = () => {
-    if (validateForm(patientForm)) {
-      console.log("Patient Login:", patientForm);
-      alert("Patient login submitted successfully!");
-    }
-  };
-
-  const handleDoctorSubmit = () => {
-    if (validateForm(doctorForm)) {
-      console.log("Doctor Login:", doctorForm);
-      alert("Doctor login submitted successfully!");
-    }
   };
 
   return (
     <div className="container py-5">
       <h3 className="display-5 fw-bold text-teal mb-5 text-center">Login</h3>
       <div className="row g-4 justify-content-center">
-        <div className="col-md-6">
+        <div className="col-md-8 col-lg-6">
           <div className="card shadow-sm healthcare-card">
             <div className="card-header healthcare-card-header">
               <h4 className="mb-0 text-white">Select Login Type</h4>
             </div>
             <div className="card-body">
-              <div className="d-flex justify-content-center mb-4">
+              <div className="d-flex justify-content-center mb-4 flex-wrap gap-2">
                 <button
                   className={`btn ${
                     loginType === "patient" ? "btn-teal" : "btn-outline-teal"
-                  } healthcare-btn me-2`}
+                  } healthcare-btn`}
                   onClick={() => handleTypeChange("patient")}
                 >
                   Patient Login
@@ -148,10 +185,18 @@ const Login = () => {
                 >
                   Doctor Login
                 </button>
+                <button
+                  className={`btn ${
+                    loginType === "admin" ? "btn-teal" : "btn-outline-teal"
+                  } healthcare-btn`}
+                  onClick={() => handleTypeChange("admin")}
+                >
+                  Admin Login
+                </button>
               </div>
 
               {loginType === "patient" ? (
-                <>
+                <form onSubmit={handlePatientLogin}>
                   <div className="form-floating mb-3">
                     <input
                       type="email"
@@ -162,7 +207,7 @@ const Login = () => {
                       name="email"
                       value={patientForm.email}
                       onChange={handlePatientChange}
-                      placeholder="example@email.com"
+                      placeholder="patient@example.com"
                     />
                     <label htmlFor="patientEmail">Email Address</label>
                     {errors.email && (
@@ -187,10 +232,18 @@ const Login = () => {
                     )}
                   </div>
                   <button
+                    type="submit"
                     className="btn btn-teal healthcare-btn w-100 mb-3"
-                    onClick={handlePatientLogin}
+                    disabled={isLoading}
                   >
-                    Login as Patient
+                    {isLoading ? (
+                      <>
+                        <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                        Logging in...
+                      </>
+                    ) : (
+                      "Login as Patient"
+                    )}
                   </button>
                   <p className="text-center">
                     Not registered?{" "}
@@ -198,9 +251,9 @@ const Login = () => {
                       Register here
                     </Link>
                   </p>
-                </>
-              ) : (
-                <>
+                </form>
+              ) : loginType === "doctor" ? (
+                <form onSubmit={handleDoctorLogin}>
                   <div className="form-floating mb-3">
                     <input
                       type="email"
@@ -211,7 +264,7 @@ const Login = () => {
                       name="email"
                       value={doctorForm.email}
                       onChange={handleDoctorChange}
-                      placeholder="example@email.com"
+                      placeholder="doctor@example.com"
                     />
                     <label htmlFor="doctorEmail">Email Address</label>
                     {errors.email && (
@@ -236,10 +289,18 @@ const Login = () => {
                     )}
                   </div>
                   <button
+                    type="submit"
                     className="btn btn-teal healthcare-btn w-100 mb-3"
-                    onClick={handleDoctorLogin}
+                    disabled={isLoading}
                   >
-                    Login as Doctor
+                    {isLoading ? (
+                      <>
+                        <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                        Logging in...
+                      </>
+                    ) : (
+                      "Login as Doctor"
+                    )}
                   </button>
                   <p className="text-center">
                     Not registered?{" "}
@@ -247,7 +308,61 @@ const Login = () => {
                       Register here
                     </Link>
                   </p>
-                </>
+                </form>
+              ) : (
+                <form onSubmit={handleAdminLogin}>
+                  <div className="form-floating mb-3">
+                    <input
+                      type="email"
+                      className={`form-control ${
+                        errors.email ? "is-invalid" : ""
+                      }`}
+                      id="adminEmail"
+                      name="email"
+                      value={adminForm.email}
+                      onChange={handleAdminChange}
+                      placeholder="admin@example.com"
+                    />
+                    <label htmlFor="adminEmail">Admin Email</label>
+                    {errors.email && (
+                      <div className="invalid-feedback">{errors.email}</div>
+                    )}
+                  </div>
+                  <div className="form-floating mb-3">
+                    <input
+                      type="password"
+                      className={`form-control ${
+                        errors.password ? "is-invalid" : ""
+                      }`}
+                      id="adminPassword"
+                      name="password"
+                      value={adminForm.password}
+                      onChange={handleAdminChange}
+                      placeholder="Password"
+                    />
+                    <label htmlFor="adminPassword">Password</label>
+                    {errors.password && (
+                      <div className="invalid-feedback">{errors.password}</div>
+                    )}
+                  </div>
+                  <button
+                    type="submit"
+                    className="btn btn-teal healthcare-btn w-100 mb-3"
+                    disabled={isLoading}
+                  >
+                    {isLoading ? (
+                      <>
+                        <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                        Logging in...
+                      </>
+                    ) : (
+                      "Login as Admin"
+                    )}
+                  </button>
+                  <p className="text-center text-muted small">
+                    Admin access is restricted to authorized personnel only
+                  </p>
+                </form>
               )}
             </div>
           </div>
@@ -263,54 +378,50 @@ const Login = () => {
           border-radius: 12px;
           background-color: #ffffff;
           transition: transform 0.3s ease;
+          overflow: hidden;
         }
         .healthcare-card:hover {
           transform: translateY(-5px);
+          box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
         .healthcare-card-header {
           background: linear-gradient(135deg, #17a2b8, #138496);
-          border-radius: 12px 12px 0 0;
+          border-radius: 12px 12px 0 0 !important;
           padding: 1.5rem;
         }
-        .card-body {
-          background-color: #e9ecef;
-          border-radius: 0 0 12px 12px;
+        .healthcare-btn {
+          padding: 0.5rem 1.5rem;
+          font-weight: 500;
+          letter-spacing: 0.5px;
         }
         .btn-teal {
           background-color: #17a2b8;
           border-color: #17a2b8;
           color: #ffffff;
-          transition: all 0.3s ease;
         }
-        .btn-teal:hover {
+        .btn-teal:hover, .btn-teal:focus {
           background-color: #138496;
           border-color: #138496;
-          transform: translateY(-2px);
+          color: #ffffff;
         }
         .btn-outline-teal {
           border-color: #17a2b8;
           color: #17a2b8;
-          transition: all 0.3s ease;
         }
-        .btn-outline-teal:hover {
+        .btn-outline-teal:hover, .btn-outline-teal:focus {
           background-color: #17a2b8;
           color: #ffffff;
-          transform: translateY(-2px);
-        }
-        .form-floating > .form-control:focus,
-        .form-floating > .form-control:not(:placeholder-shown) {
-          padding-top: 1.625rem;
-          padding-bottom: 0.625rem;
-        }
-        .form-floating > label {
-          color: #6c757d;
         }
         .form-control:focus {
           border-color: #17a2b8;
           box-shadow: 0 0 0 0.2rem rgba(23, 162, 184, 0.25);
         }
-        @media (max-width: 767px) {
-          .btn {
+        .invalid-feedback {
+          font-size: 0.85rem;
+        }
+        @media (max-width: 576px) {
+          .healthcare-btn {
+            width: 100%;
             margin-bottom: 0.5rem;
           }
         }
