@@ -83,13 +83,8 @@ const Login = () => {
         "http://localhost:5000/api/admin/login",
         adminForm
       );
-      
-      // Store token and admin data
-      localStorage.setItem('adminToken', response.data.token);
-      localStorage.setItem('adminData', JSON.stringify(response.data.adminData));
-      setUser({ ...response.data.adminData, role: 'admin' });
-      
-      Swal.fire({
+      Swal.fire(
+        {
         position: "center",
         icon: "success",
         title: "Admin Login Successful!",

@@ -1,15 +1,19 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaUserMd, FaUserInjured, FaCalendarAlt, FaHospital, FaBars } from 'react-icons/fa';
 import Patients from './components/Patients';
 import Doctors from './components/Doctors';
 import Appointments from './components/Appointments';
 import MedicalServices from './components/MedicalServices';
+import { UserContext } from '../common/UserContext';
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('patients');
   const [collapsed, setCollapsed] = useState(false);
+  // const [user, setUser] = useContext(UserContext);
   const navigate = useNavigate();
+
+  
 
   const renderContent = () => {
     switch (activeTab) {
