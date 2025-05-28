@@ -10,7 +10,6 @@ const Doctors = () => {
   const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
   const [data, setData] = useState([]);
-  const [filteredData, setFilteredData] = useState([]);
   const [selectedTimes, setSelectedTimes] = useState({});
 
   // Get all doctor available times
@@ -85,9 +84,6 @@ const Doctors = () => {
         icon: "warning",
         title: "Invalid Time Selection",
         text: timeValidation.message,
-        customClass: {
-          popup: "booking-swal-popup",
-        },
       });
       return;
     }
@@ -108,9 +104,6 @@ const Doctors = () => {
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, book it!",
       cancelButtonText: "Cancel",
-      customClass: {
-        popup: "booking-swal-popup",
-      },
     }).then(async (result) => {
       if (result.isConfirmed) {
         const userId = user.patient.patientId;
@@ -130,8 +123,6 @@ const Doctors = () => {
             requestBody
           );
 
-          console.log("Appointment created:", response.data);
-
           Swal.fire({
             icon: "success",
             title: "Booking Successful!",
@@ -143,11 +134,6 @@ const Doctors = () => {
                 <p><strong>Status:</strong> Pending confirmation</p>
               </div>
             `,
-            customClass: {
-              popup: "booking-swal-popup",
-            },
-            showConfirmButton: true,
-            confirmButtonText: "OK",
           }).then(() => {
             setSelectedTimes((prev) => ({
               ...prev,
@@ -156,16 +142,10 @@ const Doctors = () => {
           });
         } catch (error) {
           console.error("Booking error:", error);
-
           Swal.fire({
             icon: "error",
             title: "Booking Failed",
-            text:
-              error.response?.data?.message ||
-              "Something went wrong. Please try again.",
-            customClass: {
-              popup: "booking-swal-popup",
-            },
+            text: error.response?.data?.message || "Something went wrong. Please try again.",
           });
         }
       }
@@ -180,9 +160,7 @@ const Doctors = () => {
     for (let minutes = startMinutes; minutes <= endMinutes; minutes += 30) {
       const hours = Math.floor(minutes / 60);
       const mins = minutes % 60;
-      const timeStr = `${hours.toString().padStart(2, "0")}:${mins
-        .toString()
-        .padStart(2, "0")}`;
+      const timeStr = `${hours.toString().padStart(2, "0")}:${mins.toString().padStart(2, "0")}`;
       options.push(timeStr);
     }
 
@@ -197,9 +175,7 @@ const Doctors = () => {
           <div className="doctors-container">
             {data?.map((doctor) => {
               const selectedTime = selectedTimes[doctor._id] || "";
-              const timeValidation = selectedTime
-                ? validateTime(doctor, selectedTime)
-                : null;
+              const timeValidation = selectedTime ? validateTime(doctor, selectedTime) : null;
 
               return (
                 <div className="doctor-card" key={doctor?._id}>
@@ -232,63 +208,25 @@ const Doctors = () => {
                   </div>
 
                   <div className="time-selection">
-                    <label
-                      htmlFor={`time-${doctor._id}`}
-                      className="time-label"
-                    >
+                    <label htmlFor={`time-${doctor._id}`} className="time-label">
                       Select your preferred time:
                     </label>
-                    <div className="time-input-container">
-                      <select
-                        id={`time-${doctor._id}`}
-                        className={`time-input ${
-                          timeValidation?.isValid === false
-                            ? "invalid"
-                            : timeValidation?.isValid
-                            ? "valid"
-                            : ""
-                        }`}
-                        value={selectedTime}
-                        onChange={(e) =>
-                          handleTimeChange(doctor._id, e.target.value)
-                        }
-                      >
-                        <option value="">Select time</option>
-                        {generateTimeOptions(doctor.inTime, doctor.outTime).map(
-                          (time) => (
-                            <option key={time} value={time}>
-                              {time}
-                            </option>
-                          )
-                        )}
-                      </select>
-
-                      <input
-                        type="time"
-                        className={`time-input-manual ${
-                          timeValidation?.isValid === false
-                            ? "invalid"
-                            : timeValidation?.isValid
-                            ? "valid"
-                            : ""
-                        }`}
-                        value={selectedTime}
-                        onChange={(e) =>
-                          handleTimeChange(doctor._id, e.target.value)
-                        }
-                        min={doctor.inTime}
-                        max={doctor.outTime}
-                        placeholder="Or enter manually"
-                      />
-                    </div>
+                    <select
+                      id={`time-${doctor._id}`}
+                      className="time-select"
+                      value={selectedTime}
+                      onChange={(e) => handleTimeChange(doctor._id, e.target.value)}
+                    >
+                      <option value="">Select time</option>
+                      {generateTimeOptions(doctor.inTime, doctor.outTime).map((time) => (
+                        <option key={time} value={time}>
+                          {time}
+                        </option>
+                      ))}
+                    </select>
 
                     {timeValidation && (
-                      <div
-                        className={`time-validation ${
-                          timeValidation.isValid ? "valid" : "invalid"
-                        }`}
-                      >
-                        {timeValidation.isValid ? "✅" : "❌"}{" "}
+                      <div className={`time-validation ${timeValidation.isValid ? "valid" : "invalid"}`}>
                         {timeValidation.message}
                       </div>
                     )}
@@ -296,19 +234,11 @@ const Doctors = () => {
 
                   <div className="booking-buttons">
                     <button
-                      className={`booking-button ${
-                        !selectedTime || timeValidation?.isValid === false
-                          ? "disabled"
-                          : ""
-                      }`}
+                      className={`booking-button ${!selectedTime || timeValidation?.isValid === false ? "disabled" : ""}`}
                       onClick={() => handleBooking(doctor)}
-                      disabled={
-                        !selectedTime || timeValidation?.isValid === false
-                      }
+                      disabled={!selectedTime || timeValidation?.isValid === false}
                     >
-                      {!selectedTime
-                        ? "Select Time to Book"
-                        : "Book Appointment"}
+                      {!selectedTime ? "Select Time to Book" : "Book Appointment"}
                     </button>
                   </div>
                 </div>
