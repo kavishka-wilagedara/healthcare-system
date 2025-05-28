@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FaUserMd, FaUserInjured, FaCalendarAlt, FaHospital, FaBars } from 'react-icons/fa';
 import Patients from './components/Patients';
 import Doctors from './components/Doctors';
@@ -8,6 +9,7 @@ import MedicalServices from './components/MedicalServices';
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('patients');
   const [collapsed, setCollapsed] = useState(false);
+  const navigate = useNavigate();
 
   const renderContent = () => {
     switch (activeTab) {
@@ -26,7 +28,7 @@ const AdminDashboard = () => {
 
   return (
     <div className="admin-wrapper d-flex">
-      <div className={`sidebar ${collapsed ? 'collapsed' : ''}`}>
+      <div className={`sidebar d-flex flex-column ${collapsed ? 'collapsed' : ''}`}>
         <div className="sidebar-header d-flex align-items-center justify-content-between px-3">
           {!collapsed ? (
             <div className="d-flex align-items-center gap-2">
@@ -40,7 +42,7 @@ const AdminDashboard = () => {
           ) : (
             <img
               src="/health-care.png"
-              alt="SereneCare Logo"
+              alt="Logo"
               style={{ height: '40px', objectFit: 'contain' }}
             />
           )}
@@ -71,6 +73,12 @@ const AdminDashboard = () => {
             </button>
           </li>
         </ul>
+
+        <div className="mt-auto px-3 pb-4">
+          <button className="btn btn-danger w-100" onClick={() => navigate('/')}>
+            Logout
+          </button>
+        </div>
       </div>
 
       <div className="content p-4 flex-grow-1">
@@ -91,16 +99,12 @@ const AdminDashboard = () => {
         .sidebar.collapsed {
           width: 70px;
         }
-        .sidebar-header {
-          height: 60px;
-        }
-        .sidebar img {
-          max-height: 40px;
-        }
+        .sidebar h4,
         .brand-name {
-          font-size: 1.1rem;
-          font-weight: 500;
           color: white;
+          margin: 0;
+          font-size: 18px;
+          font-weight: bold;
         }
         .nav-link {
           width: 100%;
@@ -121,6 +125,14 @@ const AdminDashboard = () => {
           background-color: #334155;
           border: none;
           color: white;
+        }
+        .btn-danger {
+          background-color: #dc3545;
+          border-color: #dc3545;
+        }
+        .btn-danger:hover {
+          background-color: #c82333;
+          border-color: #bd2130;
         }
         .content {
           background-color: #ffffff;
