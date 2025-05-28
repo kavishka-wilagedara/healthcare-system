@@ -27,13 +27,29 @@ const AdminDashboard = () => {
   return (
     <div className="admin-wrapper d-flex">
       <div className={`sidebar ${collapsed ? 'collapsed' : ''}`}>
-        <div className="sidebar-header d-flex justify-content-between align-items-center px-3">
-          {!collapsed && <h4>Admin Panel</h4>}
+        <div className="sidebar-header d-flex align-items-center justify-content-between px-3">
+          {!collapsed ? (
+            <div className="d-flex align-items-center gap-2">
+              <img
+                src="/health-care.png"
+                alt="SereneCare Logo"
+                style={{ height: '40px', objectFit: 'contain' }}
+              />
+              <span className="brand-name">SereneCare Admin Panel</span>
+            </div>
+          ) : (
+            <img
+              src="/health-care.png"
+              alt="SereneCare Logo"
+              style={{ height: '40px', objectFit: 'contain' }}
+            />
+          )}
           <button className="btn btn-sm btn-outline-light toggle-btn" onClick={() => setCollapsed(!collapsed)}>
             <FaBars />
           </button>
         </div>
-        <ul className="nav flex-column px-2">
+
+        <ul className="nav flex-column px-2 mt-3">
           <li className={`nav-item ${activeTab === 'patients' ? 'active' : ''}`}>
             <button className="nav-link" onClick={() => setActiveTab('patients')}>
               <FaUserInjured className="me-2" /> {!collapsed && 'Patients'}
@@ -75,9 +91,16 @@ const AdminDashboard = () => {
         .sidebar.collapsed {
           width: 70px;
         }
-        .sidebar h4 {
+        .sidebar-header {
+          height: 60px;
+        }
+        .sidebar img {
+          max-height: 40px;
+        }
+        .brand-name {
+          font-size: 1.1rem;
+          font-weight: 500;
           color: white;
-          margin: 1rem 0;
         }
         .nav-link {
           width: 100%;
