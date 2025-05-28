@@ -31,6 +31,7 @@ import { NotificationProvider } from "./patient/context/NotificationContext";
 import Doctors from "./patient/Doctors";
 import { UserProvider } from "./common/UserContext";
 import DoctorProfile from "./doctor/pages/DoctorProfile";
+import AdminDashboard from "./admin/AdminDashboard";
 
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -47,55 +48,58 @@ const Layout = ({ children }) => {
 function App() {
   return (
     <UserProvider>
-    <Router>
-      <Layout>
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/register" element={<DoctorRegister />} />
-          <Route path="/patient-register" element={<Register />} />
-          <Route path="/doc-home" element={<Dashboard />} />
-          <Route path="/doc-dashboard" element={<Dashboard />} />
-          <Route path="/doc-patient-profile/:id" element={<Profile />} />
-          <Route path="/doc-add-time" element={<AddTimeForm />} />
-          <Route path="/doc-appointments" element={<Appointments />} />
-          <Route path="/doc-profile" element={<DoctorProfile />} />
-          <Route
-            path="/doc-scheduledAppointments"
-            element={<ScheduledAppointments />}
-          />
-          <Route
-            path="/doc-appointmentHistory"
-            element={<AppointmentHistory />}
-          />
-          <Route
-            path="/doc-appointment/:id"
-            element={<AppointmentDetailsPage />}
-          />
-          <Route
-            path="/doc-appointment-details/:id"
-            element={<ViewAppointmentDetailsPage />}
-          />
+      <Router>
+        <Layout>
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="/register" element={<DoctorRegister />} />
+            <Route path="/patient-register" element={<Register />} />
+            <Route path="/doc-home" element={<Dashboard />} />
+            <Route path="/doc-dashboard" element={<Dashboard />} />
+            <Route path="/doc-patient-profile/:id" element={<Profile />} />
+            <Route path="/doc-add-time" element={<AddTimeForm />} />
+            <Route path="/doc-appointments" element={<Appointments />} />
+            <Route path="/doc-profile" element={<DoctorProfile />} />
+            <Route
+              path="/doc-scheduledAppointments"
+              element={<ScheduledAppointments />}
+            />
+            <Route
+              path="/doc-appointmentHistory"
+              element={<AppointmentHistory />}
+            />
+            <Route
+              path="/doc-appointment/:id"
+              element={<AppointmentDetailsPage />}
+            />
+            <Route
+              path="/doc-appointment-details/:id"
+              element={<ViewAppointmentDetailsPage />}
+            />
 
-          {/* Patient Routes */}
-          <Route
-            path="/patient/dashboard"
-            element={
-              <NotificationProvider>
-                <PatientDashboard />
-              </NotificationProvider>
-            }
-          >
-            <Route index element={<Homepage />} />
-            <Route path="channeling" element={<Channeling />} />
-            <Route path="clinical-services" element={<Services />} />
-            <Route path="my-history" element={<MyHistory />} />
-            <Route path="notification" element={<Notification />} />
-            <Route path="profile" element={<Profile />} />
-            <Route path="view-all-doctors" element={<Doctors />} />
-          </Route>
-        </Routes>
-      </Layout>
-    </Router>
+            {/* Patient Routes */}
+            <Route
+              path="/patient/dashboard"
+              element={
+                <NotificationProvider>
+                  <PatientDashboard />
+                </NotificationProvider>
+              }
+            >
+              <Route index element={<Homepage />} />
+              <Route path="channeling" element={<Channeling />} />
+              <Route path="clinical-services" element={<Services />} />
+              <Route path="my-history" element={<MyHistory />} />
+              <Route path="notification" element={<Notification />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="view-all-doctors" element={<Doctors />} />
+            </Route>
+
+            {/* Admin Routes */}
+            <Route path="/admin/dashboard" element={<AdminDashboard />}></Route>
+          </Routes>
+        </Layout>
+      </Router>
     </UserProvider>
   );
 }
