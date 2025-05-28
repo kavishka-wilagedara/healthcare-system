@@ -32,6 +32,7 @@ import Doctors from "./patient/Doctors";
 import { UserProvider } from "./common/UserContext";
 import DoctorProfile from "./doctor/pages/DoctorProfile";
 import AdminDashboard from "./admin/AdminDashboard";
+import PatientDetailsPage from "./admin/components/PatientDetailsModal";
 
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -97,6 +98,7 @@ function App() {
 
             {/* Admin Routes */}
             <Route path="/admin/dashboard" element={<AdminDashboard />}></Route>
+            <Route path="/admin/patient/:id" element={<PatientDetailsPage />} />
           </Routes>
         </Layout>
       </Router>
