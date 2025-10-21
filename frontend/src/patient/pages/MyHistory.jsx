@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import "./MyHistory.css";
+import "../css/MyHistory.css";
 import {
   FaUserMd,
   FaFileMedical,
@@ -11,7 +11,7 @@ import {
 import { MdOutlineFormatListNumbered } from "react-icons/md";
 import { PDFDocument, rgb, StandardFonts } from "pdf-lib";
 import axios from "axios";
-import { UserContext } from "../common/UserContext";
+import { UserContext } from "../../common/UserContext";
 
 function MyHistory() {
   const [activeTab, setActiveTab] = useState("visits");

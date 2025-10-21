@@ -10,10 +10,10 @@ import {
   FaCheckDouble,
   FaRegClock,
 } from "react-icons/fa";
-import "./Notification.css";
-import { useNotification } from "./context/NotificationContext";
-import axios from 'axios';
-import { UserContext } from "../common/UserContext";
+import "../css/Notification.css";
+import { useNotification } from "../context/NotificationContext";
+import axios from "axios";
+import { UserContext } from "../../common/UserContext";
 
 function Notification(props) {
   const [searchTerm, setSearchTerm] = useState("");
@@ -28,7 +28,7 @@ function Notification(props) {
     loading,
     filteredNotifications,
     setFilteredNotifications,
-    fetchUserNotifications
+    fetchUserNotifications,
   } = useNotification();
 
   // Apply filters when search term or filter options change
@@ -82,28 +82,26 @@ function Notification(props) {
   // Mark notification as read
   const markAsRead = (id) => {
     setNotifications(
-      notifications.map(notification => 
-        notification.id === id 
-          ? { ...notification, read: true } 
-          : notification
+      notifications.map((notification) =>
+        notification.id === id ? { ...notification, read: true } : notification
       )
     );
   };
 
   // Delete notification
   const handleDeleteNotification = (id) => {
-    setNotifications(prev =>
-      prev.filter(notification => notification.id !== id)
+    setNotifications((prev) =>
+      prev.filter((notification) => notification.id !== id)
     );
-    setFilteredNotifications(prev =>
-      prev.filter(notification => notification.id !== id)
+    setFilteredNotifications((prev) =>
+      prev.filter((notification) => notification.id !== id)
     );
   };
 
   // Mark all notifications as read
   const markAllAsRead = () => {
     setNotifications(
-      notifications.map(notification => ({ ...notification, read: true }))
+      notifications.map((notification) => ({ ...notification, read: true }))
     );
   };
 
@@ -271,9 +269,7 @@ function Notification(props) {
               <div className="notification-content">
                 <div className="notification-header">
                   <h4 className="notification-title">{notification.title}</h4>
-                  <span className="notification-time">
-                    {notification.date}
-                  </span>
+                  <span className="notification-time">{notification.date}</span>
                 </div>
 
                 <p className="notification-message">{notification.message}</p>

@@ -2,9 +2,9 @@ import React, { useContext, useEffect } from "react";
 import { Nav, Navbar, Container, Dropdown } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { FaSignOutAlt, FaUserCircle, FaBell } from "react-icons/fa";
-import "./PatientNavbar.css";
-import { useNotification } from "./context/NotificationContext";
-import { UserContext } from "../common/UserContext";
+import "../css/PatientNavbar.css";
+import { useNotification } from "../context/NotificationContext";
+import { UserContext } from "../../common/UserContext";
 
 const PatientNavbar = () => {
   const { getUnreadCount, notifications, loading } = useNotification();
@@ -17,7 +17,11 @@ const PatientNavbar = () => {
   };
 
   // Calculate if notifications badge should be shown
-  const showNotificationBadge = !loading && notifications && notifications.length > 0 && getUnreadCount() > 0;
+  const showNotificationBadge =
+    !loading &&
+    notifications &&
+    notifications.length > 0 &&
+    getUnreadCount() > 0;
 
   return (
     <Navbar
@@ -28,13 +32,13 @@ const PatientNavbar = () => {
     >
       <Container fluid>
         <Navbar.Brand as={Link} to="/patient/dashboard" className="fw-bold">
-            <img
-              src="/health-care.png" 
-              alt="SereneCare Logo"
-              width="35"
-              height="35"
-              className="d-inline-block align-top me-2"
-            />
+          <img
+            src="/health-care.png"
+            alt="SereneCare Logo"
+            width="35"
+            height="35"
+            className="d-inline-block align-top me-2"
+          />
           <span className="navbar-title">SereneCare</span>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

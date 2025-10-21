@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Row, Col, Card, Form } from "react-bootstrap";
-import "./Services.css";
+import "../css/Services.css";
 import {
   MdOutlineDateRange,
   MdOutlineFormatListNumbered,
@@ -15,10 +15,10 @@ import {
 } from "react-icons/fa";
 import { IoArrowBackCircleSharp } from "react-icons/io5";
 import { FaCalendarAlt } from "react-icons/fa";
-import { UserContext } from "../common/UserContext";
+import { UserContext } from "../../common/UserContext";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { fetchServicesByUserId } from "./hooks/useService";
+import { fetchServicesByUserId } from "../hooks/useService";
 
 const Services = () => {
   const { user } = useContext(UserContext);

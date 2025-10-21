@@ -15,20 +15,20 @@ import AppointmentDetailsPage from "./doctor/pages/AppointmentDetailsPage";
 import ViewAppointmentDetailsPage from "./doctor/pages/ViewAppointmentDetailsPage";
 import DocNavbar from "./doctor/components/DocNavbar";
 // Patient
-import PatientDashboard from "./patient/PatientDashboard";
-import Homepage from "./patient/Homepage";
-import Channeling from "./patient/Channeling";
-import Services from "./patient/Services";
-import Notification from "./patient/Notification";
-import Profile from "./patient/Profile";
-import MyHistory from "./patient/MyHistory";
+import PatientDashboard from "./patient/pages/PatientDashboard";
+import Homepage from "./patient/pages/Homepage";
+import Channeling from "./patient/pages/Channeling";
+import Services from "./patient/pages/Services";
+import Notification from "./patient/pages/Notification";
+import Profile from "./patient/pages/Profile";
+import MyHistory from "./patient/pages/MyHistory";
 
 //common
 import Register from "./common/Register";
 import Login from "./common/Login";
 import DoctorRegister from "./common/DoctorRegister";
 import { NotificationProvider } from "./patient/context/NotificationContext";
-import Doctors from "./patient/Doctors";
+import Doctors from "./patient/pages/Doctors";
 import { UserProvider } from "./common/UserContext";
 import DoctorProfile from "./doctor/pages/DoctorProfile";
 import AdminDashboard from "./admin/AdminDashboard";

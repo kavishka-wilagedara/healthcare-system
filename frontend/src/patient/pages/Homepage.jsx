@@ -1,15 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
-import "./Homepage.css";
+import "../css/Homepage.css";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { FaCalendarCheck, FaFileMedical } from "react-icons/fa";
 import { FaUserDoctor } from "react-icons/fa6";
 import { RiFileHistoryFill } from "react-icons/ri";
-import doctorPatientImg from "../assets/images/doctor-patient.png";
-import medicalBackgroundImg from "../assets/images/medical-background.jpg";
-import healthTipImg from "../assets/images/health-tip.jpg";
-import { UserContext } from "../common/UserContext";
-import { fetchAppointmentsByUserId } from "./hooks/useAppointment";
-import { fetchServicesByUserId } from "./hooks/useService";
+import doctorPatientImg from "../../assets/images/doctor-patient.png";
+import medicalBackgroundImg from "../../assets/images/medical-background.jpg";
+import healthTipImg from "../../assets/images/health-tip.jpg";
+import { UserContext } from "../../common/UserContext";
+import { fetchAppointmentsByUserId } from "../hooks/useAppointment";
+import { fetchServicesByUserId } from "../hooks/useService";
 
 function Homepage() {
   const { user } = useContext(UserContext);

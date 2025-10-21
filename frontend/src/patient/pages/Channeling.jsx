@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Row, Col, Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import "./Channeling.css";
+import "../css/Channeling.css";
 import {
   FaCheckCircle,
   FaUserMd,
@@ -14,8 +14,8 @@ import {
 } from "react-icons/fa";
 import { IoArrowBackCircleSharp } from "react-icons/io5";
 import axios from "axios";
-import { UserContext } from "../common/UserContext";
-import { fetchAppointmentsByUserId } from "./hooks/useAppointment";
+import { UserContext } from "../../common/UserContext";
+import { fetchAppointmentsByUserId } from "../hooks/useAppointment";
 
 function Channeling() {
   const navigate = useNavigate();
