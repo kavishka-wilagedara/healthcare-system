@@ -18,6 +18,7 @@ import { UserContext } from "../../common/UserContext";
 import { fetchAppointmentsByUserId } from "../hooks/useAppointment";
 
 function Channeling() {
+  const backendUrl=process.env.REACT_APP_BACKEND_URL;
   const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
   const [showAppointments, setShowAppointments] = useState(false);
@@ -60,7 +61,7 @@ function Channeling() {
   const deleteAppointment = async (appointmentId) => {
     try {
       await axios.delete(
-        `http://localhost:5000/api/appointments/${appointmentId}`
+        `${backendUrl}/appointments/${appointmentId}`
       );
       // Update local state to remove deleted appointment
       setData((prevData) =>

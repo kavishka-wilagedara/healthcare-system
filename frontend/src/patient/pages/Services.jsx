@@ -68,6 +68,7 @@ const Services = () => {
 
   const patientId = user?.patient?.patientId;
   const patientFullName = user?.patient?.fullName;
+  const backendUrl=process.env.REACT_APP_BACKEND_URL;
 
   const getAllServiceByPatientId = async () => {
     if (!patientId) return;
@@ -134,7 +135,7 @@ const Services = () => {
         roomNum: randomRoomNumber,
       };
       const response = await axios.post(
-        "http://localhost:5000/api/services/",
+        `${backendUrl}/services/`,
         payload
       );
       console.log(response.data);
@@ -272,7 +273,7 @@ const Services = () => {
       if (result.isConfirmed) {
         try {
           const response = await axios.delete(
-            `http://localhost:5000/api/services/${serviceId}`
+            `${backendUrl}/services/${serviceId}`
           );
           console.log(response.data);
 
@@ -310,7 +311,7 @@ const Services = () => {
       };
 
       const response = await axios.put(
-        `http://localhost:5000/api/services/${selectedService._id}`,
+        `${backendUrl}/services/${selectedService._id}`,
         payload
       );
       console.log(response.data);

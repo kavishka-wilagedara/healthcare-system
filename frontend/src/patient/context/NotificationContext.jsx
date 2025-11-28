@@ -7,6 +7,7 @@ export const NotificationProvider = ({ children }) => {
   const [notifications, setNotifications] = useState([]);
   const [filteredNotifications, setFilteredNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
+  const backendUrl=process.env.REACT_APP_BACKEND_URL;
 
   // Initial load - this will ensure notifications are loaded when the context is initialized
   useEffect(() => {
@@ -28,7 +29,7 @@ export const NotificationProvider = ({ children }) => {
     try {
       setLoading(true);
       // Fetch appointments for the user
-      const response = await axios.get('http://localhost:5000/api/appointments/');
+      const response = await axios.get(`${backendUrl}/appointments/`);
       
       const today = new Date().toISOString().split('T')[0];
       const filterData = response?.data?.data?.filter(

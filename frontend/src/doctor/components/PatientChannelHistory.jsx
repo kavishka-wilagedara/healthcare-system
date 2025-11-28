@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const PatientChannelHistory = ({ patientId }) => {
+  const backendUrl=process.env.REACT_APP_BACKEND_URL;
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -9,7 +10,7 @@ const PatientChannelHistory = ({ patientId }) => {
   useEffect(() => {
     const getAllAppointments = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/appointments/');
+        const response = await axios.get(`${backendUrl}/appointments/`);
         // Filter appointments by patient ID and completed status
         const filteredAppointments = response.data.data.filter(
           (appointment) => 

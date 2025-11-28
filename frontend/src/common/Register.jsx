@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const Register = () => {
+  const backendUrl=process.env.REACT_APP_BACKEND_URL;
+  console.log("env:", `${backendUrl}`)
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [formData, setFormData] = useState({
@@ -138,7 +140,8 @@ const Register = () => {
           dob: new Date(formData.dob).toISOString().split('T')[0] 
         };
 
-        const response = await axios.post('http://localhost:5000/api/patients/add', submissionData);
+        console.log("backend url: ", `${backendUrl}`)
+        const response = await axios.post(`${backendUrl}/patients/add`, submissionData);
         
         if (response.data.status) {
           alert('Registration submitted successfully!');

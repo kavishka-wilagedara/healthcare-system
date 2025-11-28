@@ -3,10 +3,11 @@ import axios from 'axios';
 import { Accordion, Card, Button, Row, Col } from 'react-bootstrap';
 
 const Appointments = () => {
+  const backendUrl=process.env.REACT_APP_BACKEND_URL;
   const [appointments, setAppointments] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/appointments/')
+    axios.get(`${backendUrl}/appointments/`)
       .then(response => {
         if (response.data.status) {
           setAppointments(response.data.data);

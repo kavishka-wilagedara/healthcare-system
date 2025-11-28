@@ -5,6 +5,7 @@ import { UserContext } from "../../common/UserContext";
 import Swal from "sweetalert2";
 
 const ViewAppointmentDetailsPage = () => {
+  const backendUrl=process.env.REACT_APP_BACKEND_URL;
   const { id } = useParams();
   const { user } = useContext(UserContext);
   const [allAppointments, setAllAppointments] = useState([]);
@@ -16,7 +17,7 @@ const ViewAppointmentDetailsPage = () => {
   const fetchAppointments = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/appointments/"
+        `${backendUrl}/appointments/`
       );
       // filter by doctorId
       setAllAppointments((preData) =>
@@ -52,7 +53,7 @@ const ViewAppointmentDetailsPage = () => {
       return;
     }
     try {
-      await axios.put(`http://localhost:5000/api/appointments/${id}`, {
+      await axios.put(`${backendUrl}/appointments/${id}`, {
         medicine: medicine.trim(),
         advice: description.trim(),
         completed: true,

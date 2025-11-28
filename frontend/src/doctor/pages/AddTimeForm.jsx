@@ -3,6 +3,7 @@ import { UserContext } from "../../common/UserContext";
 import axios from "axios";
 
 const AddTimeForm = () => {
+  const backendUrl=process.env.REACT_APP_BACKEND_URL;
   const { user } = useContext(UserContext);
   const [formData, setFormData] = useState({
     inTime: "",
@@ -28,7 +29,7 @@ const AddTimeForm = () => {
         date: formData.date,
       };
       const response = await axios.post(
-        `http://localhost:5000/api/doctor/time`,
+        `${backendUrl}/doctor/time`,
         requestBody
       );
       console.log(response.data);

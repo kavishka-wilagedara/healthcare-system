@@ -21,6 +21,7 @@ function MyHistory() {
   const [medicalHistory, setmedicalHistory] = useState([]);
   const { user, setUser } = useContext(UserContext);
   const userId = user?.patient?.patientId;
+  const backendUrl=process.env.REACT_APP_BACKEND_URL;
 
   useEffect(() => {
     if (userId) {
@@ -32,7 +33,7 @@ function MyHistory() {
   const fetchMedicalHistoryByPatientId = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/appointments/"
+        `${backendUrl}/appointments/`
       );
       setmedicalHistory(
         response.data.data.filter(
@@ -47,7 +48,7 @@ function MyHistory() {
 
   const fetchServiceHistoryByPatientsId = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/services/");
+      const response = await axios.get(`${backendUrl}/services/`);
 
       const allServices = response.data.data.filter(
         (item) => item?.patient?._id === userId

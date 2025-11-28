@@ -8,8 +8,7 @@ const AppointmentHistory = () => {
   const {user} = useContext(UserContext);
   const [data,setData] = useState([]);
   const [pendingAppointments, setPendingAppointments] = useState([]);
-
-  
+  const backendUrl=process.env.REACT_APP_BACKEND_URL;
 
   const getAllAppointments = async () => {
 
@@ -17,7 +16,7 @@ const AppointmentHistory = () => {
 
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/appointments/"
+        `${backendUrl}/appointments/`
       );
 
       setPendingAppointments((preData) =>

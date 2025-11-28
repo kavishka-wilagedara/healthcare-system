@@ -4,6 +4,7 @@ import axios from "axios";
 import { UserContext } from "../../common/UserContext";
 
 const ScheduledAppointments = () => {
+  const backendUrl=process.env.REACT_APP_BACKEND_URL;
   const { user } = useContext(UserContext);
   const [pendingDoctorAppointments, setPendingDoctorAppointments] = useState(
     []
@@ -14,7 +15,7 @@ const ScheduledAppointments = () => {
   const getAllAppointments = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/appointments/"
+        `${backendUrl}/appointments/`
       );
 
       setPendingDoctorAppointments((preData) =>

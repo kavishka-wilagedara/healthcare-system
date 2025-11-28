@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const Patients = () => {
+  const backendUrl=process.env.REACT_APP_BACKEND_URL;
   const [data, setData] = useState([]);
   const [nicSearch, setNicSearch] = useState('');
   const [filteredData, setFilteredData] = useState([]);
@@ -11,7 +12,7 @@ const Patients = () => {
   //get all patients
     const fetchPatients = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/patients');  
+      const response = await axios.get(`${backendUrl}/patients`);  
       setData(response.data.data);
       setFilteredData(response.data.data);
     } catch (error) {

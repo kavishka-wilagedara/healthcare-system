@@ -5,6 +5,7 @@ import { Card, Row, Col, Button, Form } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 
 const PatientDetailsPage = () => {
+  const backendUrl=process.env.REACT_APP_BACKEND_URL;
   const { id } = useParams();
   const navigate = useNavigate();
   const [patient, setPatient] = useState(null);
@@ -14,7 +15,7 @@ const PatientDetailsPage = () => {
   useEffect(() => {
     const fetchPatient = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/patients/');
+        const response = await axios.get(`${backendUrl}/patients/`);
         const found = response.data.data.find(p => p._id === id);
         setPatient(found);
         setFormData(found);
@@ -32,7 +33,7 @@ const PatientDetailsPage = () => {
 
   const handleUpdate = async () => {
     try {
-      await axios.put(`http://localhost:5000/api/patients/update/${id}`, formData);
+      await axios.put(`${backendUrl}/patients/update/${id}`, formData);
       Swal.fire('Success', 'Patient updated successfully', 'success');
       setEditMode(false);
       setPatient(formData);

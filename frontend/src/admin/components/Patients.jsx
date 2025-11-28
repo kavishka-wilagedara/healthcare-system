@@ -7,12 +7,13 @@ import Swal from 'sweetalert2';
 const defaultPatientImage = 'https://cdn-icons-png.flaticon.com/512/1533/1533506.png';
 
 const Patients = () => {
+  const backendUrl=process.env.REACT_APP_BACKEND_URL;
   const [patients, setPatients] = useState([]);
   const navigate = useNavigate();
 
   const fetchPatients = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/patients/');
+      const response = await axios.get(`${backendUrl}/patients/`);
       setPatients(response.data.data);
     } catch (error) {
       console.error('Failed to fetch patients:', error);
@@ -36,7 +37,7 @@ const Patients = () => {
 
     if (confirm.isConfirmed) {
       try {
-        await axios.delete(`http://localhost:5000/api/patients/delete/${id}`);
+        await axios.delete(`${backendUrl}/patients/delete/${id}`);
         Swal.fire('Deleted!', 'Patient has been removed.', 'success');
         fetchPatients();
       } catch (error) {

@@ -4,6 +4,7 @@ import { useState ,useEffect} from 'react';
 import axios from 'axios';
 
 const AppointmentDetailsPage = () => {
+  const backendUrl=process.env.REACT_APP_BACKEND_URL;
   const { id } = useParams();
   const [data,setData] = useState([]);
 
@@ -14,7 +15,7 @@ const AppointmentDetailsPage = () => {
 
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/appointments/"
+        `${backendUrl}/appointments/`
       );
 
       setData((preData) =>

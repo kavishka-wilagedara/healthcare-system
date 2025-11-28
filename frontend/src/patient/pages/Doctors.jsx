@@ -7,6 +7,7 @@ import axios from "axios";
 import { UserContext } from "../../common/UserContext";
 
 const Doctors = () => {
+  const backendUrl=process.env.REACT_APP_BACKEND_URL;
   const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
   const [data, setData] = useState([]);
@@ -16,7 +17,7 @@ const Doctors = () => {
   const fetchDocAvailableTimes = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/doctor/time/all"
+        `${backendUrl}/doctor/time/all`
       );
       setData(response.data);
     } catch (error) {
@@ -119,7 +120,7 @@ const Doctors = () => {
           };
 
           const response = await axios.post(
-            `http://localhost:5000/api/appointments/${userId}`,
+            `${backendUrl}/appointments/${userId}`,
             requestBody
           );
 

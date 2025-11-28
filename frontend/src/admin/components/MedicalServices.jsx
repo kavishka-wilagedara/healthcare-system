@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 const MedicalServices = () => {
+  const backendUrl=process.env.REACT_APP_BACKEND_URL;
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -14,7 +15,7 @@ const MedicalServices = () => {
   const fetchServices = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:5000/api/services');
+      const response = await fetch(`${backendUrl}/services`);
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -62,7 +63,7 @@ const MedicalServices = () => {
       `Are you sure you want to accept "${serviceName}"?`,
       async () => {
         try {
-          const response = await fetch(`http://localhost:5000/api/services/accept/${serviceId}`, {
+          const response = await fetch(`${backendUrl}/services/accept/${serviceId}`, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json',
@@ -95,7 +96,7 @@ const MedicalServices = () => {
       `Are you sure you want to delete this service?\n\nService: ${service.name}\nPatient: ${service.patient?.fullName || 'N/A'}\nDate: ${service.date}`,
       async () => {
         try {
-          const response = await fetch(`http://localhost:5000/api/services/${service._id}`, {
+          const response = await fetch(`${backendUrl}/services/${service._id}`, {
             method: 'DELETE',
           });
 

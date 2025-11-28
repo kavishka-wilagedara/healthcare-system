@@ -5,6 +5,7 @@ import { UserContext } from "./UserContext";
 import Swal from "sweetalert2";
 
 const Login = () => {
+  const backendUrl=process.env.REACT_APP_BACKEND_URL;
   const [loginType, setLoginType] = useState("patient");
   const [patientForm, setPatientForm] = useState({ email: "", password: "" });
   const [doctorForm, setDoctorForm] = useState({ email: "", password: "" });
@@ -20,9 +21,10 @@ const Login = () => {
     if (!validateForm(doctorForm)) return;
     setIsLoading(true);
     
+    console.log("login url: ", backendUrl)
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/doctor/login",
+        `${backendUrl}/doctor/login`,
         doctorForm
       );
       setUser(response.data);
@@ -50,8 +52,9 @@ const Login = () => {
     setIsLoading(true);
     
     try {
+      console.log("patient log url:", `${backendUrl}`)
       const response = await axios.post(
-        "http://localhost:5000/api/patients/login",
+        `${backendUrl}/patients/login`,
         patientForm
       );
       setUser(response.data);
@@ -80,7 +83,7 @@ const Login = () => {
     
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/admin/login",
+        `${backendUrl}/admin/login`,
         adminForm
       );
       Swal.fire(

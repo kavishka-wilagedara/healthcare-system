@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import '../css/DoctorProfile.css';
 
 export default function DoctorProfile() {
+    const backendUrl=process.env.REACT_APP_BACKEND_URL;
     const { user, logout } = useContext(UserContext);
     const [doctor, setDoctor] = useState(null);
     const [appointments, setAppointments] = useState([]);
@@ -37,7 +38,7 @@ export default function DoctorProfile() {
     const getAllDoctorTimes = async () => {
         try {
             setTimesLoading(true);
-            const response = await axios.get(`http://localhost:5000/api/doctor/time/${doctorId}`);
+            const response = await axios.get(`${backendUrl}/doctor/time/${doctorId}`);
             setDoctorTimes(response.data);
             setTimesLoading(false);
         } catch (error) {
@@ -66,7 +67,7 @@ export default function DoctorProfile() {
             });
 
             if (result.isConfirmed) {
-                await axios.delete(`http://localhost:5000/api/doctor/delete/time/${timeId}`);
+                await axios.delete(`${backendUrl}/doctor/delete/time/${timeId}`);
                 Swal.fire({
                     icon: 'success',
                     title: 'Deleted!',
@@ -111,7 +112,7 @@ export default function DoctorProfile() {
 
     const getDoctorById = async () => {
         try {
-            const response = await axios.get(`http://localhost:5000/api/doctor/${doctorId}`);
+            const response = await axios.get(`${backendUrl}/doctor/${doctorId}`);
             setDoctor(response.data);
             setFormData({
                 fullName: response.data.fullName,
@@ -135,7 +136,7 @@ export default function DoctorProfile() {
 
     const handleAppointmentDelete = async (appointmentId) => {
         try {
-            await axios.delete(`http://localhost:5000/api/appointments/${appointmentId}`);
+            await axios.delete(`${backendUrl}/appointments/${appointmentId}`);
             Swal.fire({
                 icon: 'success',
                 title: 'Success',
@@ -159,7 +160,7 @@ export default function DoctorProfile() {
 
     const getDoctorAppointments = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/api/appointments/');
+            const response = await axios.get(`${backendUrl}/appointments/`);
             const doctorAppointments = response.data.data.filter(
                 appointment => appointment?.appointment?.doctorId === doctorId
             );
@@ -222,7 +223,7 @@ export default function DoctorProfile() {
             };
 
             await axios.put(
-                `http://localhost:5000/api/doctor/${doctor._id}`,
+                `${backendUrl}/doctor/${doctor._id}`,
                 updatedDoctor
             );
             
@@ -250,7 +251,7 @@ export default function DoctorProfile() {
 
     const handleDeleteAccount = async () => {
         try {
-            await axios.delete(`http://localhost:5000/api/doctor/delete/${doctor?._id}`);
+            await axios.delete(`${backendUrl}/doctor/delete/${doctor?._id}`);
             
             Swal.fire({
                 icon: 'success',

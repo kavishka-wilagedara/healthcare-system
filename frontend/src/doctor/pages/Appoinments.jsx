@@ -3,6 +3,7 @@ import axios from "axios";
 import { UserContext } from "../../common/UserContext";
 
 const Appointments = () => {
+  const backendUrl=process.env.REACT_APP_BACKEND_URL;
   const { user } = useContext(UserContext);
   const [data, setData] = useState([]);
 
@@ -12,7 +13,7 @@ const Appointments = () => {
   const fetchAppointments = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/appointments/"
+        `${backendUrl}/appointments/`
       );
       // filter by doctorId
       setData((preData) =>
@@ -35,12 +36,12 @@ const Appointments = () => {
     try {
       if (newStatus === "confirmed") {
         const response = await axios.put(
-          `http://localhost:5000/api/appointments/${appointmentId}`,
+          `${backendUrl}/appointments/${appointmentId}`,
           { booked: "confirmed" }
         );
       } else {
         const response = await axios.put(
-          `http://localhost:5000/api/appointments/${appointmentId}`,
+          `${backendUrl}/appointments/${appointmentId}`,
           { booked: "cancelled" }
         );
       }

@@ -49,6 +49,7 @@ function Profile() {
   const [editing, setEditing] = useState(false);
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
+  const backendUrl=process.env.REACT_APP_BACKEND_URL;
 
   useEffect(() => {
     getUserById();
@@ -57,7 +58,7 @@ function Profile() {
   const deletPatient = async (patientId) => {
     try {
       await axios.delete(
-        `http://localhost:5000/api/patients/delete/${patientId}`
+        `${backendUrl}/patients/delete/${patientId}`
       );
       navigate("/");
     } catch (error) {
@@ -75,13 +76,13 @@ function Profile() {
     try {
       if (user?.patient?.patientId == undefined) {
         const response = await axios.get(
-          `http://localhost:5000/api/patients/${id}`
+          `${backendUrl}/patients/${id}`
         );
         setPatient(response.data);
         setLoading(false);
       } else {
         const response = await axios.get(
-          `http://localhost:5000/api/patients/${user?.patient?.patientId}`
+          `${backendUrl}/patients/${user?.patient?.patientId}`
         );
         setPatient(response.data);
         setLoading(false);
@@ -112,7 +113,7 @@ function Profile() {
     e.preventDefault();
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/patients/update/${user?.patient?.patientId}`,
+        `${backendUrl}/patients/update/${user?.patient?.patientId}`,
         patient
       );
       Swal.fire({

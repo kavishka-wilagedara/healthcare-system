@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const DoctorRegister = () => {
+  const backendUrl=process.env.REACT_APP_BACKEND_URL;
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     employeeId: "",
@@ -32,7 +33,7 @@ const DoctorRegister = () => {
       };
 
       const response = await axios.post(
-        "http://localhost:5000/api/doctor/register",
+        `${backendUrl}/doctor/register`,
         registrationData
       );
       console.log(response.data);

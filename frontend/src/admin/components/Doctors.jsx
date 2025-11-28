@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 const defaultImage = 'https://cdn-icons-png.flaticon.com/512/3774/3774299.png'; // Common doctor image
 
 const Doctors = () => {
+  const backendUrl=process.env.REACT_APP_BACKEND_URL;
   const [doctors, setDoctors] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [editMode, setEditMode] = useState(false);
@@ -21,7 +22,7 @@ const Doctors = () => {
 
   const fetchDoctors = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/admin/doctors');
+      const response = await axios.get(`${backendUrl}/admin/doctors`);
       setDoctors(response.data);
     } catch (error) {
       console.error('Failed to fetch doctors:', error);
@@ -70,7 +71,7 @@ const Doctors = () => {
 
     if (confirm.isConfirmed) {
       try {
-        await axios.delete(`http://localhost:5000/api/doctor/delete/${id}`);
+        await axios.delete(`${backendUrl}/doctor/delete/${id}`);
         fetchDoctors();
         Swal.fire('Deleted!', 'Doctor has been deleted.', 'success');
       } catch (error) {
@@ -84,10 +85,10 @@ const Doctors = () => {
     e.preventDefault();
     try {
       if (editMode) {
-        await axios.put(`http://localhost:5000/api/doctor/${selectedDoctor._id}`, formData);
+        await axios.put(`${backendUrl}/doctor/${selectedDoctor._id}`, formData);
         Swal.fire('Updated!', 'Doctor updated successfully.', 'success');
       } else {
-        await axios.post('http://localhost:5000/api/doctor/register', formData);
+        await axios.post(`${backendUrl}/doctor/register`, formData);
         Swal.fire('Added!', 'Doctor added successfully.', 'success');
       }
       setShowModal(false);
